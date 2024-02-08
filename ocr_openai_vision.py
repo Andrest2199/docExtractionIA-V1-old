@@ -3,14 +3,14 @@
 import base64
 import json
 
-from os import getcwd
+import os
 from openai import OpenAI
 
-# Get base path
-folder_base_path = getcwd()
-
 # OpenAI API Key
-api_key = "REMOVED_SECRET"
+OpenAI.api_key = os.environ["OPENAI_API_KEY_STARLIGHT"]
+
+# Get base path
+folder_base_path = os.getcwd()
 
 """
 DOCS:
@@ -20,7 +20,7 @@ TODO:
 1) Modify prompt to include a few examples of desired output
 """
 
-# %% Ecode image
+# %% Encode image
 
 # Define function to encode the image
 def encode_image(image_path):
@@ -28,7 +28,7 @@ def encode_image(image_path):
     return base64.b64encode(image_file.read()).decode('utf-8')
   
 # Path to your image
-image_path = folder_base_path + "/data_procesed/03.jpeg"
+image_path = folder_base_path + "/1_image_procesed/0_procesed.jpeg"
 
 # Getting the base64 string
 base64_image = encode_image(image_path)
@@ -39,7 +39,7 @@ image_url = f"data:image/jpeg;base64,{base64_image}"
 # %% Send image to GPT 4 vision
 
 # Create instance of openAI client
-client = OpenAI(api_key="REMOVED_SECRET")
+client = OpenAI()
 
 # Get response
 response = client.chat.completions.create(
@@ -65,9 +65,9 @@ json_string = json_string.replace("```json\n","").replace("\n```","")
 
 # Save json data
 json_data = json.loads(json_string)
-json_file_name = '03.json'
+json_file_name = '0_text.json'
 
-with open(folder_base_path + '/1_data_procesed/' + json_file_name, 'w') as file:
+with open(folder_base_path + '/4_text_extracted/' + json_file_name, 'w') as file:
   json.dump(json_data, file, indent=4)
 
 # %%
