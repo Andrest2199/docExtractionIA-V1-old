@@ -15,7 +15,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 model.to(device)
 # load document image from the DocVQA dataset
 folder_base_path = getcwd()
-image_path = folder_base_path+'/0_image_raw/01.jpg'
+image_path = folder_base_path+'.../0_image_raw/01.jpg'
 image = Image.open(image_path).convert("RGB")
 
 # prepare decoder inputs
