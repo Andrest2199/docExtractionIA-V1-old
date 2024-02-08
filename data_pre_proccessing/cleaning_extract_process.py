@@ -2,20 +2,31 @@
 import json
 import unicodedata
 import re
-
+""" TODO:  - lowercase y espacios a '_'
+           - createformat
+        """
 def limpiar_json(json_str):
+    #Nos quedamos con caracteres alfanumericos, espacios, y simbología de string JSON
     patron = re.compile(r'[^\w\s":{},]+')
     json_str = patron.sub('', json_str)
     json_str=json_str.strip()
+    json_str = json_str.lower()
     decoded_json = json.loads(json_str)
-    
-    normalized_json = {key if unicodedata.is_normalized('NFKD',str(key)) else unicodedata.normalized('NFKD', str(key)): 
+
+    for key, value in decoded_json.items():
+        if key.find(" ") >0:
+            keyValue=key.replace(" ","_")
+            decoded_json[keyValue] = decoded_json[key] 
+            del decoded_json[key]
+
+    normalized_json = {key.replace(" ","_") if unicodedata.is_normalized('NFKD',str(key)) else unicodedata.normalized('NFKD', str(key)): 
                     value if unicodedata.is_normalized('NFKD', str(value)) else unicodedata.normalize('NFKD', str(value))
                         for key, value in decoded_json.items()}
-    
+
     return normalized_json
 
 def extraer_informacion(json_data):
+    """
     #CAMPOS PRINCIPALES
         #"extras"
         #"folio"
@@ -24,10 +35,11 @@ def extraer_informacion(json_data):
         #"dias_incapacidad"
         #"rama_incapacidad"
         #"tipo_incapacidad" : #EG,MA,AT se obtiene de rama_incapacidad
-
+        """
     campos_variaciones = [
         #Extras
         "nombre_asegurado",
+        "institucion prueba",
         "curp",
         "serie_folio",
         #Posible riesgo
@@ -51,13 +63,14 @@ def extraer_informacion(json_data):
         "direccion"
         #Agregar más campos según sea necesario
     ]
-    informacion_extraida = [campo.strip()+":"+json_data.get(campo,"").strip() if json_data.get(campo.strip()) else campo.strip()+":No se encontro" for campo in campos_variaciones]
+    informacion_extraida = {campo.strip():json_data.get(campo,"").strip() if json_data.get(campo.strip()) else campo.strip()+":No se encontro" for campo in campos_variaciones}
     
     return informacion_extraida
 # %% Ejemplo de uso prueba%%
 json_str = '''
 {
     "institucion": "INSTITUTO MEXICANO DEL SEGURO SOCIAL",
+    "institucion prueba": "INSTITUTO MEXICANO DEL SEGURO SOCIAL",
     "direccion": "DIRECCI\u00d3N DE PRESTACIONES M\u00c9DICAS",
     "documento": "CERTIFICADO DE INCAPACIDAD TEMPORAL PARA EL TRABAJO",
     "nss": "9000-84-1206",
@@ -116,5 +129,6 @@ informacion_extraida = extraer_informacion(json_limpiado)
 # print(json.dumps(json_limpiado,ensure_ascii=False,indent=2,sort_keys=True))
 
 print("\nInformación extraída:")
+print(informacion_extraida)
 print(json.dumps(informacion_extraida,ensure_ascii=False,indent=2,sort_keys=True))
 # %%
