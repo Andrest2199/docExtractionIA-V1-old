@@ -5,6 +5,10 @@ import math
 from typing import Tuple, Union
 from deskew import determine_skew
 
+"""
+    Additional documentation:
+    https://www.leadtools.com/help/sdk/v21/main/api/deskewing.html
+"""
 
 def get_skew_angle(cvImage) -> float:
     """ "
