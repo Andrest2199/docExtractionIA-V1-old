@@ -1,4 +1,17 @@
 #%%TrOCR
+#|PRERREQUISITOS PARA INSTALAR TRANSFORMERS|
+## [python 3.9 - 3.11]
+## conda install pytorch torchvision -c pytorch
+## pip install tensorflow
+## conda install conda-forge::chardet [necesario con tensorflow]
+## pip install --force-reinstall charset-normalizer==3.1.0 [normalmente se instala una version vieja]
+## conda install conda-forge::requests
+## conda install conda-forge::cmake [si usas MAC M1] No instaladas
+## conda install conda-forge::pkg-config [si usas MAC M1] No instaladas
+## |
+## conda install conda-forge::transformers 4.
+## pip install transformers 4.37
+
 import os
 import requests
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
