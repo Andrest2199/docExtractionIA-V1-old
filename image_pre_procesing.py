@@ -15,9 +15,10 @@ conda install anaconda::pillow
 
 TODO's:
 - Delete, escaneado from scanscanner
+- In a 2nd version explore other libriares to extract images from PDFs
 
 POTENTIAL IMPROVEMENTS
-- Using regex extract employee name and number
+- Using regex extract employee name, folio ID and employee ID. Andres to ask Adriana de la Rosa.
 """
 
 # %%
