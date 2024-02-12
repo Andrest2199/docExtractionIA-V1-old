@@ -68,7 +68,7 @@ json_string = json_string.replace("```json\n", "").replace("\n```", "")
 json_data = json.loads(json_string)
 json_file_name = "0_text.json"
 
-with open(folder_base_path + "/4_text_extracted/" + json_file_name, "w") as file:
-    json.dump(json_data, file, indent=4)
+with open(folder_base_path + '/4_results/' + json_file_name, 'w') as file:
+  json.dump(json_data, file, indent=4)
 
 # %%
