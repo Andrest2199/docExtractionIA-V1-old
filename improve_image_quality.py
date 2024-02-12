@@ -10,6 +10,7 @@ from deskew import determine_skew
     https://www.leadtools.com/help/sdk/v21/main/api/deskewing.html
 """
 
+
 def get_skew_angle(cvImage) -> float:
     """ "
     Get the skew angle of the image using Hough Transform
@@ -60,6 +61,7 @@ def convert_to_1bit(image):
 
     return binary_image
 
+
 def rotate(
     image: np.ndarray, angle: float, background: Union[int, Tuple[int, int, int]]
 ) -> np.ndarray:
@@ -82,8 +84,11 @@ def rotate(
 
 
 def improve_image_quality(input_image_path, output_image_path):
-
+    print(f"Processing image: {input_image_path}")
     raw_image = cv2.imread(input_image_path)
+    if raw_image is None:
+        print(f"Image {input_image_path} not found")
+        return None
     skewed_angle = get_skew_angle(raw_image)
     if abs(skewed_angle) > 0.5:
         print(f"Image {input_image_path} is skewed by {skewed_angle} degrees")
