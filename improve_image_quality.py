@@ -84,7 +84,6 @@ def rotate(
 
 
 def improve_image_quality(input_image_path, output_image_path):
-    print(f"Processing image: {input_image_path}")
     raw_image = cv2.imread(input_image_path)
     if raw_image is None:
         print(f"Image {input_image_path} not found")
