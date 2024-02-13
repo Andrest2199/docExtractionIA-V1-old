@@ -2,28 +2,41 @@
 import json
 import unicodedata
 import re
+
 """ TODO:  - lowercase y espacios a '_'
            - createformat
         """
+
+
 def limpiar_json(json_str):
-    #Nos quedamos con caracteres alfanumericos, espacios, y simbología de string JSON
+    # Nos quedamos con caracteres alfanumericos, espacios, y simbología de string JSON
     patron = re.compile(r'[^\w\s":{},]+')
-    json_str = patron.sub('', json_str)
-    json_str=json_str.strip()
+    json_str = patron.sub("", json_str)
+    json_str = json_str.strip()
     json_str = json_str.lower()
     decoded_json = json.loads(json_str)
 
-    for key, value in decoded_json.items():
-        if key.find(" ") >0:
-            keyValue=key.replace(" ","_")
-            decoded_json[keyValue] = decoded_json[key] 
+    for key, value in list(decoded_json.items()):
+        if key.find(" ") > 0:
+            keyValue = key.replace(" ", "_")
+            decoded_json[keyValue] = decoded_json[key]
             del decoded_json[key]
 
-    normalized_json = {key.replace(" ","_") if unicodedata.is_normalized('NFKD',str(key)) else unicodedata.normalized('NFKD', str(key)): 
-                    value if unicodedata.is_normalized('NFKD', str(value)) else unicodedata.normalize('NFKD', str(value))
-                        for key, value in decoded_json.items()}
+    normalized_json = {
+        (
+            key.replace(" ", "_")
+            if unicodedata.is_normalized("NFKD", str(key))
+            else unicodedata.normalized("NFKD", str(key))
+        ): (
+            value
+            if unicodedata.is_normalized("NFKD", str(value))
+            else unicodedata.normalize("NFKD", str(value))
+        )
+        for key, value in decoded_json.items()
+    }
 
     return normalized_json
+
 
 def extraer_informacion(json_data):
     """
@@ -35,39 +48,48 @@ def extraer_informacion(json_data):
         #"dias_incapacidad"
         #"rama_incapacidad"
         #"tipo_incapacidad" : #EG,MA,AT se obtiene de rama_incapacidad
-        """
+    """
     campos_variaciones = [
-        #Extras
+        # Extras
         "nombre_asegurado",
         "institucion prueba",
         "curp",
         "serie_folio",
-        #Posible riesgo
+        # Posible riesgo
         "probable_riesgo_trabajo",
-        #Rama incapacidad
+        # Rama incapacidad
         "ramo_seguro",
         "ramo_de_seguro",
         "Ramo de Seguro",
-        #Fecha desde
+        # Fecha desde
         "a_partir_de",
         "A partir del",
         "inicio_incapacidad",
-        #Fecha desde en otro campo
+        # Fecha desde en otro campo
         "expedido_el",
         "Expedido el",
-        #Dias Incapacidad
+        # Dias Incapacidad
         "numero",
         "dias_autorizados_letra",
         "numero_dias_autorizados",
         "Dias Autorizados",
-        "direccion"
-        #Agregar más campos según sea necesario
+        "direccion",
+        # Agregar más campos según sea necesario
     ]
-    informacion_extraida = {campo.strip():json_data.get(campo,"").strip() if json_data.get(campo.strip()) else campo.strip()+":No se encontro" for campo in campos_variaciones}
-    
+    informacion_extraida = {
+        campo.strip(): (
+            json_data.get(campo, "").strip()
+            if json_data.get(campo.strip())
+            else campo.strip() + ":No se encontro"
+        )
+        for campo in campos_variaciones
+    }
+
     return informacion_extraida
+
+
 # %% Ejemplo de uso prueba%%
-json_str = '''
+json_str = """
 {
     "institucion": "INSTITUTO MEXICANO DEL SEGURO SOCIAL",
     "institucion prueba": "INSTITUTO MEXICANO DEL SEGURO SOCIAL",
@@ -117,7 +139,7 @@ json_str = '''
     "nota": "El asegurado a quien se entreg\u00f3 copia de este documento se encuentra incapacitado para trabajar a partir de la fecha y durante el periodo que se indica en este estudio.",
     "informacion_adicional": "CONOCES EL SERVICIO DE CONSULTA DE INCAPACIDADES EN LINEA? Ingresa al escritorio virtual y podr\u00e1s revisar el historico de las incapacidades de los trabajadores de tu empresa. Si cuentas con Convenio de pago indirecto y reembolso de subsidios, tambi\u00e9n puedes descargar tus facturas de pago."
 }
-'''
+"""
 
 # %% Limpieza del JSON%%
 json_limpiado = limpiar_json(json_str)
@@ -130,5 +152,5 @@ informacion_extraida = extraer_informacion(json_limpiado)
 
 print("\nInformación extraída:")
 print(informacion_extraida)
-print(json.dumps(informacion_extraida,ensure_ascii=False,indent=2,sort_keys=True))
+print(json.dumps(informacion_extraida, ensure_ascii=False, indent=2, sort_keys=True))
 # %%
