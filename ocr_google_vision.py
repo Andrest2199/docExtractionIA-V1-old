@@ -27,6 +27,7 @@ output_folder_path = folder_base_path +  '/3_text_extracted/'
 
 # %% Quick start
 
+
 def run_quickstart() -> vision.EntityAnnotation:
     """Provides a quick start example for Cloud Vision."""
 
@@ -49,8 +50,10 @@ def run_quickstart() -> vision.EntityAnnotation:
 
     return labels
 
+
 # %% Detect text in images in local directory
 # https://cloud.google.com/vision/docs/ocr
+
 
 # Define function to detect text in the image file
 def detect_text(path):
@@ -80,8 +83,9 @@ def detect_text(path):
             "{}\nFor more info on error messages, check: "
             "https://cloud.google.com/apis/design/errors".format(response.error.message)
         )
-    
+
     return texts
+
 
 # Specify path to image
 image_path = folder_base_path + '/1_image_procesed/5_procesed_0_0_img0.jpeg'
@@ -95,9 +99,9 @@ for text in texts:
     text_corpus += f'\n"{text.description}"'
 
 # Save as .txt
-file_name = folder_base_path + "/1_data_procesed/02.txt"
+file_name = folder_base_path + "/3_text_extracted/0.txt"
 with open(file_name, "w") as file:
-        file.write(text_corpus)
+    file.write(text_corpus)
 
 # %% Detect handwriting in local images
 # https://cloud.google.com/vision/docs/handwriting
