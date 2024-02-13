@@ -5,6 +5,7 @@ from PIL import Image
 import os
 import shutil
 import json
+import utils
 
 folder_base_path = os.getcwd()
 
@@ -29,21 +30,9 @@ POTENTIAL IMPROVEMENTS
 # output_folder_path = folder_base_path + "/1_image_procesed"
 
 
-def delete_images_from_folder(folder_path):
-    for filename in os.listdir(folder_path):
-        file_path = os.path.join(folder_path, filename)
-        try:
-            # Check if it is a file and not a directory and not .gitignore
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                if filename != ".gitignore":
-                    os.unlink(file_path)  # Unlink (delete) the file
-        except Exception as e:
-            print(f"Failed to delete {file_path}. Reason: {e}")
-
-
 def process_images(input_folder_path, output_folder_path):
     # Delete all files in output folder path
-    delete_images_from_folder(output_folder_path)
+    utils.delete_images_from_folder(output_folder_path)
 
     # Create file name list
     file_name_list = []
@@ -59,7 +48,8 @@ def process_images(input_folder_path, output_folder_path):
     data = {}
     for ii in range(len(file_name_list)):
         file_name_original = file_name_list[ii]
-        data[ii] = {"file_name_original": file_name_original}
+        if file_name_original != ".gitignore":
+            data[ii] = {"file_name_original": file_name_original}
 
     # Loop through all the files in the input folder
     file_number = 0

@@ -24,3 +24,15 @@ def create_file_list(folder_path):
         # Append original file name cleaned
         file_name_list.append(file_name_original_clean)
     return file_name_list
+
+
+def delete_images_from_folder(folder_path):
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        try:
+            # Check if it is a file and not a directory and not .gitignore
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                if filename != ".gitignore":
+                    os.unlink(file_path)  # Unlink (delete) the file
+        except Exception as e:
+            print(f"Failed to delete {file_path}. Reason: {e}")
