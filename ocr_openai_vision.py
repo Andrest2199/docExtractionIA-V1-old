@@ -2,7 +2,7 @@
 
 import base64
 import json
-
+import utils
 import os
 from openai import OpenAI
 
@@ -30,8 +30,9 @@ def encode_image(image_path):
 
 
 def ocr_openai_vision(image_path, output_folder):
+    utils.delete_files_in_folder(output_folder)
     print(f"Processing image: {image_path}")
-    print(f"Output folder: {output_folder}")
+
     # Path to your image
     # image_path = folder_base_path + "/1_image_procesed/0_procesed.jpeg"
 
