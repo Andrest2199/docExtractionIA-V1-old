@@ -4,6 +4,7 @@ import cv2
 import math
 from typing import Tuple, Union
 from deskew import determine_skew
+from skimage import io, filters
 
 """
     Additional documentation:
@@ -55,10 +56,9 @@ def convert_to_1bit(image):
     """
     np_image = np.array(image)
     np_image = cv2.cvtColor(np_image, cv2.COLOR_BGR2GRAY)
-    binary_image = cv2.adaptiveThreshold(
-        np_image, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2
-    )  # imgf contains Binary image
-
+    # Use Sauvola's method to get better results
+    sauvola = filters.threshold_sauvola(np_image, window_size=15)
+    binary_image = np_image > sauvola
     return binary_image
 
 
@@ -90,10 +90,12 @@ def improve_image_quality(input_image_path, output_image_path):
         return None
     skewed_angle = get_skew_angle(raw_image)
     if abs(skewed_angle) > 0.5:
-        print(f"Image {input_image_path} is skewed by {skewed_angle} degrees")
+        print(f"Image is skewed by {skewed_angle} degrees")
         deskewed_image = deskew_and_rotate(raw_image, output_image_path)
     else:
         deskewed_image = raw_image
     bin_img = convert_to_1bit(deskewed_image)
+    bin_img = (bin_img * 255).astype(np.uint8)
+
     cv2.imwrite(output_image_path, bin_img)
-    print(f"Image {input_image_path} improved and saved to {output_image_path}")
+    print(f"Image improved and saved ")
