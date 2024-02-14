@@ -2,6 +2,7 @@
 from image_pre_procesing import process_images
 from improve_image_quality import improve_image_quality
 from ocr_openai_vision import ocr_openai_vision
+from ocr_google_vision import ocr_google_vision
 import os
 import utils
 
@@ -17,18 +18,25 @@ text_extracted_folder = folder_base_path + "/3_text_extracted"
 def main():
     # Process images
     process_images(image_raw_folder, image_preprocessed_folder)
-    # Get all file paths in a folder
+    #  %% improves image quality
     all_images = utils.create_file_list(image_preprocessed_folder)
     for image in all_images:
-        image_processed = improve_image_quality(
+        improve_image_quality(
             image_preprocessed_folder + "/" + image,
             image_improved_folder + "/" + image,
         )
+    # %% get improved images
     improved_images = utils.create_file_list(image_improved_folder)
+    #  %% ocr openai vision
     for image in improved_images:
         ocr_openai_vision(image_improved_folder + "/" + image, text_extracted_folder)
 
+    # %% ocr_google_vision
+    for image in improved_images:
+        ocr_google_vision(image_improved_folder + "/" + image, text_extracted_folder)
 
+
+# %% Run main function
 if __name__ == "__main__":
     main()
 
