@@ -27,7 +27,7 @@ print(folder_base_path)
 folder_base_path = folder_base_path.replace("/pre_trained_models", "")
 print(folder_base_path)
 # %%
-image_path = os.path.join(folder_base_path, "0_image_raw/03.jpeg")
+image_path = os.path.join(folder_base_path, "2_image_improved/0_procesed.jpeg")
 image = Image.open(image_path).convert("RGB")
 
 display(image)
@@ -46,7 +46,7 @@ display(image02)
 display(image03)
 display(image04)
 # %%
-image_path = os.path.join(folder_base_path, "0_image_raw/01.jpg")
+image_path = os.path.join(folder_base_path, "2_image_improved/0_procesed.jpeg")
 image = Image.open(image_path).convert("RGB")
 
 display(image)
