@@ -30,7 +30,7 @@ def encode_image(image_path):
 
 
 def ocr_openai_vision(image_path, output_folder):
-    utils.delete_files_in_folder(output_folder)
+    utils.delete_images_from_folder(output_folder)
     print(f"Processing image: {image_path}")
 
     # Path to your image
