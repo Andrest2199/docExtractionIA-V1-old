@@ -2,6 +2,7 @@
 
 import os
 from google.cloud import vision
+import utils
 
 folder_base_path = os.getcwd()
 
@@ -22,10 +23,11 @@ TODO:
 # %% Set up folder paths
 
 # Set folder paths
-input_folder_path = folder_base_path + '/1_image_procesed/'
-output_folder_path = folder_base_path +  '/3_text_extracted/'
+# input_folder_path = folder_base_path + "/1_image_preprocessed/"
+# output_folder_path = folder_base_path + "/3_text_extracted/"
 
 # %% Quick start
+
 
 def run_quickstart() -> vision.EntityAnnotation:
     """Provides a quick start example for Cloud Vision."""
@@ -49,8 +51,10 @@ def run_quickstart() -> vision.EntityAnnotation:
 
     return labels
 
+
 # %% Detect text in images in local directory
 # https://cloud.google.com/vision/docs/ocr
+
 
 # Define function to detect text in the image file
 def detect_text(path):
@@ -80,28 +84,30 @@ def detect_text(path):
             "{}\nFor more info on error messages, check: "
             "https://cloud.google.com/apis/design/errors".format(response.error.message)
         )
-    
+
     return texts
 
+
 # Specify path to image
-image_path = folder_base_path + '/1_image_procesed/5_procesed_0_0_img0.jpeg'
+# image_path = folder_base_path + "/1_image_preprocessed/5_procesed_0_0_Image9.jpg"
 
-# Send image to Google Vision API
-texts = detect_text(image_path)
+# # Send image to Google Vision API
+# texts = detect_text(image_path)
 
-# Create one big text corpus
-text_corpus = ""
-for text in texts:
-    text_corpus += f'\n"{text.description}"'
+# # Create one big text corpus
+# text_corpus = ""
+# for text in texts:
+#     text_corpus += f'\n"{text.description}"'
 
-# Save as .txt
-file_name = folder_base_path + "/1_data_procesed/02.txt"
-with open(file_name, "w") as file:
-        file.write(text_corpus)
+# # Save as .txt
+# file_name = folder_base_path + "/3_text_extracted/0.txt"
+# with open(file_name, "w") as file:
+#     file.write(text_corpus)
 
 # %% Detect handwriting in local images
 # https://cloud.google.com/vision/docs/handwriting
-    
+
+
 def detect_handwriting(path):
 
     client = vision.ImageAnnotatorClient()
@@ -113,7 +119,7 @@ def detect_handwriting(path):
 
     response = client.document_text_detection(image=image)
 
-    text_corpus = ''
+    text_corpus = ""
     for page in response.full_text_annotation.pages:
         for block in page.blocks:
             print(f"\nBlock confidence: {block.confidence}\n")
@@ -143,21 +149,43 @@ def detect_handwriting(path):
             "{}\nFor more info on error messages, check: "
             "https://cloud.google.com/apis/design/errors".format(response.error.message)
         )
-    
+
     return text_corpus
 
-# Specify path to image
-image_name = '5_procesed_0_0_img0.jpeg'
-image_path = os.path.join(input_folder_path, image_name)
 
-# Send image to Google Vision API
-text_corpus = detect_handwriting(image_path)
-
-# Save as .txt
-file_name = '5_text.txt'
-file_path_output = os.path.join(output_folder_path, file_name)
-
-with open(file_path_output, "w") as file:
+def ocr_google_vision(image_path, output_folder_path):
+    """ " Function to run the Google Vision API to detect handwriting and text in images
+    Args:
+    image_path: str, path to the image
+    output_folder_path: str, path to the output folder
+    """
+    text_corpus = detect_handwriting(image_path)
+    file_name = os.path.basename(image_path).split(".")[0] + ".txt"
+    file_path_output = os.path.join(output_folder_path, file_name)
+    with open(file_path_output, "w") as file:
         file.write(text_corpus)
+    texts = detect_text(image_path)
+    text_corpus = ""
+    for text in texts:
+        text_corpus += f'\n"{text.description}"'
+    file_name = os.path.basename(image_path).split(".")[0] + "_text.txt"
+    file_path_output = os.path.join(output_folder_path, file_name)
+    with open(file_path_output, "w") as file:
+        file.write(text_corpus)
+
+
+# Specify path to image
+# image_name = "5_procesed_0_0_Image9.jpg"
+# image_path = os.path.join(input_folder_path, image_name)
+
+# # Send image to Google Vision API
+# text_corpus = detect_handwriting(image_path)
+
+# # Save as .txt
+# file_name = "5_text.txt"
+# file_path_output = os.path.join(output_folder_path, file_name)
+
+# with open(file_path_output, "w") as file:
+#     file.write(text_corpus)
 
 # %%
