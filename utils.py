@@ -28,6 +28,14 @@ def create_file_list(folder_path):
     return file_name_list
 
 
+def list_text_files(folder_path):
+    file_name_list = []
+    for file in os.listdir(folder_path):
+        if file.endswith(".txt") or file.endswith(".json"):
+            file_name_list.append(file)
+    return file_name_list
+
+
 def delete_images_from_folder(folder_path):
     for filename in os.listdir(folder_path):
         file_path = os.path.join(folder_path, filename)
