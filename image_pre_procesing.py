@@ -35,20 +35,13 @@ def process_images(input_folder_path, output_folder_path):
     utils.delete_images_from_folder(output_folder_path)
 
     # Create file name list
-    file_name_list = []
-    for file_name_original in os.listdir(input_folder_path):
-        # Remove non-ASCII characters
-        file_name_original_clean = file_name_original.encode(
-            "ascii", errors="ignore"
-        ).decode()
-        # Append original file name cleaned
-        file_name_list.append(file_name_original_clean)
+    file_name_list = utils.create_file_list(input_folder_path)
 
     # Create data dictionary and extract original file name
     data = {}
     for ii in range(len(file_name_list)):
         file_name_original = file_name_list[ii]
-        if file_name_original != ".gitignore":
+        if file_name_original != ".gitignore" and file_name_original != ".DS_Store":
             data[ii] = {"file_name_original": file_name_original}
 
     # Loop through all the files in the input folder
@@ -66,7 +59,7 @@ def process_images(input_folder_path, output_folder_path):
             for jj in range(len(reader.pages)):
                 page = reader.pages[jj]
                 # Method 1 / following documentation
-                if page.images != []:
+                if hasattr(page, "images") and page.images != []:
                     image_count = 0
                     # Loop through images in each PDF page
                     for image_file_object in page.images:
@@ -87,8 +80,8 @@ def process_images(input_folder_path, output_folder_path):
                 else:
                     image_count = 0
                     # Get xobject subtype Image
-                    resources = page.get("/Resources")
-                    xobjects = resources.get("/XObject") if resources else {}
+                    resources = page.get("/Resources").getObject()
+                    xobjects = resources["/XObject"] if resources else {}
                     for key, obj in xobjects.items():
                         xobject = obj.get_object()
                         # Logic to check for images
@@ -124,6 +117,7 @@ def process_images(input_folder_path, output_folder_path):
         elif (
             not file_name_original.endswith(".pdf")
             and file_name_original != ".gitignore"
+            and file_name_original != ".DS_Store"
         ):
             # Create image file path input
             file_path_input = os.path.join(input_folder_path, file_name_original)
