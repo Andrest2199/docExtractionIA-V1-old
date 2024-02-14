@@ -159,7 +159,6 @@ def ocr_google_vision(image_path, output_folder_path):
     image_path: str, path to the image
     output_folder_path: str, path to the output folder
     """
-    utils.delete_images_from_folder(output_folder_path)
     text_corpus = detect_handwriting(image_path)
     file_name = os.path.basename(image_path).split(".")[0] + ".txt"
     file_path_output = os.path.join(output_folder_path, file_name)
