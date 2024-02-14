@@ -32,7 +32,7 @@ POTENTIAL IMPROVEMENTS
 
 def process_images(input_folder_path, output_folder_path):
     # Delete all files in output folder path
-    utils.delete_images_from_folder(output_folder_path)
+
 
     # Create file name list
     file_name_list = utils.create_file_list(input_folder_path)
