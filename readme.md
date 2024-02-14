@@ -14,6 +14,9 @@ If you have trouble installing the packages, you can try to install them manuall
 ```bash
 conda install conda-forge::pypdf2
 conda install anaconda::pillow
+conda install numpy
+pip install opencv-python
+pip install deskew
 ```
 
 You will also need to install the Google Cloud SDK. You can find the installation instructions [here](https://cloud.google.com/sdk/docs/install).
