@@ -62,6 +62,16 @@ def convert_to_1bit(image):
     return binary_image
 
 
+def convert_to_grayscale(image):
+    """
+    Convert the image to grayscale
+    rtype: PIL.Image.Image
+    """
+    np_image = np.array(image)
+    grayscale_image = cv2.cvtColor(np_image, cv2.COLOR_BGR2GRAY)
+    return grayscale_image
+
+
 def rotate(
     image: np.ndarray, angle: float, background: Union[int, Tuple[int, int, int]]
 ) -> np.ndarray:
@@ -94,8 +104,9 @@ def improve_image_quality(input_image_path, output_image_path):
         deskewed_image = deskew_and_rotate(raw_image, output_image_path)
     else:
         deskewed_image = raw_image
-    bin_img = convert_to_1bit(deskewed_image)
-    bin_img = (bin_img * 255).astype(np.uint8)
+    # bin_img = convert_to_1bit(deskewed_image)
+    bin_img = convert_to_grayscale(deskewed_image)
+    # bin_img = (bin_img * 255).astype(np.uint8)
 
     cv2.imwrite(output_image_path, bin_img)
     print(f"Image improved and saved ")
