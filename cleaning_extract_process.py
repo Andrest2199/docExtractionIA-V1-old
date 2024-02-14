@@ -2,6 +2,7 @@
 import json
 import unicodedata
 import re
+import os
 
 """ TODO:  - lowercase y espacios a '_'
            - createformat
@@ -10,12 +11,14 @@ import re
 
 def limpiar_json(json_str):
     # Nos quedamos con caracteres alfanumericos, espacios, y simbología de string JSON
-    patron = re.compile(r'[^\w\s":{},]+')
+    patron = re.compile(r'[^\w\s":{},\[\]\\]+')
+
     json_str = patron.sub("", json_str)
     json_str = json_str.strip()
     json_str = json_str.lower()
+    print(json_str)
     decoded_json = json.loads(json_str)
-
+    print(decoded_json)
     for key, value in list(decoded_json.items()):
         if key.find(" ") > 0:
             keyValue = key.replace(" ", "_")
@@ -78,9 +81,7 @@ def extraer_informacion(json_data):
     ]
     informacion_extraida = {
         campo.strip(): (
-            json_data.get(campo, "").strip()
-            if json_data.get(campo.strip())
-            else campo.strip() + ":No se encontro"
+            json_data.get(campo, "") if json_data.get(campo) else ":No se encontro"
         )
         for campo in campos_variaciones
     }
@@ -141,16 +142,31 @@ json_str = """
 }
 """
 
+
 # %% Limpieza del JSON%%
-json_limpiado = limpiar_json(json_str)
+def data_retrieval(json_file, output_folder):
+    with open(json_file, "r") as file:
+        data = file.read()
+    cleaned_data = limpiar_json(data)
+    extracted_data = extraer_informacion(cleaned_data)
+    # Extract the file name from the json_file path
+    file_name = os.path.basename(json_file)
 
-# %%Extracción de información%%
-informacion_extraida = extraer_informacion(json_limpiado)
+    with open(os.path.join(output_folder, file_name), "w") as file:
+        file.write(
+            json.dumps(extracted_data, ensure_ascii=False, indent=2, sort_keys=True)
+        )
 
-# print("JSON limpiado y con acentos convertidos:")
-# print(json.dumps(json_limpiado,ensure_ascii=False,indent=2,sort_keys=True))
 
-print("\nInformación extraída:")
-print(informacion_extraida)
-print(json.dumps(informacion_extraida, ensure_ascii=False, indent=2, sort_keys=True))
+# json_limpiado = limpiar_json(json_str)
+
+# # %%Extracción de información%%
+# informacion_extraida = extraer_informacion(json_limpiado)
+
+# # print("JSON limpiado y con acentos convertidos:")
+# # print(json.dumps(json_limpiado,ensure_ascii=False,indent=2,sort_keys=True))
+
+# print("\nInformación extraída:")
+# print(informacion_extraida)
+# print(json.dumps(informacion_extraida, ensure_ascii=False, indent=2, sort_keys=True))
 # %%
