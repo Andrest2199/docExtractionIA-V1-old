@@ -23,7 +23,7 @@ def create_file_list(folder_path):
             "ascii", errors="ignore"
         ).decode()
         # Append original file name cleaned
-        if not file_name_original.endswith((".DS_Store", ".gitignore")):
+        if not file_name_original.endswith((".DS_Store", ".gitignore", ".json")):
             file_name_list.append(file_name_original_clean)
     return file_name_list
 
