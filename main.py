@@ -42,10 +42,20 @@ def main():
     # %% Extract data
     all_text_files = utils.list_text_files(text_extracted_folder)
     for text_file in all_text_files:
-        data_retrieval(
-            text_extracted_folder + "/" + text_file,
-            results_folder,
-        )
+        if text_file.endswith(".txt"):
+            with open(os.path.join(text_extracted_folder, text_file), "r") as file:
+                json_str = file.read()
+            extracted_text = regex_extraction(json_str)
+            json_str = json.dumps(
+                extracted_text, ensure_ascii=False, indent=2, sort_keys=True
+            )
+            print(json_str)
+            utils.save_to_file(results_folder + "/" + text_file, json_str)
+        elif text_file.endswith(".json"):
+            data_cleaned = data_cleaning(text_file)
+            extracted_text = data_extraction(
+                data_cleaned, "operaciones", "incapacidades"
+            )
 
 
 # %% Run main function
