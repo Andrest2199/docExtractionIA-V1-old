@@ -1,9 +1,10 @@
 # %% google vision
 
-from os import getcwd
+import os
 from google.cloud import vision
+import utils
 
-folder_base_path = getcwd()
+folder_base_path = os.getcwd()
 
 """
 SET-UP
@@ -19,7 +20,14 @@ TODO:
 3) Compare results between three OCR methods
 """
 
+# %% Set up folder paths
+
+# Set folder paths
+# input_folder_path = folder_base_path + "/1_image_preprocessed/"
+# output_folder_path = folder_base_path + "/3_text_extracted/"
+
 # %% Quick start
+
 
 def run_quickstart() -> vision.EntityAnnotation:
     """Provides a quick start example for Cloud Vision."""
@@ -43,7 +51,10 @@ def run_quickstart() -> vision.EntityAnnotation:
 
     return labels
 
+
 # %% Detect text in images in local directory
+# https://cloud.google.com/vision/docs/ocr
+
 
 # Define function to detect text in the image file
 def detect_text(path):
@@ -73,25 +84,108 @@ def detect_text(path):
             "{}\nFor more info on error messages, check: "
             "https://cloud.google.com/apis/design/errors".format(response.error.message)
         )
-    
+
     return texts
 
+
 # Specify path to image
-image_path = folder_base_path + '/1_data_procesed/01.jpg'
+# image_path = folder_base_path + "/1_image_preprocessed/5_procesed_0_0_Image9.jpg"
 
-# Send image to Google Vision API
-texts = detect_text(image_path)
+# # Send image to Google Vision API
+# texts = detect_text(image_path)
 
-# Create one big text corpus
-text_corpus = ""
-for text in texts:
-    text_corpus += f'\n"{text.description}"'
+# # Create one big text corpus
+# text_corpus = ""
+# for text in texts:
+#     text_corpus += f'\n"{text.description}"'
 
-# Save as .txt
-file_name = folder_base_path + "/1_data_procesed/02.txt"
-with open(file_name, "w") as file:
+# # Save as .txt
+# file_name = folder_base_path + "/3_text_extracted/0.txt"
+# with open(file_name, "w") as file:
+#     file.write(text_corpus)
+
+# %% Detect handwriting in local images
+# https://cloud.google.com/vision/docs/handwriting
+
+
+def detect_handwriting(path):
+
+    client = vision.ImageAnnotatorClient()
+
+    with open(path, "rb") as image_file:
+        content = image_file.read()
+
+    image = vision.Image(content=content)
+
+    response = client.document_text_detection(image=image)
+
+    text_corpus = ""
+    for page in response.full_text_annotation.pages:
+        for block in page.blocks:
+            print(f"\nBlock confidence: {block.confidence}\n")
+
+            for paragraph in block.paragraphs:
+                print("Paragraph confidence: {}".format(paragraph.confidence))
+
+                for word in paragraph.words:
+                    word_text = "".join([symbol.text for symbol in word.symbols])
+                    print(
+                        "Word text: {} (confidence: {})".format(
+                            word_text, word.confidence
+                        )
+                    )
+
+                    text_corpus = "\n".join([text_corpus, word_text])
+
+                    for symbol in word.symbols:
+                        print(
+                            "\tSymbol: {} (confidence: {})".format(
+                                symbol.text, symbol.confidence
+                            )
+                        )
+
+    if response.error.message:
+        raise Exception(
+            "{}\nFor more info on error messages, check: "
+            "https://cloud.google.com/apis/design/errors".format(response.error.message)
+        )
+
+    return text_corpus
+
+
+def ocr_google_vision(image_path, output_folder_path):
+    """ " Function to run the Google Vision API to detect handwriting and text in images
+    Args:
+    image_path: str, path to the image
+    output_folder_path: str, path to the output folder
+    """
+    text_corpus = detect_handwriting(image_path)
+    file_name = os.path.basename(image_path).split(".")[0] + ".txt"
+    file_path_output = os.path.join(output_folder_path, file_name)
+    with open(file_path_output, "w") as file:
+        file.write(text_corpus)
+    texts = detect_text(image_path)
+    text_corpus = ""
+    for text in texts:
+        text_corpus += f'\n"{text.description}"'
+    file_name = os.path.basename(image_path).split(".")[0] + "_text.txt"
+    file_path_output = os.path.join(output_folder_path, file_name)
+    with open(file_path_output, "w") as file:
         file.write(text_corpus)
 
-# %%
-    
 
+# Specify path to image
+# image_name = "5_procesed_0_0_Image9.jpg"
+# image_path = os.path.join(input_folder_path, image_name)
+
+# # Send image to Google Vision API
+# text_corpus = detect_handwriting(image_path)
+
+# # Save as .txt
+# file_name = "5_text.txt"
+# file_path_output = os.path.join(output_folder_path, file_name)
+
+# with open(file_path_output, "w") as file:
+#     file.write(text_corpus)
+
+# %%
