@@ -4,169 +4,274 @@ import unicodedata
 import re
 import os
 
-""" TODO:  - lowercase y espacios a '_'
-           - createformat
+""" TODO:  
+        - createformat. "from datetime import datetime"
+        - Juntar funciones o definir union data_cleaning,data_extraction,regex_extraction
         """
 
-
-def limpiar_json(json_str):
-    # Nos quedamos con caracteres alfanumericos, espacios, y simbología de string JSON
-    patron = re.compile(r'[^\w\s":{},\[\]\\]+')
-
-    json_str = patron.sub("", json_str)
-    json_str = json_str.strip()
-    json_str = json_str.lower()
-    print(json_str)
+def data_cleaning(json_str):
+    clear_json = None
+    #Detectamos si es un txt
+    if type(json_str) is list:        
+        json_str = dict(zip(range(len(json_str)), json_str))
+        json_str = json.dumps(json_str)
+    #Nos quedamos con caracteres alfanumericos, espacios, y simbología de string JSON
+    patron = re.compile(r'[^\w\s":{},\[\]\/]+')
+    json_str = patron.sub('', json_str)
+    json_str=json_str.strip()
+    json_str = json_str.upper()
     decoded_json = json.loads(json_str)
-    print(decoded_json)
-    for key, value in list(decoded_json.items()):
-        if key.find(" ") > 0:
-            keyValue = key.replace(" ", "_")
-            decoded_json[keyValue] = decoded_json[key]
-            del decoded_json[key]
 
-    normalized_json = {
-        (
-            key.replace(" ", "_")
-            if unicodedata.is_normalized("NFKD", str(key))
-            else unicodedata.normalized("NFKD", str(key))
-        ): (
-            value
-            if unicodedata.is_normalized("NFKD", str(value))
-            else unicodedata.normalize("NFKD", str(value))
-        )
-        for key, value in decoded_json.items()
-    }
+    for key in decoded_json.keys():
+        if key.find(" ") > 0:
+            key_value=key.replace(" ","_")
+            clear_json={clave if clave != key else key_value:valor for clave,valor in decoded_json.items()}
+    
+    if clear_json == None:
+        clear_json = decoded_json
+    
+    normalized_json = {key if unicodedata.is_normalized('NFKD',str(key)) else unicodedata.normalize('NFKD', str(key)): 
+                    value if unicodedata.is_normalized('NFKD', str(value)) else unicodedata.normalize('NFKD', str(value))
+                        for key,value in clear_json.items()}
 
     return normalized_json
 
-
-def extraer_informacion(json_data):
-    """
-    #CAMPOS PRINCIPALES
-        #"extras"
-        #"folio"
-        #"posible_riesgo"
-        #"fecha_desde"
-        #"dias_incapacidad"
-        #"rama_incapacidad"
-        #"tipo_incapacidad" : #EG,MA,AT se obtiene de rama_incapacidad
-    """
-    campos_variaciones = [
-        # Extras
-        "nombre_asegurado",
-        "institucion prueba",
-        "curp",
-        "serie_folio",
-        # Posible riesgo
-        "probable_riesgo_trabajo",
-        # Rama incapacidad
-        "ramo_seguro",
-        "ramo_de_seguro",
-        "Ramo de Seguro",
-        # Fecha desde
-        "a_partir_de",
-        "A partir del",
-        "inicio_incapacidad",
-        # Fecha desde en otro campo
-        "expedido_el",
-        "Expedido el",
-        # Dias Incapacidad
-        "numero",
-        "dias_autorizados_letra",
-        "numero_dias_autorizados",
-        "Dias Autorizados",
-        "direccion",
-        # Agregar más campos según sea necesario
-    ]
-    informacion_extraida = {
-        campo.strip(): (
-            json_data.get(campo, "") if json_data.get(campo) else ":No se encontro"
-        )
-        for campo in campos_variaciones
+def data_extraction(json_data,type_doc,subtype_doc=''):
+    """ CAMPOS PRINCIPALES / OPERACIONES
+            INCAPACIDADES:
+            extras,folio,posible_riesgo,fecha_desde,
+            dias_incapacidad,rama_incapacidad
+            tipo_incapacidad : #EG,MA,AT se obtiene de rama_incapacidad
+            INFONAVIT:
+            numero_credito,
+            fecha,
+            aviso [titulo de doc]
+        CAMPOS PRINCIPALES / CODIGOS POSTALES
+            rfc,curp,nombre,primer_apellido,
+            segundo_apellido,codigo_postal    
+        """
+    contador_tipo = 0
+    contador_subtipo = 0
+    campos_variaciones = {
+        "operaciones":{
+            "incapacidades":
+                [#Extras
+                "institucion",
+                "nombre",
+                "institucion",
+                "curp",
+                #Serie
+                "serie",
+                "folio",
+                #Posible riesgo
+                "riesgo",
+                "trabajo",
+                "probable",
+                "probable_riesgo_trabajo",
+                #Rama incapacidad
+                "seguro",
+                "ramo",
+                "ramo_seguro",
+                "ramo_de_seguro",
+                #Fecha desde
+                "partir",
+                "a_partir",
+                "a_partir_de",
+                "inicio",
+                "incapacidad",
+                "inicio_incapacidad",
+                #Fecha desde en otro campo
+                "expedido",
+                "expedido_el",
+                #Dias Incapacidad
+                "numero",
+                "dias",
+                "autorizados",
+                "dias_autorizados_letra",
+                "numero_dias_autorizados",
+                "direccion"],
+            "infonavit":
+                ["numero",
+                 "credito",
+                 "numero_credito",
+                 "fecha",
+                 "aviso",
+                 "suspension",
+                 "aviso_suspension",
+                 ]},
+        "codigos_postales":[
+            "rfc",
+            "curp",
+            "nombre",
+            "primer",
+            "primer_apellido",
+            "segundo",
+            "segundo_apellido",
+            "codigo",
+            "postal",
+            "codigo_postal"
+        ]
     }
+    if type_doc == "operaciones" and subtype_doc =="":
+        return "Debe definir un subtipo de documento"
+    
+    if type_doc != "" and subtype_doc == "":
+        for tipo in campos_variaciones.keys():
+            if tipo == type_doc:
+                contador_tipo += 1
+                variaciones=campos_variaciones.get(type_doc)
+    elif type_doc != "" and subtype_doc != "":
+        for tipo,subtipo in campos_variaciones.items():
+            if tipo == type_doc:
+                contador_tipo += 1
+                variaciones = campos_variaciones.get(type_doc)
+        for subtipo in variaciones.keys():
+            if subtipo == subtype_doc:
+                contador_subtipo += 1
+                variaciones_final = variaciones.get(subtype_doc)
+        variaciones = variaciones_final
+    else:
+        return 'El tipo de documento viene vacio'
+    
+    if contador_tipo == 0:
+        return 'No existe el tipo de documento'
+    if contador_subtipo == 0:
+        return 'El subtipo de documento viene vacio o no existe'
+    
+    for i in range(len(variaciones)):
+        variaciones[i] = variaciones[i].upper()
+    informacion_extraida = {campo.strip():json_data.get(campo).strip() if json_data.get(campo.strip()) else "NA" for campo in variaciones}
+    
+    for key,value in informacion_extraida.items():
+        if value == "NA":
+            # print ("key no encontrado: "+key)
+            patron = re.escape(key)
+            # print ("patron: "+patron)
+            exp_compilada = re.compile(patron)
+            # print ("patron compilado: "+str(exp_compilada))
+            for keyJson in json_data.keys():
+                # print("keyJSON: "+keyJson)
+                coincidencias = exp_compilada.search(keyJson)
+                if coincidencias != None:
+                    informacion_extraida[key]= json_data.get(keyJson)
 
     return informacion_extraida
 
+def regex_extraction(texto):
+    #Detectar si hay '|'
+    boolBarra = True
+    if "|" not in texto:
+        boolBarra = False
+        texto = texto.strip()
+        texto = texto.split('"')
+        texto = texto[1].replace("\n","|")
+    #Formatear string
+    texto = ''.join(c for c in unicodedata.normalize('NFD', texto)
+                  if unicodedata.category(c) != 'Mn')
+    texto = texto.upper()
+    # Definir el patrón regex
+    # patron_regex = re.compile(r"(?:TIPO\|INCAPACIDAD\|(.*?)\|).*?(?:RAMO\|DE\|SEGURO\|(.*?)\|(.*?)\|).*?(?:RIESGO\|TRABAJO\|(.*?)\|).*?(?:DIAS\|AUTORIZADOS\|\(\|LETRA\|\)\|(.*?)\|).*?(?:SERIE\|Y\|FOLIO\|(.*?)\|).*?(?:PARTIR\|DEL\|(.*?)\|).*?(?:EXPEDIDO\|EL\|(.*?)\|)")
+    arr_coincidencias={}
+    patrones_regulares = {
+        "SERIE_FOLIO":
+            "SERIE\|Y\|FOLIO\|(.*?)\|",
+        "TIPO_INCAPACIDAD":
+            "TIPO\|INCAPACIDAD\|(.*?)\|",
+            #"INCAPACIDAD\|(.*?)\|"],
+        "RAMO_SEGURO":
+            "RAMO\|DE\|SEGURO\|(.*?)\|(.*?)\|",
+            #"SEGURO\|(.*?)\|(.*?)\|"],
+        "FECHA_APARTIR":
+            "PARTIR\|DEL\|(.*?)\|",
+        "FECHA_EXPEDIDO":
+            "EXPEDIDO\|EL\|(.*?)\|",
+        "PROBABLE_RIESGO_TRABAJO":
+            "RIESGO\|TRABAJO\|(.*?)\|",
+        "DIAS_AUTORIZADOS":
+            "DIAS\|AUTORIZADOS\|\(\|LETRA\|\)\|(.*?)\|"
+    }
+    if boolBarra == False:
+        patrones_regulares = {
+            "SERIE_FOLIO":
+                "SERIE Y FOLIO(.*?)\|",
+            "TIPO_INCAPACIDAD":
+                "TIPO INCAPACIDAD\|?(.*?)\|",
+                #"INCAPACIDAD\|(.*?)\|"],
+            "RAMO_SEGURO":
+                "RAMO DE SEGURO\|?(.*?)\|",
+                #"SEGURO\|(.*?)\|(.*?)\|"],
+            "FECHA_APARTIR":
+                "PARTIR DEL\|?(.*?)\|",
+            "FECHA_EXPEDIDO":
+                "EXPEDIDO EL\|?(.*?)\|",
+            "PROBABLE_RIESGO_TRABAJO":
+                "RIESGO\|TRABAJO\|?(.*?)\|",
+            "DIAS_AUTORIZADOS":
+                "DIAS AUTORIZADOS\(LETRA\)\|?(.*?)\|"
+        }
+    # Buscar coincidencias en el texto
+    for key,pat in patrones_regulares.items():
+        if type(pat) is str:
+            patron = re.compile(r"(?:"+pat+")")
+            coincidencias = patron.search(texto)
+            if coincidencias:
+                if len(coincidencias.groups()) > 1:
+                    value=""
+                    for data in coincidencias.groups():
+                        value+=data+" "       
+                    arr_coincidencias[key]=value.strip()
+                else:
+                    arr_coincidencias[key]=coincidencias.group(1)
+            else:
+                arr_coincidencias[key]="NA"
+        elif type(pat) is list:
+            i=0
+            for pat2 in pat:
+                i+=1
+                patron = re.compile(r"(?:"+pat2+")")
+                coincidencias = patron.search(texto)
+                if coincidencias:
+                    if len(coincidencias.groups()) > 1:
+                        value=""
+                        for data in coincidencias.groups():
+                            value+=data+" " 
+                        arr_coincidencias[key+"_"+str(i)]=value.strip()
+                    else:
+                        arr_coincidencias[key+"_"+str(i)]=coincidencias.group(1)
+                else:
+                    arr_coincidencias[key+"_"+str(i)]="NA"
 
-# %% Ejemplo de uso prueba%%
-json_str = """
-{
-    "institucion": "INSTITUTO MEXICANO DEL SEGURO SOCIAL",
-    "institucion prueba": "INSTITUTO MEXICANO DEL SEGURO SOCIAL",
-    "direccion": "DIRECCI\u00d3N DE PRESTACIONES M\u00c9DICAS",
-    "documento": "CERTIFICADO DE INCAPACIDAD TEMPORAL PARA EL TRABAJO",
-    "nss": "9000-84-1206",
-    "agregado_medico": "1M19840R",
-    "nombre_asegurado": "ISIDRO $RAMOS CRUZ",
-    "curp": "RACI830115HCMRS00",
-    "sexo": "MASCULINO",
-    "delegacion": "OAXACA",
-    "unidad": {
-        "numero": "1",
-        "clave_presupuestal": "21012252110"
-    },
-    "consultorio": "5",
-    "turno": "MATUTINO",
-    "documento_identificacion_asegurado": "CREDENCIAL PARA VOTAR",
-    "numero_identificacion": "I270015670006",
-    "serie_folio": "WG667076",
-    "unidad_medica_expedidora": "1",
-    "nivel_atencion": "1",
-    "delegacion_adscripcion": "Oaxaca",
-    "tipo_incapacidad": "INICIAL",
-    "dias_autorizados": "uno",
-    "forma_seguro_enfermedad_general": "NO",
-    "probable_riesgo_trabajo": "NO",
-    "dias_acumulados": "0",
-    "particion": {
-        "expedidora": "Oaxaca",
-        "serie": "WG667076"
-    },
-    "patron": {
-        "nombre": "LEVI STRAUSS DE MEXICO",
-        "puesto_trabajo": "Demostradores y promotores"
-    },
-    "numero": "1",
-    "a_partir_de": "16/12/2023",
-    "expedido_el": "16/12/2023",
-    "control_maternidad": {
-        "no": "NA"
-    },
-    "nombre_firma_medico": "JAVIER ANTONIO L\u00d3PEZ AQUINO",
-    "matricula": "9921974-6",
-    "nombre_firma_medico_autoriza": "NO APLICA",
-    "matricula_autoriza": "NO APLICA",
-    "nota": "El asegurado a quien se entreg\u00f3 copia de este documento se encuentra incapacitado para trabajar a partir de la fecha y durante el periodo que se indica en este estudio.",
-    "informacion_adicional": "CONOCES EL SERVICIO DE CONSULTA DE INCAPACIDADES EN LINEA? Ingresa al escritorio virtual y podr\u00e1s revisar el historico de las incapacidades de los trabajadores de tu empresa. Si cuentas con Convenio de pago indirecto y reembolso de subsidios, tambi\u00e9n puedes descargar tus facturas de pago."
-}
-"""
+    return arr_coincidencias
+    
+#%% TEST TXT SIN DELIMITADOR '|'-----------------------------
+folder_base_path = os.getcwd()+'/3_text_extracted'
+file_path_input = os.path.join(folder_base_path, '0_procesed_text_PT.txt')
+with  open(file_path_input) as archivo:
+    json_str = archivo.read()
+
+info_extraida=regex_extraction(json_str)
+print(json.dumps(info_extraida,ensure_ascii=False,indent=2,sort_keys=True))
+#%% TEST TXT CON DELIMITADOR '|'-----------------------------
+folder_base_path = os.getcwd()+'/3_text_extracted'
+file_path_input = os.path.join(folder_base_path, '1_procesed_0_0_Im0_HW.txt')
+with  open(file_path_input) as archivo:
+    json_str = archivo.read()
+
+info_extraida=regex_extraction(json_str)
+print(json.dumps(info_extraida,ensure_ascii=False,indent=2,sort_keys=True))
+#%% TEST JSON------------------------------------------------
+folder_base_path = os.getcwd()+'/3_text_extracted'
+file_path_input = os.path.join(folder_base_path, '01.json')
+with  open(file_path_input) as archivo:
+    json_str = archivo.read()
+
+#Limpieza del JSON
+data_clean=data_cleaning(json_str)
+#Extracción de información
+informacion_extraida = data_extraction(data_clean,'operaciones','incapacidades')
+print("\nInformación extraída:")
+print(json.dumps(informacion_extraida,ensure_ascii=False,indent=2,sort_keys=True))
 
 
-# %% Limpieza del JSON%%
-def data_retrieval(json_file, output_folder):
-    with open(json_file, "r") as file:
-        data = file.read()
-    cleaned_data = limpiar_json(data)
-    extracted_data = extraer_informacion(cleaned_data)
-    # Extract the file name from the json_file path
-    file_name = os.path.basename(json_file)
-
-    with open(os.path.join(output_folder, file_name), "w") as file:
-        file.write(
-            json.dumps(extracted_data, ensure_ascii=False, indent=2, sort_keys=True)
-        )
-
-
-# json_limpiado = limpiar_json(json_str)
-
-# # %%Extracción de información%%
-# informacion_extraida = extraer_informacion(json_limpiado)
-
-# # print("JSON limpiado y con acentos convertidos:")
-# # print(json.dumps(json_limpiado,ensure_ascii=False,indent=2,sort_keys=True))
-
-# print("\nInformación extraída:")
-# print(informacion_extraida)
-# print(json.dumps(informacion_extraida, ensure_ascii=False, indent=2, sort_keys=True))
-# %%
+# %% TEST LIST%%
+json_str = ['test','test2']
