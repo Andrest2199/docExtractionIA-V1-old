@@ -1,19 +1,21 @@
 # %% Import libraries
+import json
 from image_pre_procesing import process_images
 from improve_image_quality import improve_image_quality
 from ocr_openai_vision import ocr_openai_vision
 from ocr_google_vision import ocr_google_vision
-from cleaning_extract_process import data_retrieval
+from cleaning_extract_process import data_cleaning, data_extraction, regex_extraction
 import os
 import utils
+import os
 
 # %% Set the paths
 folder_base_path = os.getcwd()
-image_raw_folder = folder_base_path + "/0_image_raw"
-image_preprocessed_folder = folder_base_path + "/1_image_preprocessed"
-image_improved_folder = folder_base_path + "/2_image_improved"
-text_extracted_folder = folder_base_path + "/3_text_extracted"
-results_folder = folder_base_path + "/4_results"
+image_raw_folder = os.path.join(folder_base_path, "0_image_raw")
+image_preprocessed_folder = os.path.join(folder_base_path, "1_image_preprocessed")
+image_improved_folder = os.path.join(folder_base_path, "2_image_improved")
+text_extracted_folder = os.path.join(folder_base_path, "3_text_extracted")
+results_folder = os.path.join(folder_base_path, "4_results")
 
 
 # %% Main function
@@ -40,10 +42,20 @@ def main():
     # %% Extract data
     all_text_files = utils.list_text_files(text_extracted_folder)
     for text_file in all_text_files:
-        data_retrieval(
-            text_extracted_folder + "/" + text_file,
-            results_folder,
-        )
+        if text_file.endswith(".txt"):
+            with open(os.path.join(text_extracted_folder, text_file), "r") as file:
+                json_str = file.read()
+            extracted_text = regex_extraction(json_str)
+            json_str = json.dumps(
+                extracted_text, ensure_ascii=False, indent=2, sort_keys=True
+            )
+            print(json_str)
+            utils.save_to_file(results_folder + "/" + text_file, json_str)
+        elif text_file.endswith(".json"):
+            data_cleaned = data_cleaning(text_file)
+            extracted_text = data_extraction(
+                data_cleaned, "operaciones", "incapacidades"
+            )
 
 
 # %% Run main function
