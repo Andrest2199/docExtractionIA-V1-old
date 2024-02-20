@@ -242,7 +242,7 @@ def regex_extraction(texto):
                     arr_coincidencias[key+"_"+str(i)]="NA"
 
     return arr_coincidencias
-    
+"""
 #%% TEST TXT SIN DELIMITADOR '|'-----------------------------
 folder_base_path = os.getcwd()+'/3_text_extracted'
 file_path_input = os.path.join(folder_base_path, '0_procesed_text_PT.txt')
@@ -275,3 +275,4 @@ print(json.dumps(informacion_extraida,ensure_ascii=False,indent=2,sort_keys=True
 
 # %% TEST LIST%%
 json_str = ['test','test2']
+"""
