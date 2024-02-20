@@ -253,7 +253,7 @@ info_extraida=regex_extraction(json_str)
 print(json.dumps(info_extraida,ensure_ascii=False,indent=2,sort_keys=True))
 #%% TEST TXT CON DELIMITADOR '|'-----------------------------
 folder_base_path = os.getcwd()+'/3_text_extracted'
-file_path_input = os.path.join(folder_base_path, '0_procesed_HW.txt')
+file_path_input = os.path.join(folder_base_path, '1_procesed_0_0_Im0_HW.txt')
 with  open(file_path_input) as archivo:
     json_str = archivo.read()
 
