@@ -46,3 +46,8 @@ def delete_images_from_folder(folder_path):
                     os.unlink(file_path)  # Unlink (delete) the file
         except Exception as e:
             print(f"Failed to delete {file_path}. Reason: {e}")
+
+
+def save_to_file(file_path_output, str):
+    with open(file_path_output, "w") as file:
+        file.write(str)
