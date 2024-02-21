@@ -148,7 +148,7 @@ input_folder_path = folder_base_path + '/SAT'
 output_folder_path = folder_base_path + '/3_text_extracted'
 
 # Set file path
-file_name = "40 CSF ELIZABETH HERNANDEZ.pdf" #'CSF 1230673 RAMOS RODRIGUEZ VICTOR RAMON.pdf'
+file_name = 'CSF 1230673 RAMOS RODRIGUEZ VICTOR RAMON.pdf' #"40 CSF ELIZABETH HERNANDEZ.pdf" #'CSF 1230673 RAMOS RODRIGUEZ VICTOR RAMON.pdf'
 input_file_path = os.path.join(input_folder_path, file_name) 
 
 # Define function to extract text
