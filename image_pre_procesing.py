@@ -6,6 +6,7 @@ import os
 import shutil
 import json
 import utils
+import re
 
 folder_base_path = os.getcwd()
 
@@ -27,12 +28,10 @@ POTENTIAL IMPROVEMENTS
 
 # Set folder paths
 # input_folder_path = folder_base_path + "/0_image_raw"
-# output_folder_path = folder_base_path + "/1_image_procesed"
+# output_folder_path = folder_base_path + "/1_image_preprocesed"
 
 
 def process_images(input_folder_path, output_folder_path):
-    # Delete all files in output folder path
-
 
     # Create file name list
     file_name_list = utils.create_file_list(input_folder_path)
@@ -141,5 +140,56 @@ def process_images(input_folder_path, output_folder_path):
         with open(file_name, "w") as json_file:
             json.dump(data, json_file, indent=4)
 
+
+# %% extract text from PDFs
+
+# Set folder paths
+input_folder_path = folder_base_path + '/SAT'
+output_folder_path = folder_base_path + '/3_text_extracted'
+
+# Set file path
+file_name = "40 CSF ELIZABETH HERNANDEZ.pdf" #'CSF 1230673 RAMOS RODRIGUEZ VICTOR RAMON.pdf'
+input_file_path = os.path.join(input_folder_path, file_name) 
+
+# Define function to extract text
+def extract_text(input_file_path):
+    # Initialize a PDF reader object and read the PDF
+    reader = PdfReader(input_file_path)
+
+    # Initialize an empty string to hold all the text
+    text_corpus = ""
+
+    # Iterate through each page in the PDF and extract text
+    for page in reader.pages:
+        text_corpus += page.extract_text() + "\n"  # Adding a newline character
+
+    return text_corpus
+
+# Extract text
+text_corpus = extract_text(input_file_path)
+
+# Save text as txt in output folder path
+new_file_name = input_file_path.split('/')[-1].strip('.pdf') + '.txt'
+new_file_name = file_name.strip('.pdf') + '.txt'
+file_path_output = os.path.join(output_folder_path, new_file_name)
+with open(file_path_output, "w") as file:
+    file.write(text_corpus)
+
+# Define function to check for pdf text
+def pdf_has_text(input_file_path, string_threshold=10):
+    # Extract text
+    text_corpus = extract_text(input_file_path)
+    # Clean the text
+    regex_cleaning_list = [r'\n', r'Escaneado con CamScanner']
+    for ii in range(len(regex_cleaning_list)):
+        regex_pattern = regex_cleaning_list[ii]
+        text_corpus = re.sub(regex_pattern, '', text_corpus)
+    # If the length of the string is cero
+    if len(text_corpus) > string_threshold:
+        return True
+    else:
+        return False
+
+text_in_pdf = pdf_has_text(input_file_path)
 
 # %%
