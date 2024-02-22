@@ -1,7 +1,7 @@
 import os
 
 
-class FileUilts:
+class FileUtils:
     @staticmethod
     def get_paths(folder_path):
         """
@@ -54,3 +54,10 @@ class FileUilts:
     def save(file_path_output, str):
         with open(file_path_output, "w") as file:
             file.write(str)
+
+    def get_original_names(input_folder_path):
+        file_name_list = []
+        for file_name_original in os.listdir(input_folder_path):
+            if file_name_original != ".gitignore" and file_name_original != ".DS_Store":
+                file_name_list.append(file_name_original)
+        return file_name_list
