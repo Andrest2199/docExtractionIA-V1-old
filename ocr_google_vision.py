@@ -2,7 +2,7 @@
 
 import os
 from google.cloud import vision
-import utils
+
 
 folder_base_path = os.getcwd()
 
@@ -134,7 +134,7 @@ def detect_handwriting(path):
                             word_text, word.confidence
                         )
                     )
-
+                    # TODO Change to | instead of \n
                     text_corpus = "\n".join([text_corpus, word_text])
 
                     for symbol in word.symbols:
@@ -154,23 +154,24 @@ def detect_handwriting(path):
 
 
 def ocr_google_vision(image_path, output_folder_path):
+    # TODO separate logic for handwriting and text printed, separate for | every word
     """ " Function to run the Google Vision API to detect handwriting and text in images
     Args:
     image_path: str, path to the image
     output_folder_path: str, path to the output folder
     """
     text_corpus = detect_handwriting(image_path)
-    file_name = os.path.basename(image_path).split(".")[0] + ".txt"
-    file_path_output = os.path.join(output_folder_path, file_name)
-    with open(file_path_output, "w") as file:
+    file_name = os.path.basename(image_path).split(".")[0] + "_HW.txt"
+    file_path_output_hw = os.path.join(output_folder_path, file_name)
+    with open(file_path_output_hw, "w") as file:
         file.write(text_corpus)
     texts = detect_text(image_path)
     text_corpus = ""
     for text in texts:
         text_corpus += f'\n"{text.description}"'
-    file_name = os.path.basename(image_path).split(".")[0] + "_text.txt"
-    file_path_output = os.path.join(output_folder_path, file_name)
-    with open(file_path_output, "w") as file:
+    file_name = os.path.basename(image_path).split(".")[0] + "_text_PT.txt"
+    file_path_output_pt = os.path.join(output_folder_path, file_name)
+    with open(file_path_output_pt, "w") as file:
         file.write(text_corpus)
 
 
