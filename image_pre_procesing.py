@@ -75,7 +75,8 @@ def get_images_from_pdf(file_path, output_folder_path):
                 # Save the image in the output folder
                 FileUtils.save(file_path_output, image_file_object.data)
                 print("Saved file:", file_name_procesed_pdf, "at ", file_path_output)
-                # Method 2 / check pdf structure
+
+        # Method 2 / check pdf structure
         else:
             image_count = 0
             # Get xobject subtype Image
