@@ -11,10 +11,12 @@ import os
 
 def data_cleaning(json_str):
     clear_json = None
+
     #Detectamos si es un txt
     if type(json_str) is list:        
         json_str = dict(zip(range(len(json_str)), json_str))
         json_str = json.dumps(json_str)
+
     #Nos quedamos con caracteres alfanumericos, espacios, y simbología de string JSON
     patron = re.compile(r'[^\w\s":{},\[\]\/]+')
     json_str = patron.sub('', json_str)
@@ -36,7 +38,7 @@ def data_cleaning(json_str):
 
     return normalized_json
 
-def data_extraction(json_data,type_doc,subtype_doc=''):
+def data_extraction(json_data,type_doc):
     """ CAMPOS PRINCIPALES / OPERACIONES
             INCAPACIDADES:
             extras,folio,posible_riesgo,fecha_desde,
@@ -51,54 +53,52 @@ def data_extraction(json_data,type_doc,subtype_doc=''):
             segundo_apellido,codigo_postal    
         """
     contador_tipo = 0
-    contador_subtipo = 0
     campos_variaciones = {
-        "operaciones":{
-            "incapacidades":
-                [#Extras
-                "institucion",
-                "nombre",
-                "institucion",
-                "curp",
-                #Serie
-                "serie",
-                "folio",
-                #Posible riesgo
-                "riesgo",
-                "trabajo",
-                "probable",
-                "probable_riesgo_trabajo",
-                #Rama incapacidad
-                "seguro",
-                "ramo",
-                "ramo_seguro",
-                "ramo_de_seguro",
-                #Fecha desde
-                "partir",
-                "a_partir",
-                "a_partir_de",
-                "inicio",
-                "incapacidad",
-                "inicio_incapacidad",
-                #Fecha desde en otro campo
-                "expedido",
-                "expedido_el",
-                #Dias Incapacidad
-                "numero",
-                "dias",
-                "autorizados",
-                "dias_autorizados_letra",
-                "numero_dias_autorizados",
-                "direccion"],
-            "infonavit":
-                ["numero",
-                 "credito",
-                 "numero_credito",
-                 "fecha",
-                 "aviso",
-                 "suspension",
-                 "aviso_suspension",
-                 ]},
+        "incapacidades":
+            [#Extras
+            "institucion",
+            "nombre",
+            "institucion",
+            "curp",
+            #Serie
+            "serie",
+            "folio",
+            #Posible riesgo
+            "riesgo",
+            "trabajo",
+            "probable",
+            "probable_riesgo_trabajo",
+            #Rama incapacidad
+            "seguro",
+            "ramo",
+            "ramo_seguro",
+            "ramo_de_seguro",
+            #Fecha desde
+            "partir",
+            "a_partir",
+            "a_partir_de",
+            "inicio",
+            "incapacidad",
+            "inicio_incapacidad",
+            #Fecha desde en otro campo
+            "expedido",
+            "expedido_el",
+            #Dias Incapacidad
+            "numero",
+            "dias",
+            "autorizados",
+            "dias_autorizados_letra",
+            "numero_dias_autorizados",
+            "direccion"],
+        "infonavit":
+            ["numero",
+            "credito",
+            "numero_credito",
+            "fecha",
+            "aviso",
+            "suspension",
+            "aviso_suspension",
+            ],
         "codigos_postales":[
             "rfc",
             "curp",
@@ -112,31 +112,16 @@ def data_extraction(json_data,type_doc,subtype_doc=''):
             "codigo_postal"
         ]
     }
-    if type_doc == "operaciones" and subtype_doc =="":
-        return "Debe definir un subtipo de documento"
+    if type_doc == "":
+        return "Debe definir un tipo de documento."
     
-    if type_doc != "" and subtype_doc == "":
-        for tipo in campos_variaciones.keys():
-            if tipo == type_doc:
-                contador_tipo += 1
-                variaciones=campos_variaciones.get(type_doc)
-    elif type_doc != "" and subtype_doc != "":
-        for tipo,subtipo in campos_variaciones.items():
-            if tipo == type_doc:
-                contador_tipo += 1
-                variaciones = campos_variaciones.get(type_doc)
-        for subtipo in variaciones.keys():
-            if subtipo == subtype_doc:
-                contador_subtipo += 1
-                variaciones_final = variaciones.get(subtype_doc)
-        variaciones = variaciones_final
-    else:
-        return 'El tipo de documento viene vacio'
+    for tipo in campos_variaciones.keys():
+        if tipo == type_doc:
+            contador_tipo += 1
+            variaciones=campos_variaciones.get(type_doc)
     
     if contador_tipo == 0:
         return 'No existe el tipo de documento'
-    if contador_subtipo == 0:
-        return 'El subtipo de documento viene vacio o no existe'
     
     for i in range(len(variaciones)):
         variaciones[i] = variaciones[i].upper()
@@ -144,13 +129,9 @@ def data_extraction(json_data,type_doc,subtype_doc=''):
     
     for key,value in informacion_extraida.items():
         if value == "NA":
-            # print ("key no encontrado: "+key)
             patron = re.escape(key)
-            # print ("patron: "+patron)
             exp_compilada = re.compile(patron)
-            # print ("patron compilado: "+str(exp_compilada))
             for keyJson in json_data.keys():
-                # print("keyJSON: "+keyJson)
                 coincidencias = exp_compilada.search(keyJson)
                 if coincidencias != None:
                     informacion_extraida[key]= json_data.get(keyJson)
@@ -196,10 +177,8 @@ def regex_extraction(texto):
                 "SERIE Y FOLIO(.*?)\|",
             "TIPO_INCAPACIDAD":
                 "TIPO INCAPACIDAD\|?(.*?)\|",
-                #"INCAPACIDAD\|(.*?)\|"],
             "RAMO_SEGURO":
                 "RAMO DE SEGURO\|?(.*?)\|",
-                #"SEGURO\|(.*?)\|(.*?)\|"],
             "FECHA_APARTIR":
                 "PARTIR DEL\|?(.*?)\|",
             "FECHA_EXPEDIDO":
