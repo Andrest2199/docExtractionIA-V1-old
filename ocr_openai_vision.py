@@ -2,7 +2,6 @@
 
 import base64
 import json
-import utils
 import os
 from openai import OpenAI
 
