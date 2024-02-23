@@ -70,3 +70,8 @@ class FileUtils:
             if file_name_original not in [".gitignore", ".DS_Store"]:
                 data[str(ii)] = {"file_name_original": file_name_original}
         return data
+
+    @staticmethod
+    def read(file_path):
+        with open(file_path) as file:
+            return file.read()
