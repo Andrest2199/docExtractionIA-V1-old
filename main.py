@@ -26,17 +26,32 @@ results_folder = os.path.join(folder_base_path, "4_results")
 
 
 def process_text_file(text_file, text_extracted_folder, results_folder):
+    """"""
     text_file_path = os.path.join(text_extracted_folder, text_file)
     if text_file.endswith(".txt"):
-        json_str = FileUtils.read(text_file_path)
-        extracted_text = regex_extraction(json_str)
-        json_str = json.dumps(
-            extracted_text,
-            ensure_ascii=True,
-            indent=2,
-            sort_keys=True,
-        )
-        FileUtils.save(results_folder + "/" + text_file, json_str)
+        file_content = FileUtils.read(text_file_path)
+        json_objects = file_content.split(
+            "\n"
+        )  # assuming each JSON object is on a new line
+        # json_str = FileUtils.read(text_file_path)
+        # extracted_text = regex_extraction(json_str)
+        # json_str = json.dumps(
+        #     extracted_text,
+        #     ensure_ascii=True,
+        #     indent=2,
+        #     sort_keys=True,
+        # )
+        # FileUtils.save(results_folder + "/" + text_file, json_str)
+        for json_str in json_objects:
+            if json_str:  # check if the string is not empty
+                extracted_text = regex_extraction(json_str)
+                json_str = json.dumps(
+                    extracted_text,
+                    ensure_ascii=True,
+                    indent=2,
+                    sort_keys=True,
+                )
+                FileUtils.save(results_folder + "/" + text_file, json_str)
     elif text_file.endswith(".json"):
         data_cleaned = data_cleaning(text_file)
         extracted_text = data_extraction(data_cleaned, "incapacidades")
@@ -72,49 +87,53 @@ def main(file_path=str, doctype=str) -> dict:
         )
 
     if doctype == "IMSS":
-        file_name = os.path.basename(file_path)
-        filetype = identify_file(file_name)
-        if filetype == "pdf":
-            has_text = pdf_has_text(file_path)
-            if has_text:
-                print("file has text inside")
-                text_corpus = get_text_from_pdf(file_path)
-                new_file_name = file_name.strip(".pdf") + ".txt"
-                FileUtils.save(text_extracted_folder + "/" + new_file_name, text_corpus)
-                text_extracted = FileUtils.read(
-                    text_extracted_folder + "/" + new_file_name
-                )
-                result = regex_extraction(text_extracted)
-                json_str = json.dumps(
-                    result, ensure_ascii=True, indent=2, sort_keys=True
-                )
-                FileUtils.save(results_folder + "/" + file_name, json_str)
-            else:
-                print("file does not have text inside")
-                get_images_from_pdf(file_path, image_preprocessed_folder)
-            procesed_images_list = FileUtils.create_list(image_preprocessed_folder)
-            process_image_files(
-                procesed_images_list,
-                image_preprocessed_folder,
-                image_improved_folder,
-                text_extracted_folder,
-            )
-            all_text_files = FileUtils.list_text_files(text_extracted_folder)
-            for text_file in all_text_files:
-                process_text_file(text_file, text_extracted_folder, results_folder)
+        document_handler(file_path)
+    if doctype == "INFONAVIT":
+        document_handler(file_path)
+    if doctype == "SAT":
+        document_handler(file_path)
+
+
+def document_handler(file_path):
+    file_name = os.path.basename(file_path)
+    filetype = identify_file(file_name)
+    if filetype == "pdf":
+        has_text = pdf_has_text(file_path)
+        if has_text:
+            print("file has text inside")
+            text_corpus = get_text_from_pdf(file_path)
+            new_file_name = file_name.strip(".pdf") + ".txt"
+            FileUtils.save(text_extracted_folder + "/" + new_file_name, text_corpus)
+            text_extracted = FileUtils.read(text_extracted_folder + "/" + new_file_name)
+            result = regex_extraction(text_extracted)
+            json_str = json.dumps(result, ensure_ascii=True, indent=2, sort_keys=True)
+            FileUtils.save(results_folder + "/" + file_name, json_str)
         else:
-            print("file is not a pdf")
-            process_images(file_path, image_preprocessed_folder)
-            procesed_images_list = FileUtils.create_list(image_preprocessed_folder)
-            process_image_files(
-                procesed_images_list,
-                image_preprocessed_folder,
-                image_improved_folder,
-                text_extracted_folder,
-            )
-            all_text_files = FileUtils.list_text_files(text_extracted_folder)
-            for text_file in all_text_files:
-                process_text_file(text_file, text_extracted_folder, results_folder)
+            print("file does not have text inside")
+            get_images_from_pdf(file_path, image_preprocessed_folder)
+        procesed_images_list = FileUtils.create_list(image_preprocessed_folder)
+        process_image_files(
+            procesed_images_list,
+            image_preprocessed_folder,
+            image_improved_folder,
+            text_extracted_folder,
+        )
+        all_text_files = FileUtils.list_text_files(text_extracted_folder)
+        for text_file in all_text_files:
+            process_text_file(text_file, text_extracted_folder, results_folder)
+    else:
+        print("file is not a pdf")
+        process_images(file_path, image_preprocessed_folder)
+        procesed_images_list = FileUtils.create_list(image_preprocessed_folder)
+        process_image_files(
+            procesed_images_list,
+            image_preprocessed_folder,
+            image_improved_folder,
+            text_extracted_folder,
+        )
+        all_text_files = FileUtils.list_text_files(text_extracted_folder)
+        for text_file in all_text_files:
+            process_text_file(text_file, text_extracted_folder, results_folder)
 
 
 # %% Run main function
@@ -124,6 +143,8 @@ if __name__ == "__main__":
     FileUtils.delete_from_folder(image_improved_folder)
     FileUtils.delete_from_folder(text_extracted_folder)
     FileUtils.delete_from_folder(results_folder)
+    """
+    """
     # get the list of files unprocessed for IMSS
     raw_imss_list = FileUtils.create_list(os.path.join(image_raw_folder, "IMSS"))
     # get the file paths for every image inside imss folder
@@ -138,5 +159,11 @@ if __name__ == "__main__":
     for file in raw_imss_list:
         file = os.path.join(imss_files_path, file)
         main(file, "IMSS")
+    """"
+    # get the list of file unprocessed for INFONAVIT
+    raw_infonavit_list = FileUtils.create_list(
+        os.path.join(image_raw_folder, "INFONAVIT")
+    )
+    """
 
 # %%
