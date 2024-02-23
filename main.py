@@ -25,12 +25,52 @@ text_extracted_folder = os.path.join(folder_base_path, "3_text_extracted")
 results_folder = os.path.join(folder_base_path, "4_results")
 
 
+def process_text_file(text_file, text_extracted_folder, results_folder):
+    text_file_path = os.path.join(text_extracted_folder, text_file)
+    if text_file.endswith(".txt"):
+        json_str = FileUtils.read(text_file_path)
+        extracted_text = regex_extraction(json_str)
+        json_str = json.dumps(
+            extracted_text,
+            ensure_ascii=True,
+            indent=2,
+            sort_keys=True,
+        )
+        FileUtils.save(results_folder + "/" + text_file, json_str)
+    elif text_file.endswith(".json"):
+        data_cleaned = data_cleaning(text_file)
+        extracted_text = data_extraction(data_cleaned, "incapacidades")
+
+
+def process_image_files(
+    procesed_images_list,
+    image_preprocessed_folder,
+    image_improved_folder,
+    text_extracted_folder,
+):
+    for image in procesed_images_list:
+        images_path = os.path.join(image_preprocessed_folder, image)
+        # improve image quality
+        improve_image_quality(images_path, os.path.join(image_improved_folder, image))
+    improved_images_list = FileUtils.create_list(image_improved_folder)
+    for image in improved_images_list:
+        # apply ocr openai vision
+        images_path = os.path.join(image_improved_folder, image)
+        ocr_openai_vision(
+            images_path,
+            text_extracted_folder,
+        )
+        # apply ocr google vision
+        ocr_google_vision(images_path, text_extracted_folder)
+
+
 # %% Main function
 def main(file_path=str, doctype=str) -> dict:
     if doctype not in ["IMSS", "ISSTE", "SAT"]:
         raise ValueError(
             "Document type not recognized. please provide a document type: IMSS, ISSTE, SAT"
         )
+
     if doctype == "IMSS":
         file_name = os.path.basename(file_path)
         filetype = identify_file(file_name)
@@ -52,80 +92,29 @@ def main(file_path=str, doctype=str) -> dict:
             else:
                 print("file does not have text inside")
                 get_images_from_pdf(file_path, image_preprocessed_folder)
-                # improve images
-                procesed_images_list = FileUtils.create_list(image_preprocessed_folder)
-                for image in procesed_images_list:
-                    images_path = os.path.join(image_preprocessed_folder, image)
-                    # improve image quality
-                    improve_image_quality(
-                        images_path, os.path.join(image_improved_folder, image)
-                    )
-                improved_images_list = FileUtils.create_list(image_improved_folder)
-                for image in improved_images_list:
-
-                    # apply ocr openai vision
-                    images_path = os.path.join(image_preprocessed_folder, image)
-
-                    ocr_openai_vision(
-                        images_path,
-                        text_extracted_folder,
-                    )
-                    # apply ocr google vision
-                    ocr_google_vision(images_path, text_extracted_folder)
-                all_text_files = FileUtils.list_text_files(text_extracted_folder)
-                for text_file in all_text_files:
-                    text_file_path = os.path.join(text_extracted_folder, text_file)
-                    if text_file.endswith(".txt"):
-                        json_str = FileUtils.read(text_file_path)
-                        extracted_text = regex_extraction(json_str)
-                        json_str = json.dumps(
-                            extracted_text,
-                            ensure_ascii=True,
-                            indent=2,
-                            sort_keys=True,
-                        )
-                        FileUtils.save(results_folder + "/" + text_file, json_str)
-                    elif text_file.endswith(".json"):
-                        data_cleaned = data_cleaning(text_file)
-                        extracted_text = data_extraction(data_cleaned, "incapacidades")
-
+            procesed_images_list = FileUtils.create_list(image_preprocessed_folder)
+            process_image_files(
+                procesed_images_list,
+                image_preprocessed_folder,
+                image_improved_folder,
+                text_extracted_folder,
+            )
+            all_text_files = FileUtils.list_text_files(text_extracted_folder)
+            for text_file in all_text_files:
+                process_text_file(text_file, text_extracted_folder, results_folder)
         else:
             print("file is not a pdf")
             process_images(file_path, image_preprocessed_folder)
             procesed_images_list = FileUtils.create_list(image_preprocessed_folder)
-            for image in procesed_images_list:
-                images_path = os.path.join(image_preprocessed_folder, image)
-
-                # improve image quality
-                improve_image_quality(
-                    images_path, os.path.join(image_improved_folder, image)
-                )
-            improved_images_list = FileUtils.create_list(image_improved_folder)
-            for image in improved_images_list:
-                # apply ocr openai vision
-                images_path = os.path.join(image_improved_folder, image)
-                ocr_openai_vision(
-                    images_path,
-                    text_extracted_folder,
-                )
-                # apply ocr google vision
-                ocr_google_vision(images_path, text_extracted_folder)
+            process_image_files(
+                procesed_images_list,
+                image_preprocessed_folder,
+                image_improved_folder,
+                text_extracted_folder,
+            )
             all_text_files = FileUtils.list_text_files(text_extracted_folder)
             for text_file in all_text_files:
-                text_file_path = os.path.join(text_extracted_folder, text_file)
-                if text_file.endswith(".txt"):
-                    json_str = FileUtils.read(text_file_path)
-                    extracted_text = regex_extraction(json_str)
-                    json_str = json.dumps(
-                        extracted_text,
-                        ensure_ascii=True,
-                        indent=2,
-                        sort_keys=True,
-                    )
-                    FileUtils.save(results_folder + "/" + text_file, json_str)
-                elif text_file.endswith(".json"):
-                    data_cleaned = data_cleaning(text_file)
-                    extracted_text = data_extraction(data_cleaned, "incapacidades")
+                process_text_file(text_file, text_extracted_folder, results_folder)
 
 
 # %% Run main function
