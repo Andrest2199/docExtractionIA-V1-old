@@ -5,7 +5,7 @@ from PIL import Image
 import os
 import shutil
 import json
-from file_utils import FileUtils
+from utils.file_utils import FileUtils
 import re
 
 folder_base_path = os.getcwd()
@@ -52,7 +52,7 @@ def pdf_has_text(file_path, string_threshold=10):
         return False
 
 
-def get_images_from_pdf(file_path, output_folder_path):
+def get_images_from_pdf(file_path=str, output_folder_path=str):
     file_name_procesed = os.path.basename(file_path).strip(".pdf") + "_procesed"
     # Create image file path input
     # Initialize a PdfReader object
