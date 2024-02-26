@@ -2,9 +2,9 @@
 
 import base64
 import json
-import utils
 import os
 from openai import OpenAI
+from utils.json_handler import JsonHandler
 
 # OpenAI API Key
 OpenAI.api_key = os.environ["OPENAI_API_KEY"]
@@ -73,13 +73,11 @@ def ocr_openai_vision(image_path, output_folder):
     json_string = response.choices[0].message.content
     json_string = json_string.replace("```json\n", "").replace("\n```", "")
 
-    # Save json data
-    print(json_string)
-    json_data = json.loads(json_string)
+    json_data = JsonHandler.to_dict(json_string) 
     file_extension = image_path.split(".")[-1]
-    json_file_name = image_path.split("/")[-1].replace(f".{file_extension}", ".json")
+    json_file_name = image_path.split("/")[-1].replace(f".{file_extension}", ".json") # add method of ocr
 
-    with open(output_folder + "/" + json_file_name, "w") as file:
+    with open(output_folder + "/" + json_file_name, "w") as file: # call utils function
         json.dump(json_data, file, indent=4)
 
 
