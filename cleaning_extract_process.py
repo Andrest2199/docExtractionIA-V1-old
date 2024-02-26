@@ -55,6 +55,7 @@ def data_cleaning(json_str):
 
 
 def data_extraction(json_data, type_doc):
+    print(type_doc)
     """CAMPOS PRINCIPALES / OPERACIONES
         INCAPACIDADES:
         extras,folio,posible_riesgo,fecha_desde,
