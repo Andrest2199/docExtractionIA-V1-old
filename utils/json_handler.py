@@ -2,6 +2,7 @@ import json
 class JsonHandler:
     @classmethod
     def to_dict(self,json_string=str) -> dict:
+        """Converts a JSON string to a dictionary with two methods"""
         try:
             json_data = json.loads(str(json_string))
         except json.JSONDecodeError:
@@ -16,6 +17,7 @@ class JsonHandler:
     @staticmethod
     def build_dictionary(json_string=str) -> dict:
         new_json = {}
+        json_string = (str(json_string))
         if json_string.startswith("{") and json_string.endswith("}"):
             json_string = json_string.replace("{", "").replace("}", "")
             json_string = json_string.replace("\n", "").replace("\t", "")
