@@ -1,9 +1,9 @@
 import os
-
+import json
 
 class FileUtils:
     @staticmethod
-    def get_paths(folder_path):
+    def get_paths( folder_path):
         """
         Get all file paths in a folder, ignoring .DS_Store and .gitignore files
         """
@@ -60,6 +60,7 @@ class FileUtils:
         else:
             with open(file_path_output, "wb") as file:
                 file.write(data)
+        return file_path_output
 
     @staticmethod
     def get_original_names(input_folder_path):
@@ -75,3 +76,4 @@ class FileUtils:
     def read(file_path):
         with open(file_path) as file:
             return file.read()
+    
