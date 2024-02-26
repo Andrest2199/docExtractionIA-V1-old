@@ -1,8 +1,9 @@
 # %% openai vision
 import json
-import utils
+from utils.file_utils import FileUtils
 import os
 from openai import OpenAI
+import utils.utils as utils
 
 # OpenAI API Key
 OpenAI.api_key = os.environ["OPENAI_API_KEY"]
@@ -13,6 +14,7 @@ https://platform.openai.com/docs/guides/vision
 
 TODO:
 1) Modify prompt to include a few examples of desired output
+2) Reduce token usage
 """
 
 
@@ -26,11 +28,11 @@ def ocr_openai_vision(image_path, output_folder, data_inject_folder):
     doc_count = 0
     json_count = 0
     # Retrieve files from 'Data Inject'
-    all_data_inject_files = utils.create_file_list(data_inject_folder)
+    all_data_inject_files = FileUtils.create_list(data_inject_folder)
     for file in all_data_inject_files:
         if file.endswith(".txt"):
             input_json_list.append(
-                utils.read_file(os.path.join(data_inject_folder, file))
+                FileUtils.read(os.path.join(data_inject_folder, file))
             )
             json_count += 1
         elif file.endswith(".jpeg") or file.endswith(".jpg"):
@@ -110,8 +112,9 @@ folder_base_path = os.getcwd()
 image_improved_folder = folder_base_path + "/2_image_improved"
 text_extracted_folder = folder_base_path + "/3_text_extracted"
 data_inject_folder = folder_base_path + "/data_inject"
+image_raw_folder = folder_base_path + "/0_image_raw"
 
-test_file = os.path.join(image_improved_folder, "7_procesed.jpeg")
+test_file = os.path.join(image_raw_folder, "7_procesed.jpg")
 
 ocr_openai_vision(test_file, text_extracted_folder, data_inject_folder)
 #%%
