@@ -22,7 +22,7 @@ TODO:
 
 
 # %% Define functions
-def openai_recognition(file_path, output_folder, data_inject_folder):
+def chat_completion_cleaning(file_path, output_folder, data_inject_folder):
     """
     Receives the extracted text to process and returns a JSON with the relevant fields.
     """
@@ -119,7 +119,7 @@ def openai_recognition(file_path, output_folder, data_inject_folder):
         f".{file_extension}", ".json"
     )  # add _cleaning or chat or whatever
     # TODO: call function to open
-    with open(output_folder + "/" + json_file_name, "w") as file:
+    with open(output_folder + "/" + json_file_name + "_completion", "w") as file:
         json.dump(json_data, file, indent=4)
 
     tokens_count_by_gpt = response.usage.prompt_tokens
