@@ -11,7 +11,7 @@ from improve_image_quality import improve_image_quality
 from ocr_openai_vision import ocr_openai_vision
 from ocr_google_vision import ocr_google_vision
 from cleaning_extract_process import data_cleaning, data_extraction, regex_extraction
-from ocr_openai_chat_completion import openai_recognition
+from ocr_openai_chat_completion import chat_completion_cleaning
 from utils.file_utils import FileUtils
 import os
 
@@ -50,7 +50,7 @@ def process_text_file(text_file, text_extracted_folder, results_folder, doctype)
             indent=2,
             sort_keys=True,
         )
-        FileUtils.save(results_folder + "/" + text_file, json_str)
+        FileUtils.save(results_folder + "/" + text_file + "_regex", json_str)
         return json_str, ocr_method, extraction_method
 
         # for json_str in json_objects:
@@ -69,7 +69,10 @@ def process_text_file(text_file, text_extracted_folder, results_folder, doctype)
         ocr_method = "Openai"
         data_cleaned = data_cleaning(text_file)
         extracted_text = data_extraction(data_cleaned, operation)
-        extraction_method = "text_extraction"
+        FileUtils.save(results_folder + "/" + text_file + "_cleaning", extracted_text)
+        data_cleaned = chat_completion_cleaning(text_file)
+        extracted_text = data_extraction(data_cleaned, operation)
+        extraction_method = "chat_completions"
         return extracted_text, ocr_method, extraction_method
 
 
