@@ -24,6 +24,7 @@ TODO:
 
 # %% Define functions
 def chat_completion_cleaning(file_path, output_folder, data_inject_folder):
+    print(f"Processing text file: {file_path}")
     """
     -> text_extracted -> result 
     Receives the extracted text to process and returns a JSON with the relevant fields.
@@ -69,7 +70,6 @@ def chat_completion_cleaning(file_path, output_folder, data_inject_folder):
     # Set content system prompt
     system_prompt.append({"type": "text", "text": context_data_inyection})
 
-    print(f"Processing text file: {file_path}")
     # Set user request
     user_prompt.append(
         {

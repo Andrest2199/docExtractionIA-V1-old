@@ -221,7 +221,7 @@ img.save("redacted-{}".format(documentName))
 
 # Create function to extract text corpus and identify fields in forms
 def extract_text_from_image(image_path: str) -> str:
-
+    print("Extracting text from image with AWS...")
     # Amazon Textract client
     textract = boto3.client("textract")
 
@@ -243,6 +243,7 @@ def extract_text_from_image(image_path: str) -> str:
 
 # Analyze document and create dictionary with fields
 def anlyse_text_and_create_dict(image_path: str) -> dict:
+    print("Analyzing text and creating dictionary with AWS...")
 
     # Call Amazon Textract / analyze document
     with open(image_path, "rb") as document:
