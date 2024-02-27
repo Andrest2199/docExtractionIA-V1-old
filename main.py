@@ -29,64 +29,50 @@ results_folder = os.path.join(folder_base_path, "4_results")
 data_inject_folder = os.path.join(folder_base_path, "data_inject")
 
 
-def process_text_file(text_file, doctype):
+def process_text_file(text_file, doctype, extraction_method):
     text_file = os.path.join(text_extracted_folder, text_file)
-    """
-    -> text extracted -> results
-    """
     filename = os.path.basename(text_file)
-    # if doctype == "IMSS":
-    #     operation = "incapacidades"
-    # elif doctype == "INFONAVIT":
-    #     operation = "infonavit"
-    # elif doctype == "SAT":
-    #     operation = "codigos_postales"
     
     text_file_path = os.path.join(text_extracted_folder, text_file)
-    if text_file.endswith(".txt"):
-        # ocr_method = "google vision"
-        file_content = FileUtils.read(text_file_path)
-        # file_content = file_content.split(
-        #     "\n"
-        # )  # assuming each JSON object is on a new line
-        # json_str = FileUtils.read(file_content[0])
-
-        # regex method
+    # if text_file.endswith(".txt"):
+    file_content = FileUtils.read(text_file_path)
+        # entity_methods = ["regex", "chat_completions", "openai"]
+        # for extraction_method in entity_methods:
+            
+            # regex method
+    if extraction_method == "regex":
         extracted_text = regex_extraction(file_content)
-        extraction_method = "regex"
-        json_str = json.dumps(
-            extracted_text,
-            ensure_ascii=True,
-            indent=2,
-            sort_keys=True,
-        )
+        json_str = json.dumps(extracted_text,ensure_ascii=True,indent=2,sort_keys=True)
         FileUtils.save(results_folder + "/" + "_regex" + filename + ".json", json_str)
-
-            #chat completions method
-        data_cleaned = chat_completion_cleaning(text_file, results_folder, data_inject_folder)
-        extracted_text = data_extraction(data_cleaned, doctype)
+        return json_str, extraction_method
+    #chat completions method
+    elif extraction_method == "chat_completions":
+        extracted_text = chat_completion_cleaning(text_file, results_folder, data_inject_folder)
+        # extracted_text = data_extraction(data_cleaned, doctype)
         extraction_method = "chat_completions"
         print("extracted text", extracted_text)
         FileUtils.save(results_folder + "/" + "_completions" + filename, json.dumps(extracted_text))
-        # openai method
-        dictionary_1 = {
-        "DIAS_AUTORIZADOS": "SETE",
-        "FECHA_APARTIR": "06/11/2023",
-        "FECHA_EXPEDIDO": "08/11/2023",
-        "PROBABLE_RIESGO_TRABAJO": "NO",
-        "RAMO_SEGURO": "ENFERMEDAD GENERAL",
-        "SERIE_FOLIO": "VZ948810",
-        "TIPO_INCAPACIDAD": "INICIAL",
-    }
-        text_extracted_1 = FileUtils.read(data_inject_folder + "/0_procesed_HW.txt")
-        text_extracted_2 = FileUtils.read(data_inject_folder + "/0_procesed_text_PT.txt")
-        text_extracted_3 = FileUtils.read(data_inject_folder + "/2_procesed_text_PT.txt")
-        dictionary_1 = FileUtils.read(data_inject_folder + "/result_1_2.txt")
-        dictionary_2 = FileUtils.read(data_inject_folder + "/result_1.txt")
-        dictionary_3 = FileUtils.read(data_inject_folder + "/result_3.txt")
-        extracted_text = recognition_openai(text_extracted_1, text_extracted_2, text_extracted_3, dictionary_1, dictionary_2, dictionary_3, file_content)
         return extracted_text, extraction_method
-
+    
+    # openai method
+    # elif extraction_method == "openai":
+    #     dictionary_1 = {
+    #     "DIAS_AUTORIZADOS": "SETE",
+    #     "FECHA_APARTIR": "06/11/2023",
+    #     "FECHA_EXPEDIDO": "08/11/2023",
+    #     "PROBABLE_RIESGO_TRABAJO": "NO",
+    #     "RAMO_SEGURO": "ENFERMEDAD GENERAL",
+    #     "SERIE_FOLIO": "VZ948810",
+    #     "TIPO_INCAPACIDAD": "INICIAL",
+    # }
+    #     text_extracted_1 = FileUtils.read(data_inject_folder + "/0_procesed_HW.txt")
+    #     text_extracted_2 = FileUtils.read(data_inject_folder + "/0_procesed_text_PT.txt")
+    #     text_extracted_3 = FileUtils.read(data_inject_folder + "/2_procesed_text_PT.txt")
+    #     dictionary_1 = FileUtils.read(data_inject_folder + "/result_1_2.txt")
+    #     dictionary_2 = FileUtils.read(data_inject_folder + "/result_1.txt")
+    #     dictionary_3 = FileUtils.read(data_inject_folder + "/result_3.txt")
+    #     extracted_text = recognition_openai(text_extracted_1, text_extracted_2, text_extracted_3, dictionary_1, dictionary_2, dictionary_3, file_content)
+    #     return extracted_text, extraction_method
         # for json_str in json_objects:
         #     if json_str:  # check if the string is not empty
         #         extracted_text = regex_extraction(json_str)
@@ -101,24 +87,31 @@ def process_text_file(text_file, doctype):
         # return json_str, ocr_method, extraction_method
     
 
-    elif text_file.endswith(".json"):
+    # elif text_file.endswith(".json"):
+        # entity_methods = ["cleaning", "chat_completions_cleaning", "openai"]
         file_content = FileUtils.read(text_file)
-        # ocr_method = "Openai"
-        #cleaning method
+        # for extraction_method in entity_methods:
+
+            #cleaning method
+    if extraction_method == "cleaning":
         data_cleaned = data_cleaning(file_content)
         extracted_text = data_extraction(data_cleaned, doctype)
         extracted_text = json.dumps(extracted_text, ensure_ascii=True, indent=2, sort_keys=True)
         FileUtils.save(results_folder + "/" + "_cleaning" + filename, extracted_text)
+        return extracted_text, extraction_method
 
-        #chat completions method
-        data_cleaned = chat_completion_cleaning(text_file, results_folder, data_inject_folder)
-        extracted_text = data_extraction(data_cleaned, doctype)
-        print("extracted text", extracted_text)
-        extraction_method = "chat_completions"
-        extracted_text = json.dumps(extracted_text, ensure_ascii=True, indent=2, sort_keys=True)
-        FileUtils.save(results_folder + "/" + "_completions" + filename , extracted_text)
+            #chat completions method
+    # elif extraction_method == "chat_completions_cleaning":
+    #     data_cleaned = chat_completion_cleaning(text_file, results_folder, data_inject_folder)
+    #     extracted_text = data_extraction(data_cleaned, doctype)
+    #     print("extracted text", extracted_text)
+    #     extraction_method = "chat_completions"
+    #     extracted_text = json.dumps(extracted_text, ensure_ascii=True, indent=2, sort_keys=True)
+    #     FileUtils.save(results_folder + "/" + "_completions" + filename , extracted_text)
+    #     return extracted_text, extraction_method
 
-        # openai method
+            # openai method
+    elif extraction_method == "openai_entity_extraction":
         dictionary_1 = {
         "DIAS_AUTORIZADOS": "SETE",
         "FECHA_APARTIR": "06/11/2023",
@@ -174,7 +167,7 @@ def process_image_files(
             FileUtils.save(
                 text_extracted_folder + "/"  + "_AWS_extract.txt", text_corpus
             )
-        if ocr_method == "aws_comprehend":
+        if ocr_method == "aws_parser":
             fields = anlyse_text_and_create_dict(images_path)
             FileUtils.save(
                 text_extracted_folder + "/"  + "_AWS_analyzed.txt",
@@ -196,10 +189,11 @@ def document_handler(file_path=str, doctype=str, ocr_method=str):
             text_extracted = FileUtils.save(
                 text_extracted_folder + "/" + new_file_name, text_corpus
             )
-            result, entity_method = process_text_file(
-                text_extracted , doctype
-            )
-            return ocr_method, result, entity_method
+            # result, entity_method = process_text_file(
+            #     text_extracted , doctype
+            # )
+            # return ocr_method, result, entity_method
+            return ocr_method
 
         else:
             print("Images inside PDF, retrieving images...")
@@ -210,17 +204,18 @@ def document_handler(file_path=str, doctype=str, ocr_method=str):
                 images_in_pdf,
                 ocr_method
             )
-            all_text_files = FileUtils.list_text_files(text_extracted_folder)
+            # all_text_files = FileUtils.list_text_files(text_extracted_folder)
 
-            for text_file in all_text_files:
-                # try:
-                text_extracted, method = process_text_file(
-                        text_file, doctype
-                    )
-                return ocr_method, text_extracted, method
+            # for text_file in all_text_files:
+            #     # try:
+            #     text_extracted, method = process_text_file(
+            #             text_file, doctype
+            #         )
+                # return ocr_method, text_extracted, method
                 # except Exception as e:
                     # print("Error: ", e)
                     # continue
+            return ocr_method
     else:
         print("File is an Imagetype ")
         process_images(file_path, image_preprocessed_folder)
@@ -229,13 +224,13 @@ def document_handler(file_path=str, doctype=str, ocr_method=str):
             procesed_images_list,
             ocr_method
         )
-        all_text_files = FileUtils.list_text_files(text_extracted_folder)
-        for text_file in all_text_files:
-            text_extracted, method = process_text_file(
-                text_file, doctype
-            )
+        # all_text_files = FileUtils.list_text_files(text_extracted_folder)
+        # for text_file in all_text_files:
+        #     text_extracted, method = process_text_file(
+        #         text_file, doctype
+        #     )
 
-            return ocr_method, text_extracted, method
+        return ocr_method#, text_extracted, method
 
 
 # %% Main function
@@ -251,17 +246,41 @@ def main(file_path=str, doctype=str) -> dict:
         "values": {},
     }
 
-    methods = ["openai", "google", "aws_textract", "aws_comprehend"]
+    methods = ["openai", "google", "aws_textract", "aws_parser"]
     for method in methods:
         # clean_folders()
-        ocr, values, recognition = document_handler(file_path, doctype, method)
-        data["values"] = values
-        data["ocr"] = ocr
-        data["entity_recognition"] = recognition
-        FileUtils.save(
-            f"{results_folder}/{data['name'][:-4]}{data['ocr']}.json",
-            json.dumps(data, ensure_ascii=True, indent=2, sort_keys=True),
-        )
+        ocr = document_handler(file_path, doctype, method)
+        all_text_files = FileUtils.list_text_files(text_extracted_folder)
+
+        for text_file in all_text_files:
+            if text_file.endswith(".txt"):
+                entity_methods = ["regex", "chat_completions", "opena_entity_extraction"]
+                
+                for method in entity_methods:
+
+                    values, recognition = process_text_file(
+                    text_file, doctype, method
+                    )
+                    data["values"] = values
+                    data["ocr"] = ocr
+                    data["entity_recognition"] = recognition
+                    FileUtils.save(
+                        f"{results_folder}/{data['name'][:-4]}_{data['ocr']}_{data['entity_recognition']}.json",
+                        json.dumps(data, ensure_ascii=True, indent=2, sort_keys=True),
+                    )
+            if text_file.endswith(".json"):
+                entity_methods = ["cleaning", "chat_completions", "opena_entity_extraction"]
+                for method in entity_methods:
+                    values, recognition = process_text_file(
+                    text_file, doctype, method
+                    )
+                    data["values"] = values
+                    data["ocr"] = ocr
+                    data["entity_recognition"] = recognition
+                    FileUtils.save(
+                        f"{results_folder}/{data['name'][:-4]}_{data['ocr']}_{data['entity_recognition']}.json",
+                        json.dumps(data, ensure_ascii=True, indent=2, sort_keys=True),
+                    )
 
     print("result", data)
     return data
