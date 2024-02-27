@@ -160,9 +160,10 @@ def data_extraction(json_data, type_doc):
     return informacion_extraida
 
 
-def regex_extraction(texto):
+def regex_extraction(texto=str)->dict:
+    """Recibe txt de google vision
+    IMSS"""
     # TODO: ADD trycatch for logging
-    print("texto a procesar", texto)
     # Detectar si hay '|'
     boolBarra = True
     if "|" not in texto and '"' in texto:

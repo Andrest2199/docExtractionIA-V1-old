@@ -1,5 +1,6 @@
 # %% entity recognition openAI
 
+import json
 from openai import OpenAI
 import os
 
@@ -75,6 +76,7 @@ dictionary_three
 # %%
 def recognition_openai(text_extracted_1, text_extracted_2, text_extracted_3, dictionary_one, dictionary_2, dictionary_3, unseen_text):
     """
+    IMSS
     text extracted -> dic_result
     text_string_one-> aws_extract
     text_string_two-> google_vision_extract
@@ -107,9 +109,8 @@ def recognition_openai(text_extracted_1, text_extracted_2, text_extracted_3, dic
                 "content": f"Extre la información requerida del sigueinte texto string nuevo: /n/n {text_string_unseen}",
             },
         ],
-        response_format="json",
     )
 
-    print(completion.choices[0].message)
+    completion = completion.choices[0].message.content
     # TODO: json.loads()
-    return completion.choices[0].message
+    return json.dumps(completion)

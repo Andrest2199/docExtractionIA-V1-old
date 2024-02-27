@@ -2,6 +2,7 @@ import json
 class JsonHandler:
     @classmethod
     def to_dict(self,json_string=str) -> dict:
+        print("Converting JSON to dictionary...", json_string)
         """Converts a JSON string to a dictionary with two methods"""
         try:
             json_data = json.loads(str(json_string))
