@@ -1,4 +1,4 @@
-# %% pre process data data%%
+# %% pre process data%%
 import json
 import unicodedata
 import re
@@ -10,33 +10,21 @@ from utils.json_handler import JsonHandler
         - Juntar funciones o definir union data_cleaning,data_extraction,regex_extraction
         """
 
-
 def data_cleaning(json_str):
-    clear_json = None
-
-    # Detectamos si es un txt
+    clear_json = {}
+    # Detectamos si es un lista
     if type(json_str) is list:
         json_str = dict(zip(range(len(json_str)), json_str))
         json_str = json.dumps(json_str)
 
     # Nos quedamos con caracteres alfanumericos, espacios, y simbología de string JSON
-    patron = re.compile(r'[^\w\s":{},\[\]\/]+')
+    patron = re.compile(r'[^\w\s":{},\[\]\/\\]+')
     json_str = patron.sub("", json_str)
+    patron = re.compile(r'\\u([\d\w]{4})')
+    json_str = patron.sub(lambda x: chr(int(x.group(1), 16)), json_str)
     json_str = json_str.strip()
     json_str = json_str.upper()
-    decoded_json = JsonHandler.to_dict(json_str)
-    # decoded_json = json.loads(json_str)
-
-    for key in decoded_json.keys():
-        if key.find(" ") > 0:
-            key_value = key.replace(" ", "_")
-            clear_json = {
-                clave if clave != key else key_value: valor
-                for clave, valor in decoded_json.items()
-            }
-
-    if clear_json == None:
-        clear_json = decoded_json
+    decoded_json = JsonHandler.to_dict(json_str) 
 
     normalized_json = {
         (
@@ -48,66 +36,80 @@ def data_cleaning(json_str):
             if unicodedata.is_normalized("NFKD", str(value))
             else unicodedata.normalize("NFKD", str(value))
         )
-        for key, value in clear_json.items()
+        for key, value in decoded_json.items()
     }
 
-    return normalized_json
+    for key, value in normalized_json.items():
+        if " " in key:
+            normalized_key = key.replace(" ", "_")
+            clear_json[normalized_key] = value
+        else:
+            clear_json[key] = value
+
+    if clear_json == {}:
+        print (f'There are no white space or Can\'t replace in keys')
+        clear_json = normalized_json
+
+    return clear_json
 
 
 def data_extraction(json_data, type_doc):
-    """CAMPOS PRINCIPALES / OPERACIONES
-        INCAPACIDADES:
-        extras,folio,posible_riesgo,fecha_desde,
-        dias_incapacidad,rama_incapacidad
-        tipo_incapacidad : #EG,MA,AT se obtiene de rama_incapacidad
-        INFONAVIT:
-        numero_credito,
-        fecha,
-        aviso [titulo de doc]
-    CAMPOS PRINCIPALES / CODIGOS POSTALES
+    """CAMPOS PRINCIPALES
+    IMSS:
+            extras,folio,posible_riesgo,fecha_desde,
+            dias_incapacidad,rama_incapacidad
+            tipo_incapacidad : #EG,MA,AT se obtiene de rama_incapacidad
+    INFONAVIT:
+            numero_credito,
+            fecha,
+            aviso [titulo de doc]
+    SAT
         rfc,curp,nombre,primer_apellido,
         segundo_apellido,codigo_postal
     """
     contador_tipo = 0
     campos_variaciones = {
-        # TODO: cambiar a IMSS, INFONAVTI, SAT
-        "incapacidades": [  # Extras
-            "institucion",
-            "nombre",
-            "institucion",
-            "curp",
-            # Serie
-            "serie",
-            "folio",
-            # Posible riesgo
-            "riesgo",
-            "trabajo",
-            "probable",
-            "probable_riesgo_trabajo",
-            # Rama incapacidad
-            "seguro",
-            "ramo",
-            "ramo_seguro",
-            "ramo_de_seguro",
-            # Fecha desde
-            "partir",
-            "a_partir",
-            "a_partir_de",
-            "inicio",
-            "incapacidad",
-            "inicio_incapacidad",
-            # Fecha desde en otro campo
-            "expedido",
-            "expedido_el",
-            # Dias Incapacidad
-            "numero",
-            "dias",
-            "autorizados",
-            "dias_autorizados_letra",
-            "numero_dias_autorizados",
-            "direccion",
+        "IMSS":[
+            # {"#Extras":
+            #     {"institucion":"",
+            #     "nombre":"",
+            #     "institucion":"",
+            #     "curp":""}},
+            {"#Serie y Folio":
+                {"serie":"",
+                "folio":"",
+                "serie_y_folio":""}},
+            {"#Posible Riesgo":
+                {"riesgo":"",
+                "trabajo":"",
+                "probable":"",
+                "riesgo_trabajo":"",
+                "posible_riesgo":"",
+                "posible_riesgo_trabajo":"",
+                "probable_riesgo_trabajo":""}},
+            {"#Rama Incapacidad":
+                {"seguro":"",
+                "ramo":"",
+                "ramo_seguro":"",
+                "ramo_de_seguro":""}},
+            {"#Fecha desde":
+                {"partir":"",
+                "a_partir":"",
+                "a_partir_de":"",
+                "inicio":"",
+                "incapacidad":"",
+                "inicio_incapacidad":""}},
+            {"#Fecha de Expedido":
+                {"expedido":"",
+                "expedido_el":""}},
+            {"#Dias Incapacidad":
+                {"numero":"",
+                "dias":"",
+                "autorizados":"",
+                "dias_autorizados_letra":"",
+                "numero_dias_autorizados":""}}
         ],
-        "infonavit": [
+        "INFONAVTI": [
             "numero",
             "credito",
             "numero_credito",
@@ -116,7 +118,7 @@ def data_extraction(json_data, type_doc):
             "suspension",
             "aviso_suspension",
         ],
-        "codigos_postales": [
+        "SAT": [
             "rfc",
             "curp",
             "nombre",
@@ -130,40 +132,38 @@ def data_extraction(json_data, type_doc):
         ],
     }
     if type_doc == "":
-        return "Debe definir un tipo de documento."
+        return "You need to defined the type of document."
 
     for tipo in campos_variaciones.keys():
         if tipo == type_doc:
             contador_tipo += 1
-            variaciones = campos_variaciones.get(type_doc)
+            informacion_extraida = campos_variaciones.get(type_doc)
 
     if contador_tipo == 0:
-        return "No existe el tipo de documento"
+        return "There type of document doesn not exist."
 
-    for i in range(len(variaciones)):
-        variaciones[i] = variaciones[i].upper()
-    informacion_extraida = {
-        campo.strip(): (
-            json_data.get(campo).strip() if json_data.get(campo.strip()) else "NA"
-        )
-        for campo in variaciones
-    }
-
-    for key, value in informacion_extraida.items():
-        if value == "NA":
-            patron = re.escape(key)
-            exp_compilada = re.compile(patron)
-            for keyJson in json_data.keys():
-                coincidencias = exp_compilada.search(keyJson)
-                if coincidencias != None:
-                    informacion_extraida[key] = json_data.get(keyJson)
+    for pos in range(len(informacion_extraida)):
+        for main_key,sub_keys in informacion_extraida[pos].items():
+            for sub_key in sub_keys.keys():
+                if json_data.get(sub_key.upper()):
+                    informacion_extraida[pos][main_key][sub_key]=json_data.get(sub_key.upper()).strip() 
+                else:
+                    informacion_extraida[pos][main_key][sub_key]="NA"
+                    patron = re.escape(sub_key.upper())
+                    exp_compilada = re.compile(patron)
+                    for keyJson in json_data.keys():
+                        coincidencias = exp_compilada.search(keyJson)
+                        if coincidencias != None:
+                            informacion_extraida[pos][main_key][sub_key]= json_data.get(keyJson)
+                            break
 
     return informacion_extraida
 
 
-def regex_extraction(texto):
+def regex_extraction(texto=str)->dict:
+    """Recibe txt de google vision
+    IMSS"""
     # TODO: ADD trycatch for logging
-    print("texto a procesar", texto)
     # Detectar si hay '|'
     boolBarra = True
     if "|" not in texto and '"' in texto:
@@ -171,8 +171,11 @@ def regex_extraction(texto):
         texto = texto.strip()
         texto = texto.split('"')
         texto = texto[1].replace("\n", "|")
-    else:
+    elif "\n" in texto:
         texto = texto.replace("\n", "|")
+    else:
+        texto = texto.replace(" ", "|")
+    
     # Formatear string
     texto = "".join(
         c
@@ -180,8 +183,8 @@ def regex_extraction(texto):
         if unicodedata.category(c) != "Mn"
     )
     texto = texto.upper()
+    print (f'texto:{texto}')
     # Definir el patrón regex
-    # patron_regex = re.compile(r"(?:TIPO\|INCAPACIDAD\|(.*?)\|).*?(?:RAMO\|DE\|SEGURO\|(.*?)\|(.*?)\|).*?(?:RIESGO\|TRABAJO\|(.*?)\|).*?(?:DIAS\|AUTORIZADOS\|\(\|LETRA\|\)\|(.*?)\|).*?(?:SERIE\|Y\|FOLIO\|(.*?)\|).*?(?:PARTIR\|DEL\|(.*?)\|).*?(?:EXPEDIDO\|EL\|(.*?)\|)")
     arr_coincidencias = {}
     patrones_regulares = {
         "SERIE_FOLIO": "SERIE\|Y\|FOLIO\|(.*?)\|",
@@ -250,7 +253,7 @@ info_extraida=regex_extraction(json_str)
 print(json.dumps(info_extraida,ensure_ascii=False,indent=2,sort_keys=True))
 #%% TEST TXT CON DELIMITADOR '|'-----------------------------
 folder_base_path = os.getcwd()+'/3_text_extracted'
-file_path_input = os.path.join(folder_base_path, '1_procesed_0_0_Im0_HW.txt')
+file_path_input = os.path.join(folder_base_path, '695844 MACIAS LARA JORGE ARMANDO VZ 948810 ok.jpg_procesed.jpeg_AWS_extract.txt')
 with  open(file_path_input) as archivo:
     json_str = archivo.read()
 
@@ -258,16 +261,17 @@ info_extraida=regex_extraction(json_str)
 print(json.dumps(info_extraida,ensure_ascii=False,indent=2,sort_keys=True))
 #%% TEST JSON------------------------------------------------
 folder_base_path = os.getcwd()+'/3_text_extracted'
-file_path_input = os.path.join(folder_base_path, '01.json')
+file_path_input = os.path.join(folder_base_path, '734031 GONZALEZ FRANCO BRISEIDA VL 865277 OK_procesed_0_1_X2.jpeg_AWS_analyzed.txt')
+
 with  open(file_path_input) as archivo:
     json_str = archivo.read()
 
 #Limpieza del JSON
 data_clean=data_cleaning(json_str)
 #Extracción de información
-informacion_extraida = data_extraction(data_clean,'operaciones','incapacidades')
+informacion_extraida = data_extraction(data_clean,'IMSS')
 print("\nInformación extraída:")
-print(json.dumps(informacion_extraida,ensure_ascii=False,indent=2,sort_keys=True))
+print(json.dumps(informacion_extraida,ensure_ascii=False,indent=2))
 
 
 # %% TEST LIST%%

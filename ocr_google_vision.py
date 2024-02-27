@@ -154,6 +154,7 @@ def detect_handwriting(path):
 
 
 def ocr_google_vision(image_path, output_folder_path):
+    print(f"Running Google Vision API for {image_path}")
     # TODO separate logic for handwriting and text printed, separate for | every word
     """ " Function to run the Google Vision API to detect handwriting and text in images
     Args:
