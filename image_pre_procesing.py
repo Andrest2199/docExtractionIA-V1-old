@@ -52,12 +52,13 @@ def pdf_has_text(file_path, string_threshold=10):
         return False
 
 
-def get_images_from_pdf(file_path=str, output_folder_path=str):
+def get_images_from_pdf(file_path=str, output_folder_path=str) -> list:
     file_name_procesed = os.path.basename(file_path).strip(".pdf") + "_procesed"
     # Create image file path input
     # Initialize a PdfReader object
     reader = PdfReader(file_path)
     # Loop through PDF pages
+    imagepaths_from_pdf = []
     for jj in range(len(reader.pages)):
         print("Page:", jj)
         page = reader.pages[jj]
@@ -73,7 +74,8 @@ def get_images_from_pdf(file_path=str, output_folder_path=str):
                     output_folder_path + "/" + file_name_procesed_pdf
                 )  # TODO: Use os.path.join()
                 # Save the image in the output folder
-                FileUtils.save(file_path_output, image_file_object.data)
+                saved_image = FileUtils.save(file_path_output, image_file_object.data)
+                imagepaths_from_pdf.append(file_path_output)
                 print("Saved file:", file_name_procesed_pdf, "at ", file_path_output)
 
         # Method 2 / check pdf structure
@@ -110,11 +112,13 @@ def get_images_from_pdf(file_path=str, output_folder_path=str):
                         output_folder_path, file_name_procesed_pdf
                     )
                     # Save the image in the output folder
-                    FileUtils.save(file_path_output, image_data)
+                    saved_image = FileUtils.save(file_path_output, image_data)
                     image_count += 1
+                    imagepaths_from_pdf.append(file_path_output)
                     print(
                         "Saved file:", file_name_procesed_pdf, "at ", file_path_output
                     )
+    return imagepaths_from_pdf
 
 
 def process_images(file_path, output_folder_path) -> None:

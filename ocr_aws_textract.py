@@ -20,24 +20,24 @@ pip install amazon-textract-response-parser
 # %% Detect text in images
 
 # Specify path to image
-documentName = folder_base_path + "/0_image_raw/7_procesed.jpg"
+# documentName = folder_base_path + "/0_image_raw/7_procesed.jpg"
 
-# Read document content
-with open(documentName, "rb") as document:
-    imageBytes = bytearray(document.read())
+# # Read document content
+# with open(documentName, "rb") as document:
+#     imageBytes = bytearray(document.read())
 
 # Amazon Textract client
 textract = boto3.client("textract")
 
 # Call Amazon Textract
-response = textract.detect_document_text(Document={"Bytes": imageBytes})
+# response = textract.detect_document_text(Document={"Bytes": imageBytes})
 
 # print(response)
 
 # Print detected text
-for item in response["Blocks"]:
-    if item["BlockType"] == "LINE":
-        print("\033[94m" + item["Text"] + "\033[0m")
+# for item in response["Blocks"]:
+#     if item["BlockType"] == "LINE":
+#         print("\033[94m" + item["Text"] + "\033[0m")
 
 # %%  Extract text in PDFs
 
@@ -214,14 +214,14 @@ img.save("redacted-{}".format(documentName))
 # %% Extract text and create dictionary
 # TODO: call from main function
 # Document
-image_path = (
-    folder_base_path + "/0_image_raw/695844 MACIAS LARA JORGE ARMANDO MI909883 ok.jpeg"
-)
+# image_path = (
+#     folder_base_path + "/0_image_raw/695844 MACIAS LARA JORGE ARMANDO MI909883 ok.jpeg"
+# )
 
 
 # Create function to extract text corpus and identify fields in forms
 def extract_text_from_image(image_path: str) -> str:
-
+    print("Extracting text from image with AWS...")
     # Amazon Textract client
     textract = boto3.client("textract")
 
@@ -243,6 +243,7 @@ def extract_text_from_image(image_path: str) -> str:
 
 # Analyze document and create dictionary with fields
 def anlyse_text_and_create_dict(image_path: str) -> dict:
+    print("Analyzing text and creating dictionary with AWS...")
 
     # Call Amazon Textract / analyze document
     with open(image_path, "rb") as document:
