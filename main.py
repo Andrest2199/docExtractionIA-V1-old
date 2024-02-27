@@ -48,14 +48,13 @@ def process_text_file(text_file, doctype, extraction_method):
     elif extraction_method == "chat_completions":
         extracted_text = chat_completion_cleaning(text_file, results_folder, data_inject_folder)
         # extracted_text = data_extraction(data_cleaned, doctype)
-        extraction_method = "chat_completions"
         print("extracted text", extracted_text)
         FileUtils.save(results_folder + "/" + "_completions" + filename, json.dumps(extracted_text))
         return extracted_text, extraction_method
 
 
             #cleaning method
-    if extraction_method == "cleaning":
+    elif extraction_method == "cleaning":
         data_cleaned = data_cleaning(file_content)
         extracted_text = data_extraction(data_cleaned, doctype)
         extracted_text = json.dumps(extracted_text, ensure_ascii=True, indent=2, sort_keys=True)
@@ -119,7 +118,7 @@ def process_image_files(
         if ocr_method == "aws_parser":
             fields = anlyse_text_and_create_dict(images_path)
             FileUtils.save(
-                text_extracted_folder + "/"  + "_AWS_analyzed.txt",
+                text_extracted_folder + "/"  + "_AWS_analyzed.json",
                 json.dumps(fields, ensure_ascii=True, indent=2, sort_keys=True),
             )
 
@@ -177,18 +176,19 @@ def main(file_path=str, doctype=str) -> dict:
 
     methods = ["openai", "google", "aws_textract", "aws_parser"]
     for method in methods:
-        # clean_folders()
+        clean_folders()
         ocr = document_handler(file_path, doctype, method)
         all_text_files = FileUtils.list_text_files(text_extracted_folder)
 
         for text_file in all_text_files:
+            print("text file", text_file)
             if text_file.endswith(".txt"):
-                entity_methods = ["regex", "chat_completions", "opena_entity_extraction"]
+                entity_methods = ["regex", "chat_completions", "openai_entity_extraction"]
                 
-                for method in entity_methods:
+                for entity_method in entity_methods:
 
                     values, recognition = process_text_file(
-                    text_file, doctype, method
+                    text_file, doctype, entity_method
                     )
                     data["values"] = values
                     data["ocr"] = ocr
@@ -198,10 +198,10 @@ def main(file_path=str, doctype=str) -> dict:
                         json.dumps(data, ensure_ascii=True, indent=2, sort_keys=True),
                     )
             if text_file.endswith(".json"):
-                entity_methods = ["cleaning", "chat_completions", "opena_entity_extraction"]
-                for method in entity_methods:
+                entity_methods = ["cleaning", "chat_completions", "openai_entity_extraction"]
+                for entity_method in entity_methods:
                     values, recognition = process_text_file(
-                    text_file, doctype, method
+                    text_file, doctype, entity_method
                     )
                     data["values"] = values
                     data["ocr"] = ocr
