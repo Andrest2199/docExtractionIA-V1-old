@@ -174,7 +174,7 @@ def process_image_files(
             FileUtils.save(
                 text_extracted_folder + "/"  + "_AWS_extract.txt", text_corpus
             )
-        if ocr_method == "aws_comprehend":
+        if ocr_method == "aws_parser":
             fields = anlyse_text_and_create_dict(images_path)
             FileUtils.save(
                 text_extracted_folder + "/"  + "_AWS_analyzed.txt",
@@ -251,7 +251,7 @@ def main(file_path=str, doctype=str) -> dict:
         "values": {},
     }
 
-    methods = ["openai", "google", "aws_textract", "aws_comprehend"]
+    methods = ["openai", "google", "aws_textract", "aws_parser"]
     for method in methods:
         # clean_folders()
         ocr, values, recognition = document_handler(file_path, doctype, method)
