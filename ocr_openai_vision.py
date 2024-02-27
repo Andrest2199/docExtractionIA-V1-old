@@ -5,7 +5,7 @@ import json
 import os
 from openai import OpenAI
 from utils.json_handler import JsonHandler
-
+from utils.file_utils import FileUtils
 # OpenAI API Key
 OpenAI.api_key = os.environ["OPENAI_API_KEY"]
 
@@ -31,7 +31,7 @@ def encode_image(image_path):
 
 def ocr_openai_vision(image_path, output_folder):
 
-    print(f"Processing image: {image_path}")
+    print(f"Processing image: {image_path} with OpenAI Vision API.")
 
     # Path to your image
     # image_path = folder_base_path + "/1_image_procesed/0_procesed.jpeg"
@@ -72,13 +72,13 @@ def ocr_openai_vision(image_path, output_folder):
     # Extract json content from response
     json_string = response.choices[0].message.content
     json_string = json_string.replace("```json\n", "").replace("\n```", "")
-
-    json_data = JsonHandler.to_dict(json_string) 
+    # json_data = JsonHandler.to_dict(json_string) 
+    json_data = json.loads(json_string)
     file_extension = image_path.split(".")[-1]
     json_file_name = image_path.split("/")[-1].replace(f".{file_extension}", ".json") # add method of ocr
-
-    with open(output_folder + "/" + json_file_name, "w") as file: # call utils function
-        json.dump(json_data, file, indent=4)
+    FileUtils.save(output_folder + "/" + json_file_name, json.dumps(json_data, indent=4))
+    # with open(output_folder + "/" + json_file_name, "w") as file: # call utils function
+        # json.dump(json_data, file, indent=4)
 
 
 # %%
