@@ -18,13 +18,16 @@ TODO:
                   -> ocr_openai_chat.completion.py -> _Complito
 1) Modify prompt to include a few examples of desired output
 2) Modify parameter to detect wich type of document is, so the data correspond to it.
+3) Add bank of results for SAT and INFONAVIT
 """
 
 
 # %% Define functions
 def chat_completion_cleaning(file_path, output_folder, data_inject_folder):
     """
+    -> text_extracted -> result 
     Receives the extracted text to process and returns a JSON with the relevant fields.
+    IMSS
     """
     # Set Data for system from folder 'Data inject'
     user_prompt = []
@@ -59,8 +62,10 @@ def chat_completion_cleaning(file_path, output_folder, data_inject_folder):
         results_count += 1
 
     context_data_inyection += f"\nYou will recive a text by the user.Your task is to read and process the text that user provides and return an output dictionary with the relevant fields and format like the next example."
+    #IMSS context data
     context_data_inyection += '\n"""{\n"DIAS_AUTORIZADOS": STRING,\n"FECHA_APARTIR": DATE STRING,\n"FECHA_EXPEDIDO": DATE STRING,\n"PROBABLE_RIESGO_TRABAJO": SI/NO,\n"RAMO_SEGURO": STRING,\n"SERIE_FOLIO": STRING,\n"TIPO_INCAPACIDAD": STRING\n}"""'
-
+    
+    # TODO: add context_data
     # Set content system prompt
     system_prompt.append({"type": "text", "text": context_data_inyection})
 

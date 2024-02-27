@@ -4,7 +4,7 @@ from utils.file_utils import FileUtils
 import os
 from openai import OpenAI
 import utils.utils as utils
-
+# TODO: remove from main
 # OpenAI API Key
 OpenAI.api_key = os.environ["OPENAI_API_KEY"]
 
