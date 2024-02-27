@@ -1,3 +1,4 @@
+import os
 from PIL import Image
 import numpy as np
 import cv2
@@ -11,6 +12,7 @@ from skimage import io, filters
     https://www.leadtools.com/help/sdk/v21/main/api/deskewing.html
 """
 
+debug = True
 
 def get_skew_angle(cvImage) -> float:
     """ "
@@ -92,21 +94,99 @@ def rotate(
         image, rot_mat, (int(round(height)), int(round(width))), borderValue=background
     )
 
+def get_bounding_boxes(contours, mask, textImg):
+    """
+    Auxiliar function to 
+    Get the bounding boxes of the text regions
+    """
+    # Initialize min and max coordinates
+    min_x, min_y, max_x, max_y = float("inf"), float("inf"), 0, 0
+    cummTheta = 0
+    ct = 0
+
+    for idx in range(len(contours)):
+        x, y, w, h = cv2.boundingRect(contours[idx])
+        mask[y : y + h, x : x + w] = 0
+        cv2.drawContours(mask, contours, idx, (255, 255, 255), -1)
+        r = float(cv2.countNonZero(mask[y : y + h, x : x + w])) / (w * h)
+
+        if r > 0.45 and w > 8 and h > 8:
+            rect = cv2.minAreaRect(contours[idx])
+            box = cv2.boxPoints(rect)
+            box = np.int0(box)
+            # cv2.drawContours(textImg, [box], 0, (0, 0, 255), 2)
+
+            theta = slope(box[0][0], box[0][1], box[1][0], box[1][1])
+            cummTheta += theta
+            ct += 1
+
+            # Update min and max coordinates
+            min_x = min(min_x, x)
+            min_y = min(min_y, y)
+            max_x = max(max_x, x + w)
+            max_y = max(max_y, y + h)
+
+    return min_x, min_y, max_x, max_y, cummTheta, ct
+
+def slope(x1, y1, x2, y2):
+    if x1 == x2:
+        return 0
+    slope = (y2 - y1) / (x2 - x1)
+    theta = np.rad2deg(np.arctan(slope))
+    return theta
+
+def display(img, frameName="OpenCV Image"):
+    if not debug:
+        return
+    h, w = img.shape[0:2]
+    neww = 800
+    newh = int(neww * (h / w))
+    img = cv2.resize(img, (neww, newh))
+    cv2.imshow(frameName, img)
+    cv2.waitKey(0)
 
 def improve_image_quality(input_image_path, output_image_path):
+    filename = os.path.basename(input_image_path)
+    output_image_path = os.path.join(output_image_path, filename)
     raw_image = cv2.imread(input_image_path)
+    
     if raw_image is None:
         print(f"Image {input_image_path} not found")
         return None
-    skewed_angle = get_skew_angle(raw_image)
+
+    # crop image to text region
+    small = cv2.cvtColor(raw_image, cv2.COLOR_BGR2GRAY)
+
+    # find the gradient map
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+    grad = cv2.morphologyEx(small, cv2.MORPH_GRADIENT, kernel)
+
+    # Binarize the gradient image
+    _, bw = cv2.threshold(grad, 0.0, 255.0, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+
+    # connect horizontally oriented regions
+    # kernal value (9,1) can be changed to improved the text detection
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (9, 1))
+    connected = cv2.morphologyEx(bw, cv2.MORPH_CLOSE, kernel)
+    contours, hierarchy = cv2.findContours(
+        connected.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE
+    )  # opencv >= 4.0
+    mask = np.zeros(bw.shape, dtype=np.uint8)
+    min_x, min_y, max_x, max_y, cummTheta, ct = get_bounding_boxes(
+        contours, mask, raw_image
+    )
+    cropped = raw_image[min_y:max_y, min_x:max_x]
+    # display(cropped, "Cropped Image")
+
+
+    skewed_angle = get_skew_angle(cropped)
     if abs(skewed_angle) > 0.5:
         print(f"Image is skewed by {skewed_angle} degrees")
-        deskewed_image = deskew_and_rotate(raw_image, output_image_path)
+        deskewed_image = deskew_and_rotate(cropped, output_image_path)
     else:
-        deskewed_image = raw_image
+        deskewed_image = cropped
     # bin_img = convert_to_1bit(deskewed_image)
     bin_img = convert_to_grayscale(deskewed_image)
     # bin_img = (bin_img * 255).astype(np.uint8)
-
     cv2.imwrite(output_image_path, bin_img)
     print(f"Image improved and saved ")
