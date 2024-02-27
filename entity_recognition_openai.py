@@ -3,6 +3,7 @@
 import json
 from openai import OpenAI
 import os
+from utils.json_handler import JsonHandler
 
 """
 DOCUMENTATION
@@ -73,8 +74,17 @@ dictionary_three
 #         "TIPO_INCAPACIDAD": "INICIAL",
 #     }
 
+
 # %%
-def recognition_openai(text_extracted_1, text_extracted_2, text_extracted_3, dictionary_one, dictionary_2, dictionary_3, unseen_text):
+def recognition_openai(
+    text_extracted_1,
+    text_extracted_2,
+    text_extracted_3,
+    dictionary_one,
+    dictionary_2,
+    dictionary_3,
+    unseen_text,
+):
     """
     IMSS
     text extracted -> dic_result
@@ -113,4 +123,5 @@ def recognition_openai(text_extracted_1, text_extracted_2, text_extracted_3, dic
 
     completion = completion.choices[0].message.content
     # TODO: json.loads()
-    return json.dumps(completion)
+    completion = JsonHandler.to_dict(completion)
+    return completion

@@ -37,7 +37,7 @@ def process_text_file(text_file, doctype):
     filename = os.path.basename(text_file)
     text_file_path = os.path.join(text_extracted_folder, text_file)
     if text_file.endswith(".txt"):
-        entity_methods = ["regex", "chat_completions", "openai"]
+        entity_methods = ["regex"]
         for method in entity_methods:
 
             file_content = FileUtils.read(text_file_path)
@@ -89,7 +89,7 @@ def process_text_file(text_file, doctype):
         file_content = FileUtils.read(text_file)
         # ocr_method = "Openai"
         #cleaning method
-        entity_methods = ["openai", "cleaning", "chat_completions" ]
+        entity_methods = ["openai" ]
         for method in entity_methods:
         
             if method == "cleaning":
@@ -242,7 +242,7 @@ def main(file_path=str, doctype=str) -> dict:
 
     methods = ["openai", "google", "aws_textract", "aws_parser"]
     for method in methods:
-        # clean_folders()
+        clean_folders()
         ocr, values, recognition = document_handler(file_path, doctype, method)
         data["values"] = values
         data["ocr"] = ocr
