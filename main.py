@@ -36,8 +36,7 @@ def process_text_file(text_file, doctype, extraction_method):
     text_file_path = os.path.join(text_extracted_folder, text_file)
     # if text_file.endswith(".txt"):
     file_content = FileUtils.read(text_file_path)
-        # entity_methods = ["regex", "chat_completions", "openai"]
-        # for extraction_method in entity_methods:
+
             
             # regex method
     if extraction_method == "regex":
@@ -53,44 +52,7 @@ def process_text_file(text_file, doctype, extraction_method):
         print("extracted text", extracted_text)
         FileUtils.save(results_folder + "/" + "_completions" + filename, json.dumps(extracted_text))
         return extracted_text, extraction_method
-    
-    # openai method
-    # elif extraction_method == "openai":
-    #     dictionary_1 = {
-    #     "DIAS_AUTORIZADOS": "SETE",
-    #     "FECHA_APARTIR": "06/11/2023",
-    #     "FECHA_EXPEDIDO": "08/11/2023",
-    #     "PROBABLE_RIESGO_TRABAJO": "NO",
-    #     "RAMO_SEGURO": "ENFERMEDAD GENERAL",
-    #     "SERIE_FOLIO": "VZ948810",
-    #     "TIPO_INCAPACIDAD": "INICIAL",
-    # }
-    #     text_extracted_1 = FileUtils.read(data_inject_folder + "/0_procesed_HW.txt")
-    #     text_extracted_2 = FileUtils.read(data_inject_folder + "/0_procesed_text_PT.txt")
-    #     text_extracted_3 = FileUtils.read(data_inject_folder + "/2_procesed_text_PT.txt")
-    #     dictionary_1 = FileUtils.read(data_inject_folder + "/result_1_2.txt")
-    #     dictionary_2 = FileUtils.read(data_inject_folder + "/result_1.txt")
-    #     dictionary_3 = FileUtils.read(data_inject_folder + "/result_3.txt")
-    #     extracted_text = recognition_openai(text_extracted_1, text_extracted_2, text_extracted_3, dictionary_1, dictionary_2, dictionary_3, file_content)
-    #     return extracted_text, extraction_method
-        # for json_str in json_objects:
-        #     if json_str:  # check if the string is not empty
-        #         extracted_text = regex_extraction(json_str)
-        #         extraction_method = "regex"
-        #         json_str = json.dumps(
-        #             extracted_text,
-        #             ensure_ascii=True,
-        #             indent=2,
-        #             sort_keys=True,
-        #         )
-        #         FileUtils.save(results_folder + "/" + text_file, json_str)
-        # return json_str, ocr_method, extraction_method
-    
 
-    # elif text_file.endswith(".json"):
-        # entity_methods = ["cleaning", "chat_completions_cleaning", "openai"]
-        file_content = FileUtils.read(text_file)
-        # for extraction_method in entity_methods:
 
             #cleaning method
     if extraction_method == "cleaning":
@@ -99,16 +61,6 @@ def process_text_file(text_file, doctype, extraction_method):
         extracted_text = json.dumps(extracted_text, ensure_ascii=True, indent=2, sort_keys=True)
         FileUtils.save(results_folder + "/" + "_cleaning" + filename, extracted_text)
         return extracted_text, extraction_method
-
-            #chat completions method
-    # elif extraction_method == "chat_completions_cleaning":
-    #     data_cleaned = chat_completion_cleaning(text_file, results_folder, data_inject_folder)
-    #     extracted_text = data_extraction(data_cleaned, doctype)
-    #     print("extracted text", extracted_text)
-    #     extraction_method = "chat_completions"
-    #     extracted_text = json.dumps(extracted_text, ensure_ascii=True, indent=2, sort_keys=True)
-    #     FileUtils.save(results_folder + "/" + "_completions" + filename , extracted_text)
-    #     return extracted_text, extraction_method
 
             # openai method
     elif extraction_method == "openai_entity_extraction":
@@ -153,10 +105,7 @@ def process_image_files(
                 images_path,
                 text_extracted_folder,
             )
-        # ocr_openai_vision(
-        #     images_path,
-        #     text_extracted_folder,
-        # )
+
         # apply ocr google vision
         if ocr_method == "google":
             ocr_google_vision(images_path, text_extracted_folder)
@@ -178,7 +127,7 @@ def process_image_files(
 def document_handler(file_path=str, doctype=str, ocr_method=str):
     file_name = os.path.basename(file_path)
     filetype = identify_file(file_name)
-    # _, filetype = os.path.splitext(file_name)
+
     if filetype == "pdf":
         has_text = pdf_has_text(file_path)
         if has_text:
@@ -189,32 +138,18 @@ def document_handler(file_path=str, doctype=str, ocr_method=str):
             text_extracted = FileUtils.save(
                 text_extracted_folder + "/" + new_file_name, text_corpus
             )
-            # result, entity_method = process_text_file(
-            #     text_extracted , doctype
-            # )
-            # return ocr_method, result, entity_method
+
             return ocr_method
 
         else:
             print("Images inside PDF, retrieving images...")
             images_in_pdf = get_images_from_pdf(file_path, image_preprocessed_folder)
 
-            # procesed_images_list = FileUtils.create_list(image_preprocessed_folder)
             process_image_files(
                 images_in_pdf,
                 ocr_method
             )
-            # all_text_files = FileUtils.list_text_files(text_extracted_folder)
 
-            # for text_file in all_text_files:
-            #     # try:
-            #     text_extracted, method = process_text_file(
-            #             text_file, doctype
-            #         )
-                # return ocr_method, text_extracted, method
-                # except Exception as e:
-                    # print("Error: ", e)
-                    # continue
             return ocr_method
     else:
         print("File is an Imagetype ")
@@ -224,13 +159,7 @@ def document_handler(file_path=str, doctype=str, ocr_method=str):
             procesed_images_list,
             ocr_method
         )
-        # all_text_files = FileUtils.list_text_files(text_extracted_folder)
-        # for text_file in all_text_files:
-        #     text_extracted, method = process_text_file(
-        #         text_file, doctype
-        #     )
-
-        return ocr_method#, text_extracted, method
+        return ocr_method
 
 
 # %% Main function
