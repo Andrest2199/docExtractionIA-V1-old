@@ -73,8 +73,8 @@ def encode_image(image_path):
         with open(image_path, "rb") as image_file:
             return base64.b64encode(image_file.read()).decode("utf-8")
     except FileNotFoundError:
-        print(f"Error: El archivo en la ruta '{image_path}' no fue encontrado.")
+        print(f"Error: The file path '{image_path}' was not found.")
     except PermissionError:
-        print(f"Error: No se tienen permisos para leer el archivo en '{image_path}'.")
+        print(f"Error: You do not have permissions to read the file in '{image_path}'.")
     except Exception as e:
-        print(f"Error inesperado: {str(e)}")
+        print(f"Unexpected error: {str(e)}")
