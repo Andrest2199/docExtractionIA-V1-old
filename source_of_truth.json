@@ -1,0 +1,105 @@
+{
+    "IMSS":[
+        {"#Serie y Folio":
+            {"serie":"",
+            "folio":"",
+            "serie_y_folio":""}},
+        {"#Posible Riesgo":
+            {"riesgo":"",
+            "trabajo":"",
+            "probable":"",
+            "riesgo_trabajo":"",
+            "posible_riesgo":"",
+            "posible_riesgo_trabajo":"",
+            "probable_riesgo_trabajo":""}},
+        {"#Rama Incapacidad":
+            {"seguro":"",
+            "ramo":"",
+            "ramo_seguro":"",
+            "ramo_de_seguro":""}},
+        {"#Fecha desde":
+            {"partir":"",
+            "a_partir":"",
+            "a_partir_de":"",
+            "inicio":"",
+            "incapacidad":"",
+            "inicio_incapacidad":""}},
+        {"#Fecha de Expedido":
+            {"expedido":"",
+            "expedido_el":""}},
+        {"#Dias Incapacidad":
+            {"numero":"",
+            "dias":"",
+            "autorizados":"",
+            "dias_autorizados_letra":"",
+            "numero_dias_autorizados":""}}
+    ],
+    "INFONAVIT": [//hay dos tipos: altas de credito/suspension
+        // {"#Numero de empleado"},//Viene en el nombre del archivo
+        {"#Aviso para retencion de descuentos": //solo para altas de credito
+            {"aviso_para_retencion_de_descuentos":"",
+                "retencion_de_descuentos":""}},
+        {"#Acuse de notificación de inicio de trámite": //solo para altas de credito
+            {"inicio_tramite":"",
+                "inicio_de_tramite":"",
+                "notificacion_de inicio_de_tramite":""}},
+        {"#Fecha del documento"://extraer mes y año
+            {"fecha":"",
+                "fecha_recepcion":"",
+                "fecha_de_recepcion":""}},
+        {"#Numero de Credito":
+            {"numero_de_credito":"",
+            "numero":"",
+            "credito":"",
+            "numero_credito":""}},
+        {"#Cantidad de Descuento":
+            {"descuento_mensual":"",
+            "porcentaje":"",
+            "pesos":"",
+            "factor_de_descuento":"",
+            "factor_descuento":"",
+            "descuento":"",
+            "factor_de_cuota_en_vsm":"",
+            "cuota_en_vsm":"",
+            "factor_cuota_vsm":"",
+            "cuota_vsm":""}},
+        {"#Motivo Baja": //solo para cuando son suspensiones
+            {"aviso":"",
+            "suspension":"",
+            "aviso_suspension":"",
+            "aviso_de_suspension":"",
+            "aviso_de_suspension_de_descuentos":"",
+            "suspension_de_descuentos":"",
+            "suspension_descuentos":""}}
+        ],
+        "SAT": [
+            {"#RFC":
+                {"rfc":""}},
+            {"#CURP":
+                {"curp":""}},
+            {"#Nombre":
+                {"nombre s":"",
+                 "nombre (s)":"",
+                 "nombre":""}},
+            {"#Primer Apellido":
+                {"primer":"",
+                "primer_apellido":""}},
+            {"#Segundo Apellido":
+                {"segundo":"",
+                "segundo_apellido":""}},
+            {"#Codigo Postal":
+                {"codigo":"",
+                "postal":"",
+                "codigo_postal":""}}
+        ],
+    }
+
+"""CAMPOS PRINCIPALES
+    IMSS:folio,posible_riesgo,fecha_desde,
+        dias_incapacidad,rama_incapacidad
+        tipo_incapacidad : #EG,MA,AT se obtiene de rama_incapacidad
+    INFONAVIT:numero_credito,fecha,
+        aviso [titulo de doc]
+    SAT:rfc,curp,nombre,primer_apellido,
+        segundo_apellido,codigo_postal
+"""
