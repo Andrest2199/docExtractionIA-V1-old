@@ -442,9 +442,11 @@ def txt_extraction(txt_str=str,type_doc=str)->dict:
 # print(json.dumps(informacion_extraida,ensure_ascii=False,indent=2))
 
 #%% TEST FINAL
+"""
 folder_base_path = os.getcwd()+'/3_text_extracted'
 output_folder_path = os.getcwd()+'/4_results'
-"""INFONAVIT"""
+"""
+"""INFONAVIT
 for i in range(0,5):
     file_path_input = os.path.join(folder_base_path, str(i)+'.txt')
     with  open(file_path_input) as archivo:
@@ -472,8 +474,9 @@ for i in range(5,7):
     file_path_output = os.path.join(output_folder_path, new_file_name)
     with open(file_path_output, "w") as file:
         file.write(json_content)
+"""
     
-"""SAT"""
+"""SAT
 for i in range(7,11):
     file_path_input = os.path.join(folder_base_path, str(i)+'.txt')
     with  open(file_path_input) as archivo:
@@ -487,7 +490,8 @@ for i in range(7,11):
     file_path_output = os.path.join(output_folder_path, new_file_name)
     with open(file_path_output, "w") as file:
         file.write(json_content)
-
+"""
+"""
 for i in range(11,13):
     file_path_input = os.path.join(folder_base_path, str(i)+'.json')
     with  open(file_path_input) as archivo:
@@ -501,9 +505,10 @@ for i in range(11,13):
     file_path_output = os.path.join(output_folder_path, new_file_name)
     with open(file_path_output, "w") as file:
         file.write(json_content)
+"""
 
 
-"""IMSS"""
+"""IMSS
 for i in range(13,25):
     file_path_input = os.path.join(folder_base_path, str(i)+'.txt')
     with  open(file_path_input) as archivo:
@@ -531,6 +536,7 @@ for i in range(25,33):
     file_path_output = os.path.join(output_folder_path, new_file_name)
     with open(file_path_output, "w") as file:
         file.write(json_content)
+"""
 
 
 # %%
