@@ -101,29 +101,6 @@ def process_text_file(text_file, doctype, extraction_method):
         )
         return extracted_text, extraction_method
 
-                extracted_text = json.dumps(extracted_text, ensure_ascii=True, indent=2, sort_keys=True)
-                FileUtils.save(results_folder + "/" + "_completions" + filename , extracted_text)
-                return extracted_text, method
-            
-            elif method == "openai":
-                # openai method
-                dictionary_1 = {
-                "DIAS_AUTORIZADOS": "SETE",
-                "FECHA_APARTIR": "06/11/2023",
-                "FECHA_EXPEDIDO": "08/11/2023",
-                "PROBABLE_RIESGO_TRABAJO": "NO",
-                "RAMO_SEGURO": "ENFERMEDAD GENERAL",
-                "SERIE_FOLIO": "VZ948810",
-                "TIPO_INCAPACIDAD": "INICIAL",
-                }
-                text_extracted_1 = FileUtils.read(data_inject_folder + "/0_procesed_HW.txt")
-                text_extracted_2 = FileUtils.read(data_inject_folder + "/0_procesed_text_PT.txt")
-                text_extracted_3 = FileUtils.read(data_inject_folder + "/2_procesed_text_PT.txt")
-                dictionary_1 = FileUtils.read(data_inject_folder + "/result_1_2.txt")
-                dictionary_2 = FileUtils.read(data_inject_folder + "/result_1.txt")
-                dictionary_3 = FileUtils.read(data_inject_folder + "/result_3.txt")
-                extracted_text = recognition_openai(text_extracted_1, text_extracted_2, text_extracted_3, dictionary_1, dictionary_2, dictionary_3, file_content)
-                return extracted_text, method
 
 def process_image_files(procesed_images_list, ocr_method=str):
     for image in procesed_images_list:
