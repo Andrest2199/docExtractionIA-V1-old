@@ -10,7 +10,7 @@ from image_pre_procesing import (
 from improve_image_quality import improve_image_quality
 from ocr_openai_vision import ocr_openai_vision
 from ocr_google_vision import ocr_google_vision
-from cleaning_extract_process import data_cleaning, data_extraction, regex_extraction
+from cleaning_extract_process import json_extraction, txt_extraction
 from ocr_openai_chat_completion import chat_completion_cleaning
 from utils.file_utils import FileUtils
 import os
@@ -32,60 +32,77 @@ data_inject_folder = os.path.join(folder_base_path, "data_inject")
 def process_text_file(text_file, doctype, extraction_method):
     text_file = os.path.join(text_extracted_folder, text_file)
     filename = os.path.basename(text_file)
-    
+
     text_file_path = os.path.join(text_extracted_folder, text_file)
     # if text_file.endswith(".txt"):
     file_content = FileUtils.read(text_file_path)
 
-            
-            # regex method
+    # regex method
     if extraction_method == "regex":
-        extracted_text = regex_extraction(file_content)
-        json_str = json.dumps(extracted_text,ensure_ascii=True,indent=2,sort_keys=True)
-        FileUtils.save(results_folder + "/" + "_regex" + filename + ".json", json_str)
+        extracted_text = txt_extraction(file_content, doctype)
+        json_str = json.dumps(
+            extracted_text, ensure_ascii=True, indent=2, sort_keys=True
+        )
+        FileUtils.save(
+            results_folder + "/" + "_regex_" + doctype + filename + ".json", json_str
+        )
         return json_str, extraction_method
-    #chat completions method
+    # chat completions method
     elif extraction_method == "chat_completions":
-        extracted_text = chat_completion_cleaning(text_file, results_folder, data_inject_folder)
+        extracted_text = chat_completion_cleaning(
+            text_file, results_folder, data_inject_folder
+        )
         # extracted_text = data_extraction(data_cleaned, doctype)
         print("extracted text", extracted_text)
-        FileUtils.save(results_folder + "/" + "_completions" + filename, json.dumps(extracted_text))
+        FileUtils.save(
+            results_folder + "/" + "_completions" + filename, json.dumps(extracted_text)
+        )
         return extracted_text, extraction_method
 
-
-            #cleaning method
+        # cleaning method
     elif extraction_method == "cleaning":
-        data_cleaned = data_cleaning(file_content)
-        extracted_text = data_extraction(data_cleaned, doctype)
-        extracted_text = json.dumps(extracted_text, ensure_ascii=True, indent=2, sort_keys=True)
+        # data_cleaned = data_cleaning(file_content)
+        extracted_text = json_extraction(file_content, doctype)
+        extracted_text = json.dumps(
+            extracted_text, ensure_ascii=True, indent=2, sort_keys=True
+        )
         FileUtils.save(results_folder + "/" + "_cleaning" + filename, extracted_text)
         return extracted_text, extraction_method
 
-            # openai method
+        # openai method
     elif extraction_method == "openai_entity_extraction":
         dictionary_1 = {
-        "DIAS_AUTORIZADOS": "SETE",
-        "FECHA_APARTIR": "06/11/2023",
-        "FECHA_EXPEDIDO": "08/11/2023",
-        "PROBABLE_RIESGO_TRABAJO": "NO",
-        "RAMO_SEGURO": "ENFERMEDAD GENERAL",
-        "SERIE_FOLIO": "VZ948810",
-        "TIPO_INCAPACIDAD": "INICIAL",
-    }
+            "DIAS_AUTORIZADOS": "SETE",
+            "FECHA_APARTIR": "06/11/2023",
+            "FECHA_EXPEDIDO": "08/11/2023",
+            "PROBABLE_RIESGO_TRABAJO": "NO",
+            "RAMO_SEGURO": "ENFERMEDAD GENERAL",
+            "SERIE_FOLIO": "VZ948810",
+            "TIPO_INCAPACIDAD": "INICIAL",
+        }
         text_extracted_1 = FileUtils.read(data_inject_folder + "/0_procesed_HW.txt")
-        text_extracted_2 = FileUtils.read(data_inject_folder + "/0_procesed_text_PT.txt")
-        text_extracted_3 = FileUtils.read(data_inject_folder + "/2_procesed_text_PT.txt")
+        text_extracted_2 = FileUtils.read(
+            data_inject_folder + "/0_procesed_text_PT.txt"
+        )
+        text_extracted_3 = FileUtils.read(
+            data_inject_folder + "/2_procesed_text_PT.txt"
+        )
         dictionary_1 = FileUtils.read(data_inject_folder + "/result_1_2.txt")
         dictionary_2 = FileUtils.read(data_inject_folder + "/result_1.txt")
         dictionary_3 = FileUtils.read(data_inject_folder + "/result_3.txt")
-        extracted_text = recognition_openai(text_extracted_1, text_extracted_2, text_extracted_3, dictionary_1, dictionary_2, dictionary_3, file_content)
+        extracted_text = recognition_openai(
+            text_extracted_1,
+            text_extracted_2,
+            text_extracted_3,
+            dictionary_1,
+            dictionary_2,
+            dictionary_3,
+            file_content,
+        )
         return extracted_text, extraction_method
 
 
-def process_image_files(
-    procesed_images_list,
-    ocr_method=str
-):
+def process_image_files(procesed_images_list, ocr_method=str):
     for image in procesed_images_list:
 
         images_path = os.path.join(image_preprocessed_folder, image)
@@ -109,16 +126,16 @@ def process_image_files(
         if ocr_method == "google":
             ocr_google_vision(images_path, text_extracted_folder)
         # ocr_google_vision(images_path, text_extracted_folder)
-        
+
         if ocr_method == "aws_textract":
             text_corpus = extract_text_from_image(images_path)
             FileUtils.save(
-                text_extracted_folder + "/"  + "_AWS_extract.txt", text_corpus
+                text_extracted_folder + "/" + "_AWS_extract.txt", text_corpus
             )
         if ocr_method == "aws_parser":
             fields = anlyse_text_and_create_dict(images_path)
             FileUtils.save(
-                text_extracted_folder + "/"  + "_AWS_analyzed.json",
+                text_extracted_folder + "/" + "_AWS_analyzed.json",
                 json.dumps(fields, ensure_ascii=True, indent=2, sort_keys=True),
             )
 
@@ -144,27 +161,23 @@ def document_handler(file_path=str, doctype=str, ocr_method=str):
             print("Images inside PDF, retrieving images...")
             images_in_pdf = get_images_from_pdf(file_path, image_preprocessed_folder)
 
-            process_image_files(
-                images_in_pdf,
-                ocr_method
-            )
+            process_image_files(images_in_pdf, ocr_method)
 
             return ocr_method
     else:
         print("File is an Imagetype ")
         process_images(file_path, image_preprocessed_folder)
         procesed_images_list = FileUtils.create_list(image_preprocessed_folder)
-        process_image_files(
-            procesed_images_list,
-            ocr_method
-        )
+        process_image_files(procesed_images_list, ocr_method)
         return ocr_method
 
 
 # %% Main function
 def main(file_path=str, doctype=str) -> dict:
     if doctype not in ["IMSS", "INFONAVIT", "SAT"]:
-        raise ValueError("Document type not recognized. Please provide a valid document type: IMSS, INFONAVIT, SAT")
+        raise ValueError(
+            "Document type not recognized. Please provide a valid document type: IMSS, INFONAVIT, SAT"
+        )
 
     data = {
         "name": os.path.basename(file_path),
@@ -183,12 +196,16 @@ def main(file_path=str, doctype=str) -> dict:
         for text_file in all_text_files:
             print("text file", text_file)
             if text_file.endswith(".txt"):
-                entity_methods = ["regex", "chat_completions", "openai_entity_extraction"]
-                
+                entity_methods = [
+                    "regex",
+                    "chat_completions",
+                    "openai_entity_extraction",
+                ]
+
                 for entity_method in entity_methods:
 
                     values, recognition = process_text_file(
-                    text_file, doctype, entity_method
+                        text_file, doctype, entity_method
                     )
                     data["values"] = values
                     data["ocr"] = ocr
@@ -198,10 +215,14 @@ def main(file_path=str, doctype=str) -> dict:
                         json.dumps(data, ensure_ascii=True, indent=2, sort_keys=True),
                     )
             if text_file.endswith(".json"):
-                entity_methods = ["cleaning", "chat_completions", "openai_entity_extraction"]
+                entity_methods = [
+                    "cleaning",
+                    "chat_completions",
+                    "openai_entity_extraction",
+                ]
                 for entity_method in entity_methods:
                     values, recognition = process_text_file(
-                    text_file, doctype, entity_method
+                        text_file, doctype, entity_method
                     )
                     data["values"] = values
                     data["ocr"] = ocr
@@ -214,11 +235,13 @@ def main(file_path=str, doctype=str) -> dict:
     print("result", data)
     return data
 
+
 def clean_folders():
     FileUtils.delete_from_folder(image_preprocessed_folder)
     FileUtils.delete_from_folder(image_improved_folder)
     FileUtils.delete_from_folder(text_extracted_folder)
     # FileUtils.delete_from_folder(results_folder)
+
 
 # %% Run main function
 if __name__ == "__main__":
@@ -236,7 +259,7 @@ if __name__ == "__main__":
     for file in raw_imss_list:
         file = os.path.join(imss_files_path, file)
         main(file, "IMSS")
-"""
+
     # get the list of file unprocessed for INFONAVIT
     raw_infonavit_list = FileUtils.create_list(
         os.path.join(image_raw_folder, "INFONAVIT")
@@ -253,7 +276,6 @@ if __name__ == "__main__":
     for file in raw_sat_list:
         file = os.path.join(sat_file_paths, file)
         main(file, "SAT")
-"""
 
 
 # %%
