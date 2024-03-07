@@ -50,7 +50,7 @@ def process_text_file(text_file, doctype, extraction_method):
     # chat completions method
     elif extraction_method == "chat_completions":
         extracted_text = chat_completion_cleaning(
-            text_file, results_folder, data_inject_folder
+            text_file, results_folder, data_inject_folder, doctype
         )
         # extracted_text = data_extraction(data_cleaned, doctype)
         print("extracted text", extracted_text)
