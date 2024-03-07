@@ -14,7 +14,7 @@ from cleaning_extract_process import json_extraction, txt_extraction
 from ocr_openai_chat_completion import chat_completion_cleaning
 from utils.file_utils import FileUtils
 import os
-from entity_recognition_openai import recognition_openai
+# from entity_recognition_openai import recognition_openai
 from ocr_aws_textract import extract_text_from_image, anlyse_text_and_create_dict
 
 # TODO: Print OCR method inside json file
@@ -53,9 +53,10 @@ def process_text_file(text_file, doctype, extraction_method):
             text_file, results_folder, data_inject_folder + "/" + doctype, doctype
         )
         # extracted_text = data_extraction(data_cleaned, doctype)
+        extracted_text = json.dumps(extracted_text)
         print("extracted text", extracted_text)
         FileUtils.save(
-            results_folder + "/" + "_completions" + filename, json.dumps(extracted_text)
+            results_folder + "/" + "_completions" + filename, extracted_text
         )
         return extracted_text, extraction_method
 
@@ -67,38 +68,6 @@ def process_text_file(text_file, doctype, extraction_method):
             extracted_text, ensure_ascii=True, indent=2, sort_keys=True
         )
         FileUtils.save(results_folder + "/" + "_cleaning" + filename, extracted_text)
-        return extracted_text, extraction_method
-
-        # openai method
-    elif extraction_method == "openai_entity_extraction":
-        dictionary_1 = {
-            "DIAS_AUTORIZADOS": "SETE",
-            "FECHA_APARTIR": "06/11/2023",
-            "FECHA_EXPEDIDO": "08/11/2023",
-            "PROBABLE_RIESGO_TRABAJO": "NO",
-            "RAMO_SEGURO": "ENFERMEDAD GENERAL",
-            "SERIE_FOLIO": "VZ948810",
-            "TIPO_INCAPACIDAD": "INICIAL",
-        }
-        text_extracted_1 = FileUtils.read(data_inject_folder + "/0_procesed_HW.txt")
-        text_extracted_2 = FileUtils.read(
-            data_inject_folder + "/0_procesed_text_PT.txt"
-        )
-        text_extracted_3 = FileUtils.read(
-            data_inject_folder + "/2_procesed_text_PT.txt"
-        )
-        dictionary_1 = FileUtils.read(data_inject_folder + "/result_1_2.txt")
-        dictionary_2 = FileUtils.read(data_inject_folder + "/result_1.txt")
-        dictionary_3 = FileUtils.read(data_inject_folder + "/result_3.txt")
-        extracted_text = recognition_openai(
-            text_extracted_1,
-            text_extracted_2,
-            text_extracted_3,
-            dictionary_1,
-            dictionary_2,
-            dictionary_3,
-            file_content,
-        )
         return extracted_text, extraction_method
 
 
@@ -199,7 +168,6 @@ def main(file_path=str, doctype=str) -> dict:
                 entity_methods = [
                     "regex",
                     "chat_completions",
-                    "openai_entity_extraction",
                 ]
 
                 for entity_method in entity_methods:
@@ -218,7 +186,6 @@ def main(file_path=str, doctype=str) -> dict:
                 entity_methods = [
                     "cleaning",
                     "chat_completions",
-                    "openai_entity_extraction",
                 ]
                 for entity_method in entity_methods:
                     values, recognition = process_text_file(
