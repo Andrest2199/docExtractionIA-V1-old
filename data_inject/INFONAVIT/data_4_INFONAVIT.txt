@@ -1,0 +1,21 @@
+{
+    "institucion": "INFONAVIT",
+    "fecha": "15/09/2009",
+    "nombre_y_domicilio_fiscal_de_la_empresa_retenedora": "REFRESCOS VICTORIA DEL CENTRO S. A. DE C",
+    "n_r_p": "E2382971109",
+    "c_p": "76120",
+    "rfc": "RVC861201Q99",
+    "acceso": "54 12 N/D B JU\u00c1REZ",
+    "ubicacion_de_vivienda": "QUERETARO ARTEAGA, QUERETARO",
+    "numero_de_seguridad": "14988136968",
+    "numero_de_credito": "2209106833",
+    "rc_cura_del_trabajador": "HEBA810516RKA",
+    "nombre_del_trabajador_y_domicilio_de_la_vivienda_objeto_del_descuento": "HERNANDEZ BARRIENTOS ADALBERTO",
+    "domicilio_de_la_vivienda": "PLAN DE SAN LUIS 5090 - 113 SMZ N/A MZ N/A LT N/A COND ELC 9 EDIF N/A ENT N/A NIV 06 SAN MIGUEL CARRILLO C.P. 76178 QUERETARO ARTEAGA, QUERETARO",
+    "porcentaje": "25.31",
+    "factor_de_cuota_en_vsm": "2.8534",
+    "persona_que_recibe_el_aviso": "LIC. HERENDIRA BELLO SOTO",
+    "fecha_de_recepcion": "13/09/2009",
+    "recibido": "RECURSOS HUMANOS",
+    "sello": "5439154"
+}

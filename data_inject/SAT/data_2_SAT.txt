@@ -1,0 +1,34 @@
+{
+    "cedula_identificacion_fiscal": {
+        "rfc": "COXJ031113MB8",
+        "curp": "CXJA031113HCLNMLA1",
+        "nombre": "ALEKC KEVIN",
+        "primer_apellido": "CONTRERAS",
+        "segundo_apellido": "JIMENEZ",
+        "idcif": "23050438218",
+        "valida_tu_informacion_fiscal": "VALIDA TU INFORMACI\u00d3N FISCAL",
+        "fecha_inicio_operaciones": "30 DE MAYO DE 2023",
+        "estatus_en_el_padron": "ACTIVO",
+        "fecha_ultimo_cambio_estado": "30 DE MAYO DE 2023",
+        "nombre_comercial": "ALEKC KEVIN CONTRERAS JIMENEZ"
+    },
+    "constancia_situacion_fiscal": {
+        "lugar_fecha_emision": "TORREON, COAHUILA DE ZARAGOZA A 30 DE MAYO DE 2023"
+    },
+    "datos_domicilio_registrado": {
+        "codigo_postal": "27280",
+        "nombre_de_vialidad": "5 DE DICIEMBRE",
+        "tipo_de_vialidad": "CALLE",
+        "numero_exterior": "215",
+        "nombre_de_la_colonia": "EDUARDO GUERRA",
+        "numero_interior": "",
+        "nombre_de_la_localidad": "TORREON",
+        "nombre_del_municipio_o_demarcacion_territorial": "TORREON",
+        "nombre_de_la_entidad_federativa": "COAHUILA DE ZARAGOZA",
+        "entre_calle": "AVENIDA TERCERA"
+    },
+    "page_number": 1,
+    "contact_info": {
+        "telephone": "+52 (55) 627 22 728"
+    }
+}
