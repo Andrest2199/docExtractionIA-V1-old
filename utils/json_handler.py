@@ -5,8 +5,8 @@ class JsonHandler:
         """Converts a JSON string to a dictionary with two methods"""
         try:
             json_data = json.loads(str(json_string))
-        except json.JSONDecodeError:
-            ("Failed to load JSON, trying to build dictionary...")
+        except Exception as e:
+            print(f"Failed to load JSON:{e}, trying to build dictionary...")
             try:
                 json_data = self.build_dictionary(str(json_string))
             except Exception as e:
@@ -23,12 +23,16 @@ class JsonHandler:
             json_string = json_string.replace("\n", "").replace("\t", "")
             json_string = json_string.split(",")
             for element in json_string:
+                countColon=element.count(":")
+                if countColon > 1:
+                    element=element.replace(":","",(countColon-1))
                 temp = element.strip().replace('"', "").split(":")
 
                 if len(temp) > 1:
-                    new_json[temp[0]] = temp[1]
+                    new_json[temp[0]] = None if temp[1].strip() == "NULL" else temp[1].strip()
                 else:
-                    new_json[temp[0]] = "N/A"
+                    new_json[temp[0]] = None
         else:
             raise ValueError("Input string is not a Valid JSON string")
-        return json.dumps(new_json, indent=4, sort_keys=True, ensure_ascii=False)
+        new_json = json.dumps(new_json, indent=4, sort_keys=True, ensure_ascii=False)
+        return json.loads(new_json)

@@ -23,12 +23,11 @@ TODO:
 
 
 # %% Define functions
-def chat_completion_cleaning(file_path, output_folder, data_inject_folder):
+def chat_completion_cleaning(file_path, output_folder, data_inject_folder, type_doc):
     print(f"Processing text file: {file_path}")
     """
     -> text_extracted -> result 
     Receives the extracted text to process and returns a JSON with the relevant fields.
-    IMSS
     """
     # Set Data for system from folder 'Data inject'
     user_prompt = []
@@ -63,10 +62,13 @@ def chat_completion_cleaning(file_path, output_folder, data_inject_folder):
         results_count += 1
 
     context_data_inyection += f"\nYou will recive a text by the user.Your task is to read and process the text that user provides and return an output dictionary with the relevant fields and format like the next example."
-    #IMSS context data
-    context_data_inyection += '\n"""{\n"DIAS_AUTORIZADOS": STRING,\n"FECHA_APARTIR": DATE STRING,\n"FECHA_EXPEDIDO": DATE STRING,\n"PROBABLE_RIESGO_TRABAJO": SI/NO,\n"RAMO_SEGURO": STRING,\n"SERIE_FOLIO": STRING,\n"TIPO_INCAPACIDAD": STRING\n}"""'
+    if type_doc == "IMSS":
+        context_data_inyection += '\n"""{\n"DIAS_AUTORIZADOS": STRING,\n"FECHA_APARTIR": DATE STRING,\n"FECHA_EXPEDIDO": DATE STRING,\n"PROBABLE_RIESGO_TRABAJO": SI/NO,\n"RAMO_SEGURO": STRING,\n"SERIE_FOLIO": STRING,\n"TIPO_INCAPACIDAD": STRING\n}"""'
+    if type_doc == "INFONAVIT":
+        context_data_inyection += '\n"""{\n"TITULO_DOCUMENTO": STRING,\n"CANTIDAD_DE_DESCUENTO": STRING,\n"FECHA": DATE STRING,\n"TIPO": ALTA/SUSPENSION,\n"NUMERO_DE_CREDITO": STRING\n}"""'
+    if type_doc == "SAT":
+        context_data_inyection += '\n"""{\n"CODIGO_POSTAL": NUMBER,\n"CURP": STRING,\n"NOMBRE": STRING,\n"PRIMER_APELLIDO": STRING,\n"SEGUNDO_APELLIDO": STRING,\n"RFC": STRING,\n}"""'
     
-    # TODO: add context_data
     # Set content system prompt
     system_prompt.append({"type": "text", "text": context_data_inyection})
 
@@ -79,7 +81,6 @@ def chat_completion_cleaning(file_path, output_folder, data_inject_folder):
     )
 
     # Set user file request
-
     with open(file_path, encoding='ISO-8859-1') as file:
         user_file = file.read()
         
@@ -90,9 +91,6 @@ def chat_completion_cleaning(file_path, output_folder, data_inject_folder):
     # print (f"Tokens in User Prompt: {num_tokens}")
     # num_tokens = FileUtils.num_tokens_from_messages(system_prompt,"gpt-3.5-turbo-0125")
     # print (f"Tokens in System Prompt: {system_prompt}")
-
-    # print(f"Final User Prompt: {json.dumps(user_prompt,ensure_ascii=False,indent=2)}")
-    # print(f"Final System Prompt: {json.dumps(system_prompt,ensure_ascii=False,indent=2)}")
 
     # Create instance of openAI client
     client = OpenAI()
@@ -163,7 +161,6 @@ def chat_completion_cleaning(file_path, output_folder, data_inject_folder):
 #     json_string = dict(zip(json_string))
 # #     print("after dict", json_string)
 # print("cast", str(temp3))
-json_string = '{\n\t "DIAS_AUTORIZADOS": "SIETE",\n\t "FECHA_APARTIR": "A PARTIR DEL EXPEDIDO",\n\t "FECHA_EXPEDIDO": "SIG",\n\t "PROBABLE_RIESGO_TRABAJO": "NO",\n\t "RAMO_SEGURO": "ENFERMEDAD GENERAL",\n\t "SERIE_FOLIO": "KEUI", \n\t "TIPO_INCAPACIDAD"\n}'
 
 
 # %%
