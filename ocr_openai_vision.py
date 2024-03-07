@@ -73,7 +73,8 @@ def ocr_openai_vision(image_path, output_folder):
     json_string = response.choices[0].message.content
     json_string = json_string.replace("```json\n", "").replace("\n```", "")
     # json_data = JsonHandler.to_dict(json_string) 
-    json_data = json.loads(json_string)
+    # json_data = json.loads(json_string)
+    json_data = JsonHandler.to_dict(json_string)
     file_extension = image_path.split(".")[-1]
     json_file_name = image_path.split("/")[-1].replace(f".{file_extension}", ".json") # add method of ocr
     FileUtils.save(output_folder + "/" + json_file_name, json.dumps(json_data, indent=4))
