@@ -1,5 +1,6 @@
 # %% entity recognition openAI
 
+#TODO: Discharge/Delete class... 
 import json
 from openai import OpenAI
 import os
