@@ -38,6 +38,7 @@ def chat_completion_cleaning(file_path, output_folder, data_inject_folder, type_
     txt_count = 0
     results_count = 0
     # Retrieve files from 'Data Inject'
+    #TODO: En data_inject_folder unir al path el type doc: line 41|ocr_openai_chat_completion.py 
     all_data_inject_files = FileUtils.create_list(data_inject_folder)
     for file in all_data_inject_files:
         if file.startswith("result"):
@@ -65,7 +66,7 @@ def chat_completion_cleaning(file_path, output_folder, data_inject_folder, type_
     if type_doc == "IMSS":
         context_data_inyection += '\n"""{\n"DIAS_AUTORIZADOS": STRING,\n"FECHA_APARTIR": DATE STRING,\n"FECHA_EXPEDIDO": DATE STRING,\n"PROBABLE_RIESGO_TRABAJO": SI/NO,\n"RAMO_SEGURO": STRING,\n"SERIE_FOLIO": STRING,\n"TIPO_INCAPACIDAD": STRING\n}"""'
     if type_doc == "INFONAVIT":
-        context_data_inyection += '\n"""{\n"TITULO_DOCUMENTO": STRING,\n"CANTIDAD_DE_DESCUENTO": STRING,\n"FECHA": DATE STRING,\n"TIPO": ALTA/SUSPENSION,\n"NUMERO_DE_CREDITO": STRING\n}"""'
+        context_data_inyection += '\n"""{\n"TITULO_DOCUMENTO": STRING,\n"CANTIDAD_DE_DESCUENTO": STRING,\n"FECHA": DATE STRING,\n"MOTIVO": ALTA/SUSPENSION,\n"NUMERO_DE_CREDITO": STRING\n}"""'
     if type_doc == "SAT":
         context_data_inyection += '\n"""{\n"CODIGO_POSTAL": NUMBER,\n"CURP": STRING,\n"NOMBRE": STRING,\n"PRIMER_APELLIDO": STRING,\n"SEGUNDO_APELLIDO": STRING,\n"RFC": STRING,\n}"""'
     
@@ -81,6 +82,7 @@ def chat_completion_cleaning(file_path, output_folder, data_inject_folder, type_
     )
 
     # Set user file request
+    #TODO: add try catch
     with open(file_path, encoding='ISO-8859-1') as file:
         user_file = file.read()
         
