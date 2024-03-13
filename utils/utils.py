@@ -1,5 +1,8 @@
+import re
 import tiktoken
 import base64
+
+import unidecode
 
 
 def read_file(file_path):
@@ -78,3 +81,9 @@ def encode_image(image_path):
         print(f"Error: You do not have permissions to read the file in '{image_path}'.")
     except Exception as e:
         print(f"Unexpected error: {str(e)}")
+
+def decode_text(texto):
+    # Decodificamos caracteres UTF-8
+    patron = re.compile(r'\\u([\d\w]{4})')
+    return patron.sub(lambda x: unidecode(chr(int(x.group(1), 16))), texto)
+    
