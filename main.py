@@ -130,9 +130,11 @@ def document_handler(file_path=str, doctype=str, ocr_method=str):
 
         else:
             print("Images inside PDF, retrieving images...")
-            images_in_pdf = get_images_from_pdf(file_path, image_preprocessed_folder)
-
+            # images_in_pdf = get_images_from_pdf(file_path, image_preprocessed_folder)
+            convert_pdf_to_image(file_path, image_preprocessed_folder)
+            images_in_pdf = FileUtils.create_list(image_preprocessed_folder)
             process_image_files(images_in_pdf, ocr_method)
+            
 
             return ocr_method
     else:
