@@ -7,6 +7,8 @@ import shutil
 import json
 from utils.file_utils import FileUtils
 import re
+from pdf2image import convert_from_path
+
 
 folder_base_path = os.getcwd()
 
@@ -14,6 +16,10 @@ folder_base_path = os.getcwd()
 INSTALLATION:
 conda install conda-forge::pypdf2
 conda install anaconda::pillow
+pip install pdf2image
+conda install -c conda-forge poppler
+conda install conda-forge::poppler
+
 
 TODO's:
 - Delete, escaneado from scanscanner
@@ -53,6 +59,9 @@ def pdf_has_text(file_path, string_threshold=10):
 
 
 def get_images_from_pdf(file_path=str, output_folder_path=str) -> list:
+    """
+    DEPRECATED FUNCTION
+    """
     file_name_procesed = os.path.basename(file_path).strip(".pdf") + "_procesed"
     # Create image file path input
     # Initialize a PdfReader object
@@ -156,6 +165,35 @@ def get_text_from_pdf(file_path=str) -> str:
         text_corpus += page.extract_text() + "\n"  # Adding a newline character
 
     return text_corpus
+
+
+# %% pdf 2 image
+# Set folder paths
+# import module
+# from pdf2image import convert_from_path
+
+# folder_base_path = os.getcwd()
+# input_file = (
+#     folder_base_path
+#     + "/0_image_raw/INFONAVIT/Aviso Suspensiขn de Descuentos Jesus Silva.pdf"
+# )
+
+
+def convert_pdf_to_image(input_file, output_folder_path) -> list:
+    # Store Pdf with convert_from_path function
+    try:
+        images = convert_from_path(input_file)
+        # Save pages as images in the pdf
+        for i in range(len(images)):
+            output_path = output_folder_path + "/page" + str(i) + ".jpg"
+            path_to_image = images[i].save(output_path, "JPEG")
+            print(images[i])
+            print("Saved file:", path_to_image)
+    except Exception as e:
+        print("Error in convert_pdf_to_image", e)
+
+
+# convert_pdf_to_image(input_file, folder_base_path + "/1_image_preprocessed")
 
 
 # %% extract text from PDFs
