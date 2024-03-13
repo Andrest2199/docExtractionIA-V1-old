@@ -123,9 +123,9 @@ def chat_completion_cleaning(file_path, output_folder, data_inject_folder, type_
     json_file_name = file_path.split("/")[-1].replace(
         f".{file_extension}", ".json"
     )  # add _cleaning or chat or whatever
-    # TODO: call function to open
-    with open(output_folder + "/" + json_file_name + "_completion", "w") as file:
-        json.dump(json_data, file, indent=4)
+    # # TODO: call function to open
+    # with open(output_folder + "/" + json_file_name + "_completion", "w") as file:
+    #     json.dump(json_data, file, indent=4)
 
     tokens_count_by_gpt = response.usage.prompt_tokens
     print(f"Tokens count by API: {tokens_count_by_gpt}")
