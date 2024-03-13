@@ -216,7 +216,7 @@ def json_extraction(json_data=any, type_doc=str)->dict:
                     if coincidencias != None:
                         informacion_extraida[main_key][sub_key]= coincidencias.group()
                 else: 
-                    informacion_extraida[main_key][sub_key]=None
+                    informacion_extraida[main_key][sub_key]="NA"
                     patron = re.escape(sub_key.upper())
                     exp_compilada = re.compile(patron)
                     for keyJson in json_data.keys():
@@ -238,7 +238,7 @@ def json_extraction(json_data=any, type_doc=str)->dict:
                             if coincidencias != None:
                                 informacion_extraida[main_key][sub_key]= coincidencias.group()
                         else: 
-                            informacion_extraida[main_key][sub_key]=None
+                            informacion_extraida[main_key][sub_key]="NA"
                             patron = re.escape(sub_key.upper())
                             exp_compilada = re.compile(patron)
                             for keyJson in json_data[clave].keys():
@@ -259,7 +259,7 @@ def json_extraction(json_data=any, type_doc=str)->dict:
                             if coincidencias != None:
                                 informacion_extraida[main_key][sub_key]= coincidencias.group()
                         else: 
-                            informacion_extraida[main_key][sub_key]=None
+                            informacion_extraida[main_key][sub_key]="NA"
                             patron = re.escape(sub_key.upper())
                             exp_compilada = re.compile(patron)
                             for keyJson in json_data.keys():
@@ -394,7 +394,7 @@ def txt_extraction(txt_str=str,type_doc=str)->dict:
             if coincidencias:
                 arr_coincidencias[key] = coincidencias.group()
             else:
-                arr_coincidencias[key] = None
+                arr_coincidencias[key] = "NA"
         elif type(pat) is list:
             i = 0
             for pat2 in pat:
@@ -405,7 +405,7 @@ def txt_extraction(txt_str=str,type_doc=str)->dict:
                     new_value = {str(i):coincidencias.group()}
                     arr_coincidencias[key].update(new_value)
                 else:
-                    new_value = {str(i):None}
+                    new_value = {str(i):"NA"}
                     arr_coincidencias[key].update(new_value)
 
     return arr_coincidencias
