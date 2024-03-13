@@ -4,7 +4,7 @@ import json
 class JsonHandler:
     @classmethod
     def to_dict(self, json_string=str) -> dict:
-        print("string to convert to dict", json_string)
+
         """Converts a JSON string to a dictionary with two methods"""
         try:
             json_string = json_string.upper()
