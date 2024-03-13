@@ -162,7 +162,6 @@ def main(file_path=str, doctype=str) -> dict:
 
     methods = ["openai", "google", "aws_textract", "aws_parser"]
     for method in methods:
-        clean_folders()
         ocr = document_handler(file_path, doctype, method)
         all_text_files = FileUtils.list_text_files(text_extracted_folder)
 
