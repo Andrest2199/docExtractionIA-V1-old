@@ -6,6 +6,7 @@ from image_pre_procesing import (
     get_images_from_pdf,
     pdf_has_text,
     get_text_from_pdf,
+    convert_pdf_to_image
 )
 from improve_image_quality import improve_image_quality
 from ocr_openai_vision import ocr_openai_vision
@@ -40,13 +41,13 @@ def process_text_file(text_file, doctype, extraction_method):
     # regex method
     if extraction_method == "regex":
         extracted_text = txt_extraction(file_content, doctype)
-        json_str = json.dumps(
+        extracted_text = json.dumps(
             extracted_text, ensure_ascii=True, indent=2, sort_keys=True
         )
-        FileUtils.save(
-            results_folder + "/" + "_regex_" + doctype + filename + ".json", json_str
-        )
-        return json_str, extraction_method
+        # FileUtils.save(
+        #     results_folder + "/" + "_regex_" + doctype + filename + ".json", extracted_text
+        # )
+        # return json_str, extraction_method
     # chat completions method
     elif extraction_method == "chat_completions":
         extracted_text = chat_completion_cleaning(
@@ -55,10 +56,10 @@ def process_text_file(text_file, doctype, extraction_method):
         # extracted_text = data_extraction(data_cleaned, doctype)
         extracted_text = json.dumps(extracted_text)
         print("extracted text", extracted_text)
-        FileUtils.save(
-            results_folder + "/" + "_completions" + filename, extracted_text
-        )
-        return extracted_text, extraction_method
+        # FileUtils.save(
+        #     results_folder + "/" + "_completions" + filename, extracted_text
+        # )
+        # return extracted_text, extraction_method
 
         # cleaning method
     elif extraction_method == "cleaning":
@@ -67,8 +68,9 @@ def process_text_file(text_file, doctype, extraction_method):
         extracted_text = json.dumps(
             extracted_text, ensure_ascii=True, indent=2, sort_keys=True
         )
-        FileUtils.save(results_folder + "/" + "_cleaning" + filename, extracted_text)
-        return extracted_text, extraction_method
+        # FileUtils.save(results_folder + "/" + "_cleaning" + filename, extracted_text)
+        
+    return file_content, extracted_text, extraction_method
 
 
 def process_image_files(procesed_images_list, ocr_method=str):
