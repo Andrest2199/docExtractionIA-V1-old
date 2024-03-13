@@ -175,9 +175,10 @@ def main(file_path=str, doctype=str) -> dict:
 
                 for entity_method in entity_methods:
 
-                    values, recognition = process_text_file(
+                    raw_text, values, recognition = process_text_file(
                         text_file, doctype, entity_method
                     )
+                    data["plain text"] = raw_text
                     data["values"] = values
                     data["ocr"] = ocr
                     data["entity_recognition"] = recognition
@@ -191,9 +192,10 @@ def main(file_path=str, doctype=str) -> dict:
                     "chat_completions",
                 ]
                 for entity_method in entity_methods:
-                    values, recognition = process_text_file(
+                    raw_text, values, recognition = process_text_file(
                         text_file, doctype, entity_method
                     )
+                    data["plain text"] = raw_text
                     data["values"] = values
                     data["ocr"] = ocr
                     data["entity_recognition"] = recognition
@@ -201,6 +203,7 @@ def main(file_path=str, doctype=str) -> dict:
                         f"{results_folder}/{data['name'][:-4]}_{data['ocr']}_{data['entity_recognition']}.json",
                         json.dumps(data, ensure_ascii=True, indent=2, sort_keys=True),
                     )
+        #TODO: call process to get system_accuracy forloop
 
     print("result", data)
     return data
@@ -229,6 +232,7 @@ if __name__ == "__main__":
     for file in raw_imss_list:
         file = os.path.join(imss_files_path, file)
         main(file, "IMSS")
+
 
     # get the list of file unprocessed for INFONAVIT
     raw_infonavit_list = FileUtils.create_list(
