@@ -47,13 +47,18 @@ class Utils:
         new_json = json.dumps(new_json, indent=4, sort_keys=True, ensure_ascii=False)
         return json.loads(new_json)
 
-    # TODO: add trycatch...
     @staticmethod
     def decode_text(texto):
         # Decodificamos caracteres UTF-8
-        patron = re.compile(r"\\u([\d\w]{4})")
-        final_text = patron.sub(lambda x: unidecode(chr(int(x.group(1), 16))), texto)
-        return final_text
+        try:
+            patron = re.compile(r"\\u([\d\w]{4})")
+            final_text = patron.sub(
+                lambda x: unidecode(chr(int(x.group(1), 16))), texto
+            )
+            return final_text
+        except Exception as e:
+            print(f"Error decoding text: {e}")
+            return texto
 
     @staticmethod
     def read_file(file_path):
@@ -67,7 +72,11 @@ class Utils:
         return num_tokens
 
     @classmethod
-    def num_tokens_from_messages(self, messages, model="gpt-3.5-turbo-0125",):
+    def num_tokens_from_messages(
+        self,
+        messages,
+        model="gpt-3.5-turbo-0125",
+    ):
         try:
             encoding = tiktoken.encoding_for_model(model)
         except KeyError:
@@ -133,5 +142,6 @@ class Utils:
             )
         except Exception as e:
             print(f"Unexpected error: {str(e)}")
+
 
 # %%
