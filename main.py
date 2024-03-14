@@ -176,8 +176,8 @@ def main(file_path=str, doctype=str) -> dict:
                     raw_text, values, recognition = process_text_file(
                         text_file, doctype, entity_method
                     )
-                    data["plain text"] = raw_text
-                    data["values"] = values
+                    data["plain text"] = Utils.decode_text(raw_text)
+                    data["values"] = Utils.decode_text(values)
                     data["ocr"] = ocr
                     data["entity_recognition"] = recognition
                     FileUtils.save(
@@ -193,15 +193,15 @@ def main(file_path=str, doctype=str) -> dict:
                     raw_text, values, recognition = process_text_file(
                         text_file, doctype, entity_method
                     )
-                    data["plain text"] = raw_text
-                    data["values"] = values
+                    data["plain text"] = Utils.decode_text(raw_text)
+                    data["values"] = Utils.decode_text(values)
                     data["ocr"] = ocr
                     data["entity_recognition"] = recognition
                     FileUtils.save(
                         f"{results_folder}/{data['name'][:-4]}_{data['ocr']}_{data['entity_recognition']}.json",
                         json.dumps(data, ensure_ascii=True, indent=2, sort_keys=True),
                     )
-        #TODO: call process to get system_accuracy forloop
+        # TODO: call process to get system_accuracy forloop
     return data
 
 
