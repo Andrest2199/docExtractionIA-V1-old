@@ -4,7 +4,7 @@
 import json
 from openai import OpenAI
 import os
-from utils.json_handler import JsonHandler
+from utils.utils import Utils
 
 """
 DOCUMENTATION
@@ -123,6 +123,5 @@ def recognition_openai(
     )
 
     completion = completion.choices[0].message.content
-    # TODO: json.loads()
-    completion = JsonHandler.to_dict(completion)
+    completion = Utils.to_dict(completion)
     return completion

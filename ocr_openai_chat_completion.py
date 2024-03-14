@@ -3,7 +3,7 @@ import json
 from utils.file_utils import FileUtils
 import os
 from openai import OpenAI
-from utils.json_handler import JsonHandler
+from utils.utils import Utils
 import re
 
 # OpenAI API Key
@@ -118,14 +118,11 @@ def chat_completion_cleaning(file_path, output_folder, data_inject_folder, type_
     json_string = json_string.replace("```json\n", "").replace("\n```", "")
 
     # Save json data
-    json_data = JsonHandler.to_dict(json_string)
+    json_data = Utils.to_dict(json_string)
     file_extension = file_path.split(".")[-1]
     json_file_name = file_path.split("/")[-1].replace(
         f".{file_extension}", ".json"
     )  # add _cleaning or chat or whatever
-    # # TODO: call function to open
-    # with open(output_folder + "/" + json_file_name + "_completion", "w") as file:
-    #     json.dump(json_data, file, indent=4)
 
     tokens_count_by_gpt = response.usage.prompt_tokens
     print(f"Tokens count by API: {tokens_count_by_gpt}")
