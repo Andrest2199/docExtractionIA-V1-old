@@ -14,8 +14,10 @@ from cleaning_extract_process import json_extraction, txt_extraction
 from ocr_openai_chat_completion import chat_completion_cleaning
 from utils.file_utils import FileUtils
 import os
+
 # from entity_recognition_openai import recognition_openai
 from ocr_aws_textract import extract_text_from_image, anlyse_text_and_create_dict
+from utils.utils import Utils
 
 
 # %% Set the paths
