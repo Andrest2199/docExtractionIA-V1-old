@@ -35,40 +35,49 @@ def process_text_file(text_file, doctype, extraction_method):
     filename = os.path.basename(text_file)
 
     text_file_path = os.path.join(text_extracted_folder, text_file)
-    # if text_file.endswith(".txt"):
-    file_content = FileUtils.read(text_file_path)
+    if text_file.endswith(".txt"):
+        file_content = FileUtils.read(text_file_path)
+    
+        # regex method
+        if extraction_method == "txt_extraction":
+            extracted_text = txt_extraction(file_content, doctype)
+            extracted_text = json.dumps(
+                extracted_text, ensure_ascii=True, indent=2, sort_keys=True
+            )
+            # FileUtils.save(
+            #     results_folder + "/" + "_regex_" + doctype + filename + ".json", extracted_text
+            # )
+            # return json_str, extraction_method
+        # chat completions method
+        elif extraction_method == "chat_completions":
+            extracted_text = chat_completion_cleaning(
+                text_file, results_folder, data_inject_folder + "/" + doctype, doctype
+            )
+            # extracted_text = data_extraction(data_cleaned, doctype)
+            extracted_text = json.dumps(extracted_text)
 
-    # regex method
-    if extraction_method == "regex":
-        extracted_text = txt_extraction(file_content, doctype)
-        extracted_text = json.dumps(
-            extracted_text, ensure_ascii=True, indent=2, sort_keys=True
-        )
-        # FileUtils.save(
-        #     results_folder + "/" + "_regex_" + doctype + filename + ".json", extracted_text
-        # )
-        # return json_str, extraction_method
-    # chat completions method
-    elif extraction_method == "chat_completions":
-        extracted_text = chat_completion_cleaning(
-            text_file, results_folder, data_inject_folder + "/" + doctype, doctype
-        )
-        # extracted_text = data_extraction(data_cleaned, doctype)
-        extracted_text = json.dumps(extracted_text)
-        print("extracted text", extracted_text)
         # FileUtils.save(
         #     results_folder + "/" + "_completions" + filename, extracted_text
         # )
         # return extracted_text, extraction_method
 
         # cleaning method
-    elif extraction_method == "cleaning":
-        # data_cleaned = data_cleaning(file_content)
-        extracted_text = json_extraction(file_content, doctype)
-        extracted_text = json.dumps(
-            extracted_text, ensure_ascii=True, indent=2, sort_keys=True
-        )
-        # FileUtils.save(results_folder + "/" + "_cleaning" + filename, extracted_text)
+    elif text_file.endswith(".json"):
+        file_content = FileUtils.read(text_file_path)
+        if extraction_method == "json_extraction":
+            # data_cleaned = data_cleaning(file_content)
+            extracted_text = json_extraction(file_content, doctype)
+            extracted_text = json.dumps(
+                extracted_text, ensure_ascii=True, indent=2, sort_keys=True
+            )
+        elif extraction_method == "chat_completions":
+            extracted_text = chat_completion_cleaning(
+                text_file, results_folder, data_inject_folder + "/" + doctype, doctype
+            )
+            # extracted_text = data_extraction(data_cleaned, doctype)
+            extracted_text = json.dumps(extracted_text)
+            
+            # FileUtils.save(results_folder + "/" + "_cleaning" + filename, extracted_text)
         
     return file_content, extracted_text, extraction_method
 
@@ -169,7 +178,7 @@ def main(file_path=str, doctype=str) -> dict:
             print("text file", text_file)
             if text_file.endswith(".txt"):
                 entity_methods = [
-                    "regex",
+                    "txt_extraction",
                     "chat_completions",
                 ]
 
@@ -186,9 +195,9 @@ def main(file_path=str, doctype=str) -> dict:
                         f"{results_folder}/{data['name'][:-4]}_{data['ocr']}_{data['entity_recognition']}.json",
                         json.dumps(data, ensure_ascii=True, indent=2, sort_keys=True),
                     )
-            if text_file.endswith(".json"):
+            elif text_file.endswith(".json"):
                 entity_methods = [
-                    "cleaning",
+                    "json_extraction",
                     "chat_completions",
                 ]
                 for entity_method in entity_methods:
@@ -221,6 +230,7 @@ if __name__ == "__main__":
     # Remove files for all output folders
     FileUtils.delete_from_folder(results_folder)
     clean_folders()
+    """
 
     # get the list of files unprocessed for IMSS
     raw_imss_list = FileUtils.create_list(os.path.join(image_raw_folder, "IMSS"))
@@ -232,7 +242,7 @@ if __name__ == "__main__":
     for file in raw_imss_list:
         file = os.path.join(imss_files_path, file)
         main(file, "IMSS")
-
+    """
 
     # get the list of file unprocessed for INFONAVIT
     raw_infonavit_list = FileUtils.create_list(
