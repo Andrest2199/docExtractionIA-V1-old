@@ -31,6 +31,8 @@ def encode_image(image_path):
 
 def ocr_openai_vision(image_path, output_folder):
 
+    filename, file_extension = os.path.splitext(image_path)
+    file_extension = file_extension.lstrip(".")
     print(f"Processing image: {image_path} with OpenAI Vision API.")
 
     # Path to your image
@@ -40,8 +42,7 @@ def ocr_openai_vision(image_path, output_folder):
     base64_image = encode_image(image_path)
 
     # Image URL
-    image_url = f"data:image/jpeg;base64,{base64_image}"
-
+    image_url = f"data:image/{file_extension};base64,{base64_image}"
     # %% Send image to GPT 4 vision
     # Create instance of openAI client
     client = OpenAI()
@@ -49,6 +50,7 @@ def ocr_openai_vision(image_path, output_folder):
     # Get response
     response = client.chat.completions.create(
         model="gpt-4-vision-preview",
+        # response_format={"type": "json_object"},
         messages=[
             {
                 "role": "user",
@@ -58,15 +60,15 @@ def ocr_openai_vision(image_path, output_folder):
                         # prompt 1
                         # "text": "Return JSON document with the data in this document. Only return ONE JSON not other text"
                         # prompt 2
-                        # "text": "Return JSON document with the data in this document. Only return ONE JSON not other text. Consider the following fields: 'unidad_medica_expedidora', 'nivel_atencion', 'delegacion_adscripcion', 'tipo_incapacidad', 'dias_autorizados', 'forma_seguro_enfermedad_general', 'probable_riesgo_trabajo', 'dias_acumulados', 'particion', 'patron', 'numero', 'a_partir_de', 'expedido_el', 'control_maternidad', 'nombre_firma_medico', 'matricula', 'nombre_firma_medico_autoriza', 'matricula_autoriza', 'nota', 'informacion_adicional'",
+                        "text": "Return JSON document with the data in this document. Only return ONE JSON not other text. Consider the following fields: 'unidad_medica_expedidora', 'nivel_atencion', 'delegacion_adscripcion', 'tipo_incapacidad', 'dias_autorizados', 'forma_seguro_enfermedad_general', 'probable_riesgo_trabajo', 'dias_acumulados', 'particion', 'patron', 'numero', 'a_partir_de', 'expedido_el', 'control_maternidad', 'nombre_firma_medico', 'matricula', 'nombre_firma_medico_autoriza', 'matricula_autoriza', 'nota', 'informacion_adicional'",
                         # prompt 3
-                        "text": "Create a JSON document with the data in the provided image. Return just ONE json document with all the retrieved fields and format it with underscores on key names and lowercase. ",
+                        # "text": "Create a JSON document with the data in the provided image. Return just ONE json document with all the retrieved fields and format it with underscores on key names and lowercase. ",
                     },
                     {"type": "image_url", "image_url": {"url": image_url}},
                 ],
             }
         ],
-
+        temperature=0.5,
         max_tokens=2000,
     )
 
@@ -76,12 +78,17 @@ def ocr_openai_vision(image_path, output_folder):
     # json_data = Utils.to_dict(json_string) 
     # json_data = json.loads(json_string)
     json_data = Utils.to_dict(json_string)
-    
+
     file_extension = image_path.split(".")[-1]
-    json_file_name = image_path.split("/")[-1].replace(f".{file_extension}", ".json") # add method of ocr
-    FileUtils.save(output_folder + "/" + json_file_name, json.dumps(json_data, indent=4))
+    json_file_name = image_path.split("/")[-1].replace(
+        f".{file_extension}", ".json"
+    )  # add method of ocr
+    FileUtils.save(
+        output_folder + "/" + json_file_name, json.dumps(json_data, indent=4)
+    )
+
     # with open(output_folder + "/" + json_file_name, "w") as file: # call utils function
-        # json.dump(json_data, file, indent=4)
+    # json.dump(json_data, file, indent=4)
 
 
 # %%
