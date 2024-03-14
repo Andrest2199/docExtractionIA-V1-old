@@ -66,7 +66,7 @@ def ocr_openai_vision(image_path, output_folder):
                 ],
             }
         ],
-        response_format={"type": "json_object"},
+
         max_tokens=2000,
     )
 
