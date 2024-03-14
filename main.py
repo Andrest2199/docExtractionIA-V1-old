@@ -3,10 +3,9 @@ import json
 from image_pre_procesing import (
     process_images,
     identify_file,
-    get_images_from_pdf,
     pdf_has_text,
     get_text_from_pdf,
-    convert_pdf_to_image
+    convert_pdf_to_image,
 )
 from improve_image_quality import improve_image_quality
 from ocr_openai_vision import ocr_openai_vision
