@@ -91,11 +91,14 @@ def json_extraction(json_data=any, type_doc=str)->dict:
     # Definimos campos y sus variaciones
     campos_variaciones = {
         "IMSS":{
-            "SERIE_Y_FOLIO":
+            "SERIE_FOLIO":
                 {"serie":"",
                 "folio":"",
-                "serie_y_folio":""},
-            "POSIBLE_RIESGO_TRABAJO":
+                "serie_y_folio":"",
+                "serie_folio":""},
+            "TIPO_INCAPACIDAD":
+                {"tipo_incapacidad":""},
+            "PROBABLE_RIESGO_TRABAJO":
                 {"riesgo":"",
                 "trabajo":"",
                 "probable":"",
@@ -103,12 +106,12 @@ def json_extraction(json_data=any, type_doc=str)->dict:
                 "posible_riesgo":"",
                 "posible_riesgo_trabajo":"",
                 "probable_riesgo_trabajo":""},
-            "RAMO_INCAPACIDAD":
+            "RAMO_SEGURO":
                 {"seguro":"",
                 "ramo":"",
                 "ramo_seguro":"",
                 "ramo_de_seguro":""},
-            "FECHA_A_PARTIR":
+            "FECHA_APARTIR":
                 {"partir":"",
                 "a_partir":"",
                 "a_partir_de":"",
@@ -118,7 +121,7 @@ def json_extraction(json_data=any, type_doc=str)->dict:
             "FECHA_EXPEDIDO":
                 {"expedido":"",
                 "expedido_el":""},
-            "DIAS_INCAPACIDAD":
+            "DIAS_AUTORIZADOS":
                 {"numero":"",
                 "dias":"",
                 "autorizados":"",
@@ -134,7 +137,7 @@ def json_extraction(json_data=any, type_doc=str)->dict:
                  "inicio_de_tramite":"",
                  "acuse_de_notificacion_de_inicio_de_tramite":"",
                  "notificacion_de_inicio_de_tramite":""},
-            "FECHA_DEL_DOCUMENTO":#extraer mes y año
+            "FECHA":#extraer mes y año
                 {"fecha":"",
                  "fecha_recepcion":"",
                  "fecha_de_recepcion":""},
@@ -156,7 +159,7 @@ def json_extraction(json_data=any, type_doc=str)->dict:
                 "cuota_vsm":"",
                 "monto_de_descuento":"",
                 "monto_descuento":""},
-            "MOTIVO_BAJA": #solo para cuando son suspensiones
+            "MOTIVO": #solo para cuando son suspensiones
                 {"aviso_suspension":"",
                 "aviso_de_suspension":"",
                 "aviso_de_suspension_de_descuentos":"",
@@ -337,7 +340,7 @@ def txt_extraction(txt_str=str,type_doc=str)->dict:
                 "FACTOR\s?\|?DESCUENTO\s?\|?:?\s?\|?(.*?)\|",
                 "DESCUENTO\s?\|?:?\s?\|?(.*?)\|"
             ],
-            "MOTIVO_BAJA": [
+            "MOTIVO": [
                 "AVISO\s?\|?DE\s?\|?SUSPENSION\s?\|?DE\s?\|?DESCUENTOS",
                 "SUSPENSION\s?\|?DE\s?\|?DESCUENTOS",
                 "AVISO\s?\|?DE\s?\|?SUSPENSION",
