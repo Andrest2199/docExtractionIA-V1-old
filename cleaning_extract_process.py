@@ -4,7 +4,7 @@ import unicodedata
 import re
 import os
 from unidecode import unidecode
-from utils.json_handler import JsonHandler
+from utils.utils import Utils
 
 """ TODO:  
         - Createformat: "from datetime import datetime"
@@ -51,7 +51,7 @@ def json_cleaning(json_str):
     json_str = json_str.strip()
     json_str = json_str.upper()
     # Construimos Diccionario
-    decoded_json = JsonHandler.to_dict(json_str)
+    decoded_json = Utils.to_dict(json_str)
     # Normalizamos caracteres que se hayan escapado
     normalized_json = {
         (

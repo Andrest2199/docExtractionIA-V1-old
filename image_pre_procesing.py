@@ -81,7 +81,7 @@ def get_images_from_pdf(file_path=str, output_folder_path=str) -> list:
                 )
                 file_path_output = (
                     output_folder_path + "/" + file_name_procesed_pdf
-                )  # TODO: Use os.path.join()
+                )
                 # Save the image in the output folder
                 saved_image = FileUtils.save(file_path_output, image_file_object.data)
                 imagepaths_from_pdf.append(file_path_output)

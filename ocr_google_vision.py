@@ -134,7 +134,7 @@ def detect_handwriting(path):
                             word_text, word.confidence
                         )
                     )
-                    # TODO Change to | instead of \n
+
                     text_corpus = "\n".join([text_corpus, word_text])
 
                     for symbol in word.symbols:

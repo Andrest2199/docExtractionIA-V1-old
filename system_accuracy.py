@@ -2,9 +2,9 @@
 import os
 import pandas as pd
 from utils.file_utils import FileUtils
-from utils.json_handler import JsonHandler
+from utils.utils import Utils
 
-#TODO: CHANGE JSONHANDLER
+
 def system_accuracy(results_json_path, source_of_truth_path) -> dict:
     #Define sumatory
     accuracy_sumatory=0
@@ -31,7 +31,7 @@ def system_accuracy(results_json_path, source_of_truth_path) -> dict:
 
         file_path = os.path.join(results_json_path, results)
         brut_result_json = FileUtils.read(file_path)
-        brut_result_json = JsonHandler.to_dict(brut_result_json)
+        brut_result_json = Utils.to_dict(brut_result_json)
 
         # Get name of document
         result_json_name = brut_result_json["name"].upper().strip()
@@ -51,16 +51,16 @@ def system_accuracy(results_json_path, source_of_truth_path) -> dict:
         source_file_path = os.path.join(source_of_truth_path, source_file_name)
         source_of_truth = FileUtils.read(source_file_path)
         source_of_truth = source_of_truth.upper()
-        source_of_truth = JsonHandler.to_dict(source_of_truth)
+        source_of_truth = Utils.to_dict(source_of_truth)
         
         # Get result json
         result_json = brut_result_json["values"]
-        result_json = JsonHandler.decode_text(result_json)
+        result_json = Utils.decode_text(result_json)
         if result_json == "":
             print ("The result json is empty or does not exist...")
         if "null" or "NULL" or "Null" in result_json:
             result_json = result_json.replace("null", '"NA"')
-        result_json_values = JsonHandler.to_dict(result_json.upper())
+        result_json_values = Utils.to_dict(result_json.upper())
         
         bool_nested_dict = False
         for valor in result_json_values.values():
