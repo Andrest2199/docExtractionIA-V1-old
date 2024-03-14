@@ -1,5 +1,6 @@
 import json
-
+import re
+from unidecode import unidecode
 
 class JsonHandler:
     @classmethod
@@ -7,9 +8,8 @@ class JsonHandler:
 
         """Converts a JSON string to a dictionary with two methods"""
         try:
-            json_string = json_string.upper()
-            if "NULL" in json_string or "NONE" in json_string:
-                json_string = json_string.replace("NULL", "NA").replace("NONE", "NA")
+            if "Null" in json_string or "None" in json_string:
+                json_string = json_string.replace("Null", "NA").replace("None", "NA")
             json_data = json.loads(str(json_string))
         except Exception as e:
             print(f"Failed to load JSON:{e}, trying to build dictionary...")
@@ -44,7 +44,13 @@ class JsonHandler:
             raise ValueError("Input string is not a Valid JSON string")
         new_json = json.dumps(new_json, indent=4, sort_keys=True, ensure_ascii=False)
         return json.loads(new_json)
-
+    #TODO: add trycatch...
+    @staticmethod
+    def decode_text(texto):
+        # Decodificamos caracteres UTF-8
+        patron = re.compile(r'\\u([\d\w]{4})')
+        final_text = patron.sub(lambda x: unidecode(chr(int(x.group(1), 16))), texto)
+        return final_text
 
 
 
