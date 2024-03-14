@@ -54,7 +54,6 @@ def process_text_file(text_file, doctype, extraction_method=str):
             )
         extracted_text = json.dumps(extracted_text)
 
-
     elif text_file.endswith(".json"):
         file_content = FileUtils.read(text_file_path)
         if extraction_method == "json_extraction":
@@ -68,8 +67,7 @@ def process_text_file(text_file, doctype, extraction_method=str):
                 text_file, results_folder, data_inject_folder + "/" + doctype, doctype
             )
         extracted_text = json.dumps(extracted_text)
-            
-        
+
     return file_content, extracted_text, extraction_method
 
 
@@ -101,12 +99,12 @@ def process_image_files(procesed_images_list, ocr_method=str):
         if ocr_method == "aws_textract":
             text_corpus = extract_text_from_image(images_path)
             FileUtils.save(
-                text_extracted_folder + "/" + "_AWS_extract.txt", text_corpus
+                text_extracted_folder + "/" + image + "_AWS_extract.txt", text_corpus
             )
         if ocr_method == "aws_parser":
             fields = anlyse_text_and_create_dict(images_path)
             FileUtils.save(
-                text_extracted_folder + "/" + "_AWS_analyzed.json",
+                text_extracted_folder + "/" + image + "_AWS_analyzed.json",
                 json.dumps(fields, ensure_ascii=True, indent=2, sort_keys=True),
             )
 
@@ -134,7 +132,6 @@ def document_handler(file_path=str, doctype=str, ocr_method=str):
             convert_pdf_to_image(file_path, image_preprocessed_folder)
             images_in_pdf = FileUtils.create_list(image_preprocessed_folder)
             process_image_files(images_in_pdf, ocr_method)
-            
 
             return ocr_method
     else:
@@ -222,8 +219,6 @@ if __name__ == "__main__":
     FileUtils.delete_from_folder(image_preprocessed_folder)
     FileUtils.delete_from_folder(image_improved_folder)
 
-    """
-
     # get the list of files unprocessed for IMSS
     raw_imss_list = FileUtils.create_list(os.path.join(image_raw_folder, "IMSS"))
     # get the file paths for every image inside imss folder
@@ -234,7 +229,6 @@ if __name__ == "__main__":
     for file in raw_imss_list:
         file = os.path.join(imss_files_path, file)
         main(file, "IMSS")
-    """
 
     # get the list of file unprocessed for INFONAVIT
     raw_infonavit_list = FileUtils.create_list(
