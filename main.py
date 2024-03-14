@@ -18,7 +18,7 @@ import os
 # from entity_recognition_openai import recognition_openai
 from ocr_aws_textract import extract_text_from_image, anlyse_text_and_create_dict
 
-# TODO: Print OCR method inside json file
+
 # %% Set the paths
 
 folder_base_path = os.getcwd()
@@ -30,9 +30,10 @@ results_folder = os.path.join(folder_base_path, "4_results")
 data_inject_folder = os.path.join(folder_base_path, "data_inject")
 
 
-def process_text_file(text_file, doctype, extraction_method):
+def process_text_file(text_file, doctype, extraction_method=str):
     text_file = os.path.join(text_extracted_folder, text_file)
     filename = os.path.basename(text_file)
+
 
     text_file_path = os.path.join(text_extracted_folder, text_file)
     if text_file.endswith(".txt"):
@@ -44,24 +45,15 @@ def process_text_file(text_file, doctype, extraction_method):
             extracted_text = json.dumps(
                 extracted_text, ensure_ascii=True, indent=2, sort_keys=True
             )
-            # FileUtils.save(
-            #     results_folder + "/" + "_regex_" + doctype + filename + ".json", extracted_text
-            # )
-            # return json_str, extraction_method
+
         # chat completions method
         elif extraction_method == "chat_completions":
             extracted_text = chat_completion_cleaning(
                 text_file, results_folder, data_inject_folder + "/" + doctype, doctype
             )
-            # extracted_text = data_extraction(data_cleaned, doctype)
-            extracted_text = json.dumps(extracted_text)
+        extracted_text = json.dumps(extracted_text)
 
-        # FileUtils.save(
-        #     results_folder + "/" + "_completions" + filename, extracted_text
-        # )
-        # return extracted_text, extraction_method
 
-        # cleaning method
     elif text_file.endswith(".json"):
         file_content = FileUtils.read(text_file_path)
         if extraction_method == "json_extraction":
@@ -74,10 +66,8 @@ def process_text_file(text_file, doctype, extraction_method):
             extracted_text = chat_completion_cleaning(
                 text_file, results_folder, data_inject_folder + "/" + doctype, doctype
             )
-            # extracted_text = data_extraction(data_cleaned, doctype)
-            extracted_text = json.dumps(extracted_text)
+        extracted_text = json.dumps(extracted_text)
             
-            # FileUtils.save(results_folder + "/" + "_cleaning" + filename, extracted_text)
         
     return file_content, extracted_text, extraction_method
 
@@ -171,6 +161,7 @@ def main(file_path=str, doctype=str) -> dict:
 
     methods = ["openai", "google", "aws_textract", "aws_parser"]
     for method in methods:
+        FileUtils.delete_from_folder(text_extracted_folder)
         ocr = document_handler(file_path, doctype, method)
         all_text_files = FileUtils.list_text_files(text_extracted_folder)
 
@@ -213,8 +204,6 @@ def main(file_path=str, doctype=str) -> dict:
                         json.dumps(data, ensure_ascii=True, indent=2, sort_keys=True),
                     )
         #TODO: call process to get system_accuracy forloop
-
-    print("result", data)
     return data
 
 
@@ -222,14 +211,16 @@ def clean_folders():
     FileUtils.delete_from_folder(image_preprocessed_folder)
     FileUtils.delete_from_folder(image_improved_folder)
     FileUtils.delete_from_folder(text_extracted_folder)
-    # FileUtils.delete_from_folder(results_folder)
+    FileUtils.delete_from_folder(results_folder)
 
 
 # %% Run main function
 if __name__ == "__main__":
     # Remove files for all output folders
     FileUtils.delete_from_folder(results_folder)
-    clean_folders()
+    FileUtils.delete_from_folder(image_preprocessed_folder)
+    FileUtils.delete_from_folder(image_improved_folder)
+
     """
 
     # get the list of files unprocessed for IMSS
