@@ -162,18 +162,20 @@ def ocr_google_vision(image_path, output_folder_path):
     output_folder_path: str, path to the output folder
     """
     text_corpus = detect_handwriting(image_path)
-    # file_name = os.path.basename(image_path).split(".")[0] + "_HW.txt"
-    # file_path_output_hw = os.path.join(output_folder_path, file_name)
-    # with open(file_path_output_hw, "w") as file:
-    #     file.write(text_corpus)
-    texts = detect_text(image_path)
-    text_corpus = ""
-    for text in texts:
-        text_corpus += f'\n"{text.description}"'
-    file_name = os.path.basename(image_path).split(".")[0] + "_text_PT.txt"
-    file_path_output_pt = os.path.join(output_folder_path, file_name)
-    with open(file_path_output_pt, "w") as file:
+    file_name = os.path.basename(image_path).split(".")[0] + "_HW.txt"
+    file_path_output_hw = os.path.join(output_folder_path, file_name)
+    with open(file_path_output_hw, "w") as file:
         file.write(text_corpus)
+    
+    # texts = detect_text(image_path)
+    # text_corpus = ""
+    # for text in texts:
+    #     text_corpus += f'\n"{text.description}"'
+    # file_name = os.path.basename(image_path).split(".")[0] + "_text_PT.txt"
+    # file_path_output_pt = os.path.join(output_folder_path, file_name)
+    # with open(file_path_output_pt, "w") as file:
+    #     file.write(text_corpus)
+    return text_corpus
 
 
 # Specify path to image
