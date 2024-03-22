@@ -14,6 +14,7 @@ from skimage import io, filters
 
 debug = True
 
+
 def get_skew_angle(cvImage) -> float:
     """ "
     Get the skew angle of the image using Hough Transform
@@ -29,12 +30,15 @@ def get_skew_angle(cvImage) -> float:
     )
     angles = []
     # calculate the angle of each line
-    for line in lines:
-        x1, y1, x2, y2 = line[0]
-        angle = np.arctan2(y2 - y1, x2 - x1) * 180.0 / np.pi
-        angles.append(angle)
+    if lines is not None:
+        for line in lines:
+            x1, y1, x2, y2 = line[0]
+            angle = np.arctan2(y2 - y1, x2 - x1) * 180.0 / np.pi
+            angles.append(angle)
 
     # return the average angle
+    if not angles:
+        return None
     return np.mean(angles)
 
 
@@ -94,16 +98,16 @@ def rotate(
         image, rot_mat, (int(round(height)), int(round(width))), borderValue=background
     )
 
+
 def get_bounding_boxes(contours, mask, textImg):
     """
-    Auxiliar function to 
+    Auxiliar function to
     Get the bounding boxes of the text regions
     """
     # Initialize min and max coordinates
     min_x, min_y, max_x, max_y = float("inf"), float("inf"), 0, 0
     cummTheta = 0
     ct = 0
-
     for idx in range(len(contours)):
         x, y, w, h = cv2.boundingRect(contours[idx])
         mask[y : y + h, x : x + w] = 0
@@ -126,7 +130,13 @@ def get_bounding_boxes(contours, mask, textImg):
             max_x = max(max_x, x + w)
             max_y = max(max_y, y + h)
 
-    return min_x, min_y, max_x, max_y, cummTheta, ct
+    # Check for float("inf") after the loop
+    if min_x == float("inf"):
+        min_x = 0
+    if min_y == float("inf"):
+        min_y = 0
+
+    return int(min_x), int(min_y), int(max_x), int(max_y), cummTheta, ct
 
 def slope(x1, y1, x2, y2):
     if x1 == x2:
@@ -134,6 +144,7 @@ def slope(x1, y1, x2, y2):
     slope = (y2 - y1) / (x2 - x1)
     theta = np.rad2deg(np.arctan(slope))
     return theta
+
 
 def display(img, frameName="OpenCV Image"):
     if not debug:
@@ -145,11 +156,13 @@ def display(img, frameName="OpenCV Image"):
     cv2.imshow(frameName, img)
     cv2.waitKey(0)
 
+
 def improve_image_quality(input_image_path, output_image_path):
+    
     filename = os.path.basename(input_image_path)
     output_image_path = os.path.join(output_image_path, filename)
     raw_image = cv2.imread(input_image_path)
-    
+
     if raw_image is None:
         print(f"Image {input_image_path} not found")
         return None
@@ -178,11 +191,13 @@ def improve_image_quality(input_image_path, output_image_path):
     cropped = raw_image[min_y:max_y, min_x:max_x]
     # display(cropped, "Cropped Image")
 
-
     skewed_angle = get_skew_angle(cropped)
-    if abs(skewed_angle) > 0.5:
-        print(f"Image is skewed by {skewed_angle} degrees")
-        deskewed_image = deskew_and_rotate(cropped, output_image_path)
+    # display(cropped, "Cropped Image")
+    deskewed_image = cropped  # assign a default value
+    if skewed_angle is not None:
+        if abs(skewed_angle) > 0.5:
+            print(f"Image is skewed by {skewed_angle} degrees")
+            deskewed_image = deskew_and_rotate(cropped, output_image_path)
     else:
         deskewed_image = cropped
     # bin_img = convert_to_1bit(deskewed_image)

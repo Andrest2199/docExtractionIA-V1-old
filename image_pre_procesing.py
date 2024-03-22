@@ -180,12 +180,15 @@ def get_text_from_pdf(file_path=str) -> str:
 
 
 def convert_pdf_to_image(input_file, output_folder_path) -> list:
+    filename = os.path.basename(input_file).strip(".pdf")
+    print("input_file", input_file)
+    print("output_folder_path", output_folder_path)
     # Store Pdf with convert_from_path function
     try:
         images = convert_from_path(input_file)
         # Save pages as images in the pdf
         for i in range(len(images)):
-            output_path = output_folder_path + "/page" + str(i) + ".jpg"
+            output_path = output_folder_path  + "/" + filename + " page" + str(i) + ".jpeg"
             path_to_image = images[i].save(output_path, "JPEG")
             print(images[i])
             print("Saved file:", path_to_image)
