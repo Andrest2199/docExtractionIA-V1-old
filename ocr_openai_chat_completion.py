@@ -1,10 +1,9 @@
 # %% openai vision
-import json
-from utils.file_utils import FileUtils
 import os
 from openai import OpenAI
 from utils.utils import Utils
-import re
+from utils.file_utils import FileUtils
+
 
 # OpenAI API Key
 OpenAI.api_key = os.environ["OPENAI_API_KEY"]
@@ -16,9 +15,6 @@ https://platform.openai.com/docs/guides/vision
 TODO:
 -> text_extracted -> cleaning -> _cleaning 
                   -> ocr_openai_chat.completion.py -> _Complito
-1) Modify prompt to include a few examples of desired output
-2) Modify parameter to detect wich type of document is, so the data correspond to it.
-3) Add bank of results for SAT and INFONAVIT
 """
 
 
