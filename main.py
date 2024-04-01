@@ -11,7 +11,7 @@ from improve_image_quality import improve_image_quality
 from ocr_openai_vision import ocr_openai_vision
 from ocr_google_vision import ocr_google_vision
 from cleaning_extract_process import json_extraction, txt_extraction
-from ocr_openai_chat_completion import chat_completion_cleaning
+from openai_chat_completions import chat_completion_cleaning
 from utils.file_utils import FileUtils
 import os
 
