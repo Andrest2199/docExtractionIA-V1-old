@@ -27,6 +27,7 @@ image_raw_folder = os.path.join(folder_base_path, "0_image_raw")
 image_preprocessed_folder = os.path.join(folder_base_path, "1_image_preprocessed")
 image_improved_folder = os.path.join(folder_base_path, "2_image_improved")
 text_extracted_folder = os.path.join(folder_base_path, "3_text_extracted")
+test_extracted_folder = os.path.join(folder_base_path, "test_extracted")
 results_folder = os.path.join(folder_base_path, "4_results")
 data_inject_folder = os.path.join(folder_base_path, "data_inject")
 
@@ -35,11 +36,10 @@ def process_text_file(text_file, doctype, extraction_method=str):
     text_file = os.path.join(text_extracted_folder, text_file)
     filename = os.path.basename(text_file)
 
-
     text_file_path = os.path.join(text_extracted_folder, text_file)
     if text_file.endswith(".txt"):
         file_content = FileUtils.read(text_file_path)
-    
+
         # regex method
         if extraction_method == "txt_extraction":
             extracted_text = txt_extraction(file_content, doctype)
@@ -77,7 +77,7 @@ def process_image_files(procesed_images_list, ocr_method=str):
         images_path = os.path.join(image_preprocessed_folder, image)
         # improve image quality
         # improve_image_quality(images_path, os.path.join(image_improved_folder, image))
-        print("Processing improved image: ", image)
+        print("Processing image to improve:", image)
         improve_image_quality(images_path, image_improved_folder)
     improved_images_list = FileUtils.create_list(image_improved_folder)
 
@@ -93,18 +93,27 @@ def process_image_files(procesed_images_list, ocr_method=str):
 
         # apply ocr google vision
         if ocr_method == "google":
-            ocr_google_vision(images_path, text_extracted_folder)
-        # ocr_google_vision(images_path, text_extracted_folder)
+            text_corpus = ocr_google_vision(images_path, text_extracted_folder)
+            FileUtils.save(
+                test_extracted_folder + "/" + image + "_Google_HW.txt", text_corpus
+            )
 
         if ocr_method == "aws_textract":
             text_corpus = extract_text_from_image(images_path)
             FileUtils.save(
                 text_extracted_folder + "/" + image + "_AWS_extract.txt", text_corpus
             )
+            FileUtils.save(
+                test_extracted_folder +  "/" + image + "_AWS_extract.txt", text_corpus
+            )
         if ocr_method == "aws_parser":
             fields = anlyse_text_and_create_dict(images_path)
             FileUtils.save(
                 text_extracted_folder + "/" + image + "_AWS_analyzed.json",
+                json.dumps(fields, ensure_ascii=True, indent=2, sort_keys=True),
+            )
+            FileUtils.save(
+                test_extracted_folder + "/" + image + "_AWS_analyzed.json",
                 json.dumps(fields, ensure_ascii=True, indent=2, sort_keys=True),
             )
 
@@ -120,8 +129,11 @@ def document_handler(file_path=str, doctype=str, ocr_method=str):
             text_corpus = get_text_from_pdf(file_path)
             new_file_name = file_name.strip(".pdf") + ".txt"
 
-            text_extracted = FileUtils.save(
+            FileUtils.save(
                 text_extracted_folder + "/" + new_file_name, text_corpus
+            )
+            FileUtils.save(
+                test_extracted_folder + "/" + new_file_name, text_corpus
             )
 
             return ocr_method

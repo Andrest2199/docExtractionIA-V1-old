@@ -252,7 +252,7 @@ def json_extraction(json_data=any, type_doc=str)->dict:
                                     break
                     else:
                         if json_data.get(sub_key.upper()):
-                            informacion_extraida[main_key][sub_key]=json_data.get(sub_key.upper()).strip() 
+                            informacion_extraida[main_key][sub_key]=json_data.get(sub_key.upper())
                             break
                         elif sub_key.startswith('r'):
                             patron = sub_key[1:]

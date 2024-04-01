@@ -30,7 +30,8 @@ def encode_image(image_path):
 
 
 def ocr_openai_vision(image_path, output_folder):
-
+    folder_base_path = os.getcwd()
+    test_extracted_folder = os.path.join(folder_base_path, "test_extracted")
     filename, file_extension = os.path.splitext(image_path)
     file_extension = file_extension.lstrip(".")
     print(f"Processing image: {image_path} with OpenAI Vision API.")
@@ -50,7 +51,6 @@ def ocr_openai_vision(image_path, output_folder):
     # Get response
     response = client.chat.completions.create(
         model="gpt-4-vision-preview",
-        # response_format={"type": "json_object"},
         messages=[
             {
                 "role": "user",
@@ -75,8 +75,9 @@ def ocr_openai_vision(image_path, output_folder):
     # Extract json content from response
     json_string = response.choices[0].message.content
     json_string = json_string.replace("```json\n", "").replace("\n```", "")
-    # json_data = Utils.to_dict(json_string) 
+    json_data = Utils.to_dict(json_string)
     # json_data = json.loads(json_string)
+    print(json_string)
     json_data = Utils.to_dict(json_string)
 
     file_extension = image_path.split(".")[-1]
@@ -85,6 +86,9 @@ def ocr_openai_vision(image_path, output_folder):
     )  # add method of ocr
     FileUtils.save(
         output_folder + "/" + json_file_name, json.dumps(json_data, indent=4)
+    )
+    FileUtils.save(
+        test_extracted_folder + "/" + json_file_name, json.dumps(json_data, indent=4)
     )
 
     # with open(output_folder + "/" + json_file_name, "w") as file: # call utils function
