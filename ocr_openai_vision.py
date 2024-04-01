@@ -60,7 +60,7 @@ def ocr_openai_vision(image_path, output_folder):
                         # prompt 1
                         # "text": "Return JSON document with the data in this document. Only return ONE JSON not other text"
                         # prompt 2
-                        "text": "Return JSON document with the data in this document. Only return ONE JSON not other text. Consider the following fields: 'unidad_medica_expedidora', 'nivel_atencion', 'delegacion_adscripcion', 'tipo_incapacidad', 'dias_autorizados', 'forma_seguro_enfermedad_general', 'probable_riesgo_trabajo', 'dias_acumulados', 'particion', 'patron', 'numero', 'a_partir_de', 'expedido_el', 'control_maternidad', 'nombre_firma_medico', 'matricula', 'nombre_firma_medico_autoriza', 'matricula_autoriza', 'nota', 'informacion_adicional'",
+                        "text": "Extract all the text in the image and return a clean python string with and format it only with UTF-8 encode. Consider the following fields: 'unidad_medica_expedidora', 'nivel_atencion', 'delegacion_adscripcion', 'tipo_incapacidad', 'dias_autorizados', 'forma_seguro_enfermedad_general', 'probable_riesgo_trabajo', 'dias_acumulados', 'particion', 'patron', 'numero', 'a_partir_de', 'expedido_el', 'control_maternidad', 'nombre_firma_medico', 'matricula', 'nombre_firma_medico_autoriza', 'matricula_autoriza', 'nota', 'informacion_adicional'",
                         # prompt 3
                         # "text": "Create a JSON document with the data in the provided image. Return just ONE json document with all the retrieved fields and format it with underscores on key names and lowercase. ",
                     },

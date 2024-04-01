@@ -10,8 +10,8 @@ class Utils:
     def to_dict(self, json_string=str) -> dict:
         """Converts a JSON string to a dictionary with two methods"""
         try:
-            if "Null" in json_string or "None" in json_string:
-                json_string = json_string.replace("Null", "NA").replace("None", "NA")
+            if "null" in json_string or "Null" in json_string or "None" in json_string:
+                json_string = json_string.replace("Null", '\\\"NA\\\"').replace("null", '\\\"NA\\\"').replace("None", '\\\"NA\\\"')
             json_data = json.loads(str(json_string))
         except Exception as e:
             print(f"Failed to load JSON:{e}, trying to build dictionary...")
