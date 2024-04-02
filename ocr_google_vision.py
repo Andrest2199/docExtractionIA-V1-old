@@ -58,7 +58,6 @@ def run_quickstart() -> vision.EntityAnnotation:
 
 # Define function to detect text in the image file
 def detect_text(path):
-
     client = vision.ImageAnnotatorClient()
 
     with open(path, "rb") as image_file:
@@ -109,7 +108,6 @@ def detect_text(path):
 
 
 def detect_handwriting(path):
-
     client = vision.ImageAnnotatorClient()
 
     with open(path, "rb") as image_file:
@@ -166,7 +164,7 @@ def ocr_google_vision(image_path, output_folder_path):
     file_path_output_hw = os.path.join(output_folder_path, file_name)
     with open(file_path_output_hw, "w") as file:
         file.write(text_corpus)
-    
+
     # texts = detect_text(image_path)
     # text_corpus = ""
     # for text in texts:

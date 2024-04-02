@@ -10,6 +10,8 @@ from utils.utils import Utils
         - Createformat: "from datetime import datetime"
         - Definir main para controlar funciones
         """
+
+
 def txt_cleaning(texto):
     if "|" not in texto and texto.startswith('"'):
         texto = texto.strip()
@@ -19,9 +21,9 @@ def txt_cleaning(texto):
         texto = texto.replace("\n", "|")
     else:
         texto = texto.replace(" ", "|")
-    
+
     # Decodificamos caracteres UTF-8
-    patron = re.compile(r'\\u([\d\w]{4})')
+    patron = re.compile(r"\\u([\d\w]{4})")
     temp_text = patron.sub(lambda x: unidecode(chr(int(x.group(1), 16))), texto)
     # Normalizamos caracteres que se hayan escapado
     texto = "".join(
@@ -45,7 +47,7 @@ def json_cleaning(json_str):
     patron = re.compile(r'[^\w\s":{},\.\[\]\/\\]+')
     json_str = patron.sub("", json_str)
     # Decodificamos caracteres UTF-8
-    patron = re.compile(r'\\u([\d\w]{4})')
+    patron = re.compile(r"\\u([\d\w]{4})")
     json_str = patron.sub(lambda x: unidecode(chr(int(x.group(1), 16))), json_str)
     # Limpiamos espacios y formateamos UPPERCASE
     json_str = json_str.strip()
@@ -63,7 +65,7 @@ def json_cleaning(json_str):
             if unicodedata.is_normalized("NFKD", str(value))
             else unicodedata.normalize("NFKD", str(value))
         )
-        for key,value in decoded_json.items()
+        for key, value in decoded_json.items()
     }
     # Formateamos claves [espacios->'_']
     for key, value in normalized_json.items():
@@ -80,112 +82,111 @@ def json_cleaning(json_str):
     return clear_json
 
 
-def json_extraction(json_data=any, type_doc=str)->dict:
+def json_extraction(json_data=any, type_doc=str) -> dict:
     # Limpiamos json de entrada
     try:
-        json_data=json_cleaning(json_data)
+        json_data = json_cleaning(json_data)
     except Exception as e:
-        raise Exception (f"Error: {e}, fail attempting json_cleaning fuction...")
-        
+        raise Exception(f"Error: {e}, fail attempting json_cleaning fuction...")
+
     bool_tipo = False
     # Definimos campos y sus variaciones
     campos_variaciones = {
-        "IMSS":{
-            "SERIE_FOLIO":
-                {"serie":"",
-                "folio":"",
-                "serie_y_folio":"",
-                "serie_folio":""},
-            "TIPO_INCAPACIDAD":
-                {"tipo_incapacidad":""},
-            "PROBABLE_RIESGO_TRABAJO":
-                {"riesgo":"",
-                "trabajo":"",
-                "probable":"",
-                "riesgo_trabajo":"",
-                "posible_riesgo":"",
-                "posible_riesgo_trabajo":"",
-                "probable_riesgo_trabajo":""},
-            "RAMO_SEGURO":
-                {"seguro":"",
-                "ramo":"",
-                "ramo_seguro":"",
-                "ramo_de_seguro":""},
-            "FECHA_APARTIR":
-                {"partir":"",
-                "a_partir":"",
-                "a_partir_de":"",
-                "inicio":"",
-                "incapacidad":"",
-                "inicio_incapacidad":""},
-            "FECHA_EXPEDIDO":
-                {"expedido":"",
-                "expedido_el":""},
-            "DIAS_AUTORIZADOS":
-                {"numero":"",
-                "dias":"",
-                "autorizados":"",
-                "dias_autorizados_letra":"",
-                "numero_dias_autorizados":""}
+        "IMSS": {
+            "SERIE_FOLIO": {
+                "serie": "",
+                "folio": "",
+                "serie_y_folio": "",
+                "serie_folio": "",
+            },
+            "TIPO_INCAPACIDAD": {"tipo_incapacidad": ""},
+            "PROBABLE_RIESGO_TRABAJO": {
+                "riesgo": "",
+                "trabajo": "",
+                "probable": "",
+                "riesgo_trabajo": "",
+                "posible_riesgo": "",
+                "posible_riesgo_trabajo": "",
+                "probable_riesgo_trabajo": "",
+            },
+            "RAMO_SEGURO": {
+                "seguro": "",
+                "ramo": "",
+                "ramo_seguro": "",
+                "ramo_de_seguro": "",
+            },
+            "FECHA_APARTIR": {
+                "partir": "",
+                "a_partir": "",
+                "a_partir_de": "",
+                "inicio": "",
+                "incapacidad": "",
+                "inicio_incapacidad": "",
+            },
+            "FECHA_EXPEDIDO": {"expedido": "", "expedido_el": ""},
+            "DIAS_AUTORIZADOS": {
+                "numero": "",
+                "dias": "",
+                "autorizados": "",
+                "dias_autorizados_letra": "",
+                "numero_dias_autorizados": "",
+            },
         },
-        "INFONAVIT": {#hay dos tipos: altas de credito/suspension
+        "INFONAVIT": {  # hay dos tipos: altas de credito/suspension
             # {"#Numero de empleado"},#Viene en el nombre del archivo
-            "TITULO_DOCUMENTO": #solo para altas de credito
-                {"aviso_para_retencion_de_descuentos":"",
-                 "retencion_de_descuentos":"",
-                 "inicio_tramite":"",
-                 "inicio_de_tramite":"",
-                 "acuse_de_notificacion_de_inicio_de_tramite":"",
-                 "notificacion_de_inicio_de_tramite":""},
-            "FECHA":#extraer mes y año
-                {"fecha":"",
-                 "fecha_recepcion":"",
-                 "fecha_de_recepcion":""},
-            "NUMERO_DE_CREDITO":
-                {"numero_de_credito":"",
-                "numero":"",
-                "credito":"",
-                "numero_credito":""},
-            "CANTIDAD_DE_DESCUENTO":
-                {"descuento_mensual":"",
-                "porcentaje":"",
-                "pesos":"",
-                "factor_de_descuento":"",
-                "factor_descuento":"",
-                "descuento":"",
-                "factor_de_cuota_en_vsm":"",
-                "cuota_en_vsm":"",
-                "factor_cuota_vsm":"",
-                "cuota_vsm":"",
-                "monto_de_descuento":"",
-                "monto_descuento":""},
-            "MOTIVO": #solo para cuando son suspensiones
-                {"aviso_suspension":"",
-                "aviso_de_suspension":"",
-                "aviso_de_suspension_de_descuentos":"",
-                "suspension_de_descuentos":"",
-                "suspension_descuentos":""}
+            "TITULO_DOCUMENTO": {  # solo para altas de credito
+                "aviso_para_retencion_de_descuentos": "",
+                "retencion_de_descuentos": "",
+                "inicio_tramite": "",
+                "inicio_de_tramite": "",
+                "acuse_de_notificacion_de_inicio_de_tramite": "",
+                "notificacion_de_inicio_de_tramite": "",
+            },
+            "FECHA": {  # extraer mes y año
+                "fecha": "",
+                "fecha_recepcion": "",
+                "fecha_de_recepcion": "",
+            },
+            "NUMERO_DE_CREDITO": {
+                "numero_de_credito": "",
+                "numero": "",
+                "credito": "",
+                "numero_credito": "",
+            },
+            "CANTIDAD_DE_DESCUENTO": {
+                "descuento_mensual": "",
+                "porcentaje": "",
+                "pesos": "",
+                "factor_de_descuento": "",
+                "factor_descuento": "",
+                "descuento": "",
+                "factor_de_cuota_en_vsm": "",
+                "cuota_en_vsm": "",
+                "factor_cuota_vsm": "",
+                "cuota_vsm": "",
+                "monto_de_descuento": "",
+                "monto_descuento": "",
+            },
+            "MOTIVO": {  # solo para cuando son suspensiones
+                "aviso_suspension": "",
+                "aviso_de_suspension": "",
+                "aviso_de_suspension_de_descuentos": "",
+                "suspension_de_descuentos": "",
+                "suspension_descuentos": "",
+            },
         },
         "SAT": {
-            "RFC":
-                {"rfc":""},
-            "CURP":
-                {"curp":"",
-                 "r[A-Z]{4}[0-9]{6}[H,M][A-Z]{5}[A-Z0-9]{2}":""},
-            "NOMBRE":
-                {"nombre s":"",
-                 "nombre":""},
-            "PRIMER_APELLIDO":
-                {"primer":"",
-                "primer_apellido":""},
-            "SEGUNDO_APELLIDO":
-                {"segundo":"",
-                "segundo_apellido":""},
-            "CODIGO_POSTAL":
-                {"codigo":"",
-                "postal":"",
-                "codigo_postal":"",
-                "rPOSTAL\s?:?(\d{5})":""}
+            "RFC": {"rfc": ""},
+            "CURP": {"curp": "", "r[A-Z]{4}[0-9]{6}[H,M][A-Z]{5}[A-Z0-9]{2}": ""},
+            "NOMBRE": {"nombre s": "", "nombre": ""},
+            "PRIMER_APELLIDO": {"primer": "", "primer_apellido": ""},
+            "SEGUNDO_APELLIDO": {"segundo": "", "segundo_apellido": ""},
+            "CODIGO_POSTAL": {
+                "codigo": "",
+                "postal": "",
+                "codigo_postal": "",
+                "rPOSTAL\s?:?(\d{5})": "",
+            },
         },
     }
 
@@ -206,109 +207,127 @@ def json_extraction(json_data=any, type_doc=str)->dict:
             bool_nested_dict = True
 
     # Buscar coincidencias en el Diccionario/JSON
-    for main_key,sub_keys in informacion_extraida.items():
+    for main_key, sub_keys in informacion_extraida.items():
         for sub_key in sub_keys.keys():
             if bool_nested_dict == False:
                 if json_data.get(sub_key.upper()):
-                    informacion_extraida[main_key][sub_key]=json_data.get(sub_key.upper()).strip() 
-                elif sub_key.startswith('r'):
+                    informacion_extraida[main_key][sub_key] = json_data.get(
+                        sub_key.upper()
+                    ).strip()
+                elif sub_key.startswith("r"):
                     patron = sub_key[1:]
-                    exp_compilada = re.compile(r'(?:'+patron+')')
+                    exp_compilada = re.compile(r"(?:" + patron + ")")
                     temp_string = str(json_data)
                     coincidencias = exp_compilada.search(temp_string)
                     if coincidencias != None:
-                        informacion_extraida[main_key][sub_key]= coincidencias.group()
-                else: 
-                    informacion_extraida[main_key][sub_key]="NA"
+                        informacion_extraida[main_key][sub_key] = coincidencias.group()
+                else:
+                    informacion_extraida[main_key][sub_key] = "NA"
                     patron = re.escape(sub_key.upper())
                     exp_compilada = re.compile(patron)
                     for keyJson in json_data.keys():
                         coincidencias = exp_compilada.search(keyJson)
                         if coincidencias != None:
-                            informacion_extraida[main_key][sub_key]= json_data.get(keyJson)
+                            informacion_extraida[main_key][sub_key] = json_data.get(
+                                keyJson
+                            )
                             break
             elif bool_nested_dict == True:
-                for clave,nest_clave in json_data.items():
-                    if isinstance(nest_clave,dict):
+                for clave, nest_clave in json_data.items():
+                    if isinstance(nest_clave, dict):
                         if json_data[clave].get(sub_key.upper()):
-                            informacion_extraida[main_key][sub_key]=json_data[clave].get(sub_key.upper()).strip()
+                            informacion_extraida[main_key][sub_key] = (
+                                json_data[clave].get(sub_key.upper()).strip()
+                            )
                             break
-                        elif sub_key.startswith('r'):
+                        elif sub_key.startswith("r"):
                             patron = sub_key[1:]
-                            exp_compilada = re.compile(r'(?:'+patron+')')
+                            exp_compilada = re.compile(r"(?:" + patron + ")")
                             temp_string = str(json_data[clave])
                             coincidencias = exp_compilada.search(temp_string)
                             if coincidencias != None:
-                                informacion_extraida[main_key][sub_key]= coincidencias.group()
-                        else: 
-                            informacion_extraida[main_key][sub_key]="NA"
+                                informacion_extraida[main_key][
+                                    sub_key
+                                ] = coincidencias.group()
+                        else:
+                            informacion_extraida[main_key][sub_key] = "NA"
                             patron = re.escape(sub_key.upper())
                             exp_compilada = re.compile(patron)
                             for keyJson in json_data[clave].keys():
                                 coincidencias = exp_compilada.search(keyJson)
                                 if coincidencias != None:
-                                    informacion_extraida[main_key][sub_key]= json_data[clave].get(keyJson)
-                                    flag=True
+                                    informacion_extraida[main_key][sub_key] = json_data[
+                                        clave
+                                    ].get(keyJson)
+                                    flag = True
                                     break
                     else:
                         if json_data.get(sub_key.upper()):
-                            informacion_extraida[main_key][sub_key]=json_data.get(sub_key.upper()).strip() 
+                            informacion_extraida[main_key][sub_key] = json_data.get(
+                                sub_key.upper()
+                            ).strip()
                             break
-                        elif sub_key.startswith('r'):
+                        elif sub_key.startswith("r"):
                             patron = sub_key[1:]
-                            exp_compilada = re.compile(r'(?:'+patron+')')
+                            exp_compilada = re.compile(r"(?:" + patron + ")")
                             temp_string = str(json_data)
                             coincidencias = exp_compilada.search(temp_string)
                             if coincidencias != None:
-                                informacion_extraida[main_key][sub_key]= coincidencias.group()
-                        else: 
-                            informacion_extraida[main_key][sub_key]="NA"
+                                informacion_extraida[main_key][
+                                    sub_key
+                                ] = coincidencias.group()
+                        else:
+                            informacion_extraida[main_key][sub_key] = "NA"
                             patron = re.escape(sub_key.upper())
                             exp_compilada = re.compile(patron)
                             for keyJson in json_data.keys():
                                 coincidencias = exp_compilada.search(keyJson)
                                 if coincidencias != None:
-                                    informacion_extraida[main_key][sub_key]=json_data.get(keyJson)
+                                    informacion_extraida[main_key][sub_key] = (
+                                        json_data.get(keyJson)
+                                    )
                                     break
-
 
     return informacion_extraida
 
 
-def txt_extraction(txt_str=str,type_doc=str)->dict:
+def txt_extraction(txt_str=str, type_doc=str) -> dict:
     # Limpiamos texto de entrada
     try:
         texto = txt_cleaning(txt_str)
     except Exception as e:
-        raise Exception (f"Error: {e}, fail attempting json_cleaning fuction...")
-        
+        raise Exception(f"Error: {e}, fail attempting json_cleaning fuction...")
+
     bool_tipo = False
     arr_coincidencias = {}
     # Definimos campos y patrones
     patrones_regulares = {
-        "IMSS":{
+        "IMSS": {
             "SERIE_FOLIO": [
                 "SERIE\s?\|?Y\s?\|?FOLIO\s?\|?(.*?)\|",
                 "SERIE\s?\|?FOLIO\s?\|?(.*?)\|",
-                "SERIE\s?\|?(.*?)\|"],
+                "SERIE\s?\|?(.*?)\|",
+            ],
             "TIPO_INCAPACIDAD": [
                 "TIPO\s?\|?INCAPACIDAD\s?\|?(.*?)\|",
-                "INCAPACIDAD\s?\|?(.*?)\|"],
+                "INCAPACIDAD\s?\|?(.*?)\|",
+            ],
             "RAMO_SEGURO": [
                 "RAMO\s?\|?DE\s?\|?SEGURO\s?\|?(.*?)\|?(.*?)\|",
-                "SEGURO\s?\|?(.*?)\s?\|?(.*?)\|"],
-            "FECHA_APARTIR": [
-                "PARTIR\s?\|?DEL\s?\|?(.*?)\|"],
-            "FECHA_EXPEDIDO": [
-                "EXPEDIDO\s?\|?EL\s?\|?(.*?)\|"],
+                "SEGURO\s?\|?(.*?)\s?\|?(.*?)\|",
+            ],
+            "FECHA_APARTIR": ["PARTIR\s?\|?DEL\s?\|?(.*?)\|"],
+            "FECHA_EXPEDIDO": ["EXPEDIDO\s?\|?EL\s?\|?(.*?)\|"],
             "PROBABLE_RIESGO_TRABAJO": [
                 "RIESGO\s?\|?TRABAJO\s?\|?(.*?)\|",
-                "RIESGO\s?\|?DE\s?\|?TRABAJO\s?\|?(.*?)\|"],
+                "RIESGO\s?\|?DE\s?\|?TRABAJO\s?\|?(.*?)\|",
+            ],
             "DIAS_AUTORIZADOS": [
                 "DIAS\s?\|?AUTORIZADOS\s?\|?\(\|?LETRA\|?\)\s?\|?(.*?)\|",
-                "DIAS\s?\|?AUTORIZADOS\s?\|?(.*?)\|"]
+                "DIAS\s?\|?AUTORIZADOS\s?\|?(.*?)\|",
+            ],
         },
-        "INFONAVIT":{
+        "INFONAVIT": {
             "TITULO_DOCUMENTO": [
                 "AVISO\s?\|?PARA\s?\|?RETENCION\s?\|?DE\s?\|?DESCUENTOS",
                 "RETENCION\s?\|?DE\s?\|?DESCUENTOS",
@@ -319,7 +338,7 @@ def txt_extraction(txt_str=str,type_doc=str)->dict:
             ],
             "FECHA": [
                 "FECHA\s?\|?:?\s?\|?(\d{2}\/\d{2}\/\d{4})\|?",
-                "\s?\|?(\d{2}\/\d{2}\/\d{4})\s?\|?"
+                "\s?\|?(\d{2}\/\d{2}\/\d{4})\s?\|?",
             ],
             "NUMERO_DE_CREDITO": [
                 "NUMERO\s?\|?DE\s?\|?CREDITO\s?\|?:?\s?\|?(\d)+\|?",
@@ -338,7 +357,7 @@ def txt_extraction(txt_str=str,type_doc=str)->dict:
                 "PESOS\s?\|?:?\s?\|?(.*?)\|",
                 "FACTOR\s?\|?DE\s?\|?DESCUENTO\s?\|?:?\s?\|?(.*?)\|",
                 "FACTOR\s?\|?DESCUENTO\s?\|?:?\s?\|?(.*?)\|",
-                "DESCUENTO\s?\|?:?\s?\|?(.*?)\|"
+                "DESCUENTO\s?\|?:?\s?\|?(.*?)\|",
             ],
             "MOTIVO": [
                 "AVISO\s?\|?DE\s?\|?SUSPENSION\s?\|?DE\s?\|?DESCUENTOS",
@@ -346,37 +365,43 @@ def txt_extraction(txt_str=str,type_doc=str)->dict:
                 "AVISO\s?\|?DE\s?\|?SUSPENSION",
                 "AVISO\s?\|?SUSPENSION",
                 "SUSPENSION\s?\|?DESCUENTOS",
-                "SUSPENSION"
-            ]
+                "SUSPENSION",
+            ],
         },
-        "SAT":{
-            "RFC":
-                ["RFC\|?\s?:?\s?\|?([A-Z]{3,4}[0-9]{6}[A-Z0-9]{3})\|?",
-                 "RFC\|?\s?:?\|?(.*?)\|",
-                 "\s?\|?([A-Z]{3,4}[0-9]{6}[A-Z0-9]{3})\s?\|?"],
-            "CURP":
-                ["CURP\|?\s?:?\s?\|?([A-Z]{4}[0-9]{6}[H,M][A-Z]{5}[A-Z0-9]{2})\|?",
-                 "CURP\|?\s?:?\|?(.*?)\|",
-                 "\s?\|?([A-Z]{4}[0-9]{6}[H,M][A-Z]{5}[A-Z0-9]{2})\s?\|?"],
-            "NOMBRE":
-                ["NOMBRE\|?\(S\)?:?\|?(.*?)\|",
-                 "NOMBRE\|?\(S\)?:?\s?\|?([A-Z']+(\s[A-Z']+)*)\|?",
-                 "NOMBRE\|?\(S\)?:?\s?\|?([A-Za-z']+(\s[A-Za-z']+)*)\|?"],
-            "PRIMER_APELLIDO":
-                ["PRIMER\|?\s?:?\s?\|?([A-Z]+)?\:?\s?\|?([A-Z']+(\s[A-Z']+)*)\|?",
-                 "PRIMER\s?\|?APELLIDO\|?\s?:?\s?\|?([A-Z']+(\s[A-Z']+)*)\|?"],
-            "SEGUNDO_APELLIDO":
-                ["SEGUNDO\|?\s?:?\s?\|?([A-Z]+)?\:?\s?\|?([A-Z']+(\s[A-Z']+)*)\|?",
-                "SEGUNDO\s?\|?APELLIDO\|?\s?:?\s?\|?([A-Z']+(\s[A-Z']+)*)\|?"],
-            "CODIGO_POSTAL":
-                ["CODIGO\s?([A-Z]+)?\|?\s?:?\|?\s?(\d{5})\|?",
-                 "POSTAL\|?\s?:?\s?\|?(\d{5})\|?",
-                 "CODIGO\|?\s?POSTAL\|?\s?:?\|?\s?(\d{5})\|?",
-                 "CODIGO\|?\s?POSTAL\|?\s?:?\|?\s?(.*?)\|",
-                 "\s?\|?(\d{5})\s?\|?"]
-        }
+        "SAT": {
+            "RFC": [
+                "RFC\|?\s?:?\s?\|?([A-Z]{3,4}[0-9]{6}[A-Z0-9]{3})\|?",
+                "RFC\|?\s?:?\|?(.*?)\|",
+                "\s?\|?([A-Z]{3,4}[0-9]{6}[A-Z0-9]{3})\s?\|?",
+            ],
+            "CURP": [
+                "CURP\|?\s?:?\s?\|?([A-Z]{4}[0-9]{6}[H,M][A-Z]{5}[A-Z0-9]{2})\|?",
+                "CURP\|?\s?:?\|?(.*?)\|",
+                "\s?\|?([A-Z]{4}[0-9]{6}[H,M][A-Z]{5}[A-Z0-9]{2})\s?\|?",
+            ],
+            "NOMBRE": [
+                "NOMBRE\|?\(S\)?:?\|?(.*?)\|",
+                "NOMBRE\|?\(S\)?:?\s?\|?([A-Z']+(\s[A-Z']+)*)\|?",
+                "NOMBRE\|?\(S\)?:?\s?\|?([A-Za-z']+(\s[A-Za-z']+)*)\|?",
+            ],
+            "PRIMER_APELLIDO": [
+                "PRIMER\|?\s?:?\s?\|?([A-Z]+)?\:?\s?\|?([A-Z']+(\s[A-Z']+)*)\|?",
+                "PRIMER\s?\|?APELLIDO\|?\s?:?\s?\|?([A-Z']+(\s[A-Z']+)*)\|?",
+            ],
+            "SEGUNDO_APELLIDO": [
+                "SEGUNDO\|?\s?:?\s?\|?([A-Z]+)?\:?\s?\|?([A-Z']+(\s[A-Z']+)*)\|?",
+                "SEGUNDO\s?\|?APELLIDO\|?\s?:?\s?\|?([A-Z']+(\s[A-Z']+)*)\|?",
+            ],
+            "CODIGO_POSTAL": [
+                "CODIGO\s?([A-Z]+)?\|?\s?:?\|?\s?(\d{5})\|?",
+                "POSTAL\|?\s?:?\s?\|?(\d{5})\|?",
+                "CODIGO\|?\s?POSTAL\|?\s?:?\|?\s?(\d{5})\|?",
+                "CODIGO\|?\s?POSTAL\|?\s?:?\|?\s?(.*?)\|",
+                "\s?\|?(\d{5})\s?\|?",
+            ],
+        },
     }
-    
+
     if type_doc == "":
         return "You need to defined the type of document..."
 
@@ -387,7 +412,7 @@ def txt_extraction(txt_str=str,type_doc=str)->dict:
 
     if bool_tipo == False:
         return "The type of document does not exist..."
-    
+
     # Buscar coincidencias en el texto
     for key, pat in patrones.items():
         arr_coincidencias[key] = {}
@@ -405,14 +430,13 @@ def txt_extraction(txt_str=str,type_doc=str)->dict:
                 patron = re.compile(r"(?:" + pat2 + ")")
                 coincidencias = patron.search(texto)
                 if coincidencias:
-                    new_value = {str(i):coincidencias.group()}
+                    new_value = {str(i): coincidencias.group()}
                     arr_coincidencias[key].update(new_value)
                 else:
-                    new_value = {str(i):"NA"}
+                    new_value = {str(i): "NA"}
                     arr_coincidencias[key].update(new_value)
 
     return arr_coincidencias
-
 
 
 # #%% TEST TXT SIN DELIMITADOR '|'-----------------------------
@@ -444,7 +468,7 @@ def txt_extraction(txt_str=str,type_doc=str)->dict:
 # print("\nInformación extraída:")
 # print(json.dumps(informacion_extraida,ensure_ascii=False,indent=2))
 
-#%% TEST FINAL
+# %% TEST FINAL
 """
 folder_base_path = os.getcwd()+'/3_text_extracted'
 output_folder_path = os.getcwd()+'/4_results'
@@ -478,7 +502,7 @@ for i in range(5,7):
     with open(file_path_output, "w") as file:
         file.write(json_content)
 """
-    
+
 """SAT
 for i in range(7,11):
     file_path_input = os.path.join(folder_base_path, str(i)+'.txt')
