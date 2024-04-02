@@ -6,6 +6,7 @@ import os
 from openai import OpenAI
 from utils.utils import Utils
 from utils.file_utils import FileUtils
+
 # OpenAI API Key
 OpenAI.api_key = os.environ["OPENAI_API_KEY"]
 
@@ -30,7 +31,6 @@ def encode_image(image_path):
 
 
 def ocr_openai_vision(image_path, output_folder):
-
     filename, file_extension = os.path.splitext(image_path)
     file_extension = file_extension.lstrip(".")
     print(f"Processing image: {image_path} with OpenAI Vision API.")
@@ -75,7 +75,7 @@ def ocr_openai_vision(image_path, output_folder):
     # Extract json content from response
     json_string = response.choices[0].message.content
     json_string = json_string.replace("```json\n", "").replace("\n```", "")
-    # json_data = Utils.to_dict(json_string) 
+    # json_data = Utils.to_dict(json_string)
     # json_data = json.loads(json_string)
     json_data = Utils.to_dict(json_string)
 

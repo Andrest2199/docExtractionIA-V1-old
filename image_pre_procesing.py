@@ -79,9 +79,7 @@ def get_images_from_pdf(file_path=str, output_folder_path=str) -> list:
                 file_name_procesed_pdf = (
                     f"{file_name_procesed}_{jj}_{image_file_object.name}"
                 )
-                file_path_output = (
-                    output_folder_path + "/" + file_name_procesed_pdf
-                )
+                file_path_output = output_folder_path + "/" + file_name_procesed_pdf
                 # Save the image in the output folder
                 saved_image = FileUtils.save(file_path_output, image_file_object.data)
                 imagepaths_from_pdf.append(file_path_output)
@@ -188,7 +186,9 @@ def convert_pdf_to_image(input_file, output_folder_path) -> list:
         images = convert_from_path(input_file)
         # Save pages as images in the pdf
         for i in range(len(images)):
-            output_path = output_folder_path  + "/" + filename + " page" + str(i) + ".jpeg"
+            output_path = (
+                output_folder_path + "/" + filename + " page" + str(i) + ".jpeg"
+            )
             path_to_image = images[i].save(output_path, "JPEG")
             print(images[i])
             print("Saved file:", path_to_image)

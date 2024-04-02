@@ -89,6 +89,7 @@ def get_job_results(client, job_id):
 
     return pages
 
+
 """"
 if __name__ == "__main__":
     # Document

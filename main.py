@@ -35,11 +35,10 @@ def process_text_file(text_file, doctype, extraction_method=str):
     text_file = os.path.join(text_extracted_folder, text_file)
     filename = os.path.basename(text_file)
 
-
     text_file_path = os.path.join(text_extracted_folder, text_file)
     if text_file.endswith(".txt"):
         file_content = FileUtils.read(text_file_path)
-    
+
         # regex method
         if extraction_method == "txt_extraction":
             extracted_text = txt_extraction(file_content, doctype)
@@ -73,7 +72,6 @@ def process_text_file(text_file, doctype, extraction_method=str):
 
 def process_image_files(procesed_images_list, ocr_method=str):
     for image in procesed_images_list:
-
         images_path = os.path.join(image_preprocessed_folder, image)
         # improve image quality
         # improve_image_quality(images_path, os.path.join(image_improved_folder, image))
@@ -82,7 +80,6 @@ def process_image_files(procesed_images_list, ocr_method=str):
     improved_images_list = FileUtils.create_list(image_improved_folder)
 
     for image in improved_images_list:
-
         # apply ocr openai vision
         images_path = os.path.join(image_improved_folder, image)
         if ocr_method == "openai":
@@ -172,7 +169,6 @@ def main(file_path=str, doctype=str) -> dict:
                 ]
 
                 for entity_method in entity_methods:
-
                     raw_text, values, recognition = process_text_file(
                         text_file, doctype, entity_method
                     )

@@ -138,6 +138,7 @@ def get_bounding_boxes(contours, mask, textImg):
 
     return int(min_x), int(min_y), int(max_x), int(max_y), cummTheta, ct
 
+
 def slope(x1, y1, x2, y2):
     if x1 == x2:
         return 0
@@ -158,7 +159,6 @@ def display(img, frameName="OpenCV Image"):
 
 
 def improve_image_quality(input_image_path, output_image_path):
-    
     filename = os.path.basename(input_image_path)
     output_image_path = os.path.join(output_image_path, filename)
     raw_image = cv2.imread(input_image_path)
