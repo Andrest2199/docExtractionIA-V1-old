@@ -61,11 +61,11 @@ def chat_completions_entity_extraction(file_path, data_inject_folder, type_doc):
 
     context_data_inyection += f"\nYou will recive a new raw text by the user. Your task is to analyse the raw text, recognize the entities to be extracted, and create a JSON with the relevant entities. Use the following format for the output JSON:\n\n"
     if type_doc == "IMSS":
-        context_data_inyection += '{\n"DIAS_AUTORIZADOS": STRING,\n"FECHA_APARTIR": DATE STRING,\n"FECHA_EXPEDIDO": DATE STRING,\n"PROBABLE_RIESGO_TRABAJO": SI/NO,\n"RAMO_SEGURO": STRING,\n"SERIE_FOLIO": STRING,\n"TIPO_INCAPACIDAD": STRING\n}'
+        context_data_inyection += '{\n"DIAS_AUTORIZADOS": STRING,\n"FECHA_A_PARTIR": DATE STRING,\n"FECHA_EXPEDIDO": DATE STRING,\n"PROBABLE_RIESGO_TRABAJO": STRING,\n"RAMO_DE_SEGURO": STRING,\n"SERIE_Y_FOLIO": STRING,\n"TIPO_INCAPACIDAD": STRING,\n "NUMERO_DE_SEGURIDAD_SOCIAL": STRING,\n"CURP": STRING,\n"NOMBRE_DEL_ASEGURADO": STRING,\n"CLAVE_PATRONAL": STRING,\n"NOMBRE_DEL_PATRON": STRING,\n}'
     if type_doc == "INFONAVIT":
-        context_data_inyection += '{\n"TITULO_DOCUMENTO": STRING,\n"CANTIDAD_DE_DESCUENTO": STRING,\n"FECHA": DATE STRING,\n"MOTIVO": ALTA/SUSPENSION,\n"NUMERO_DE_CREDITO": STRING\n}'
+        context_data_inyection += '{\n"TITULO": STRING,\n"DESCUENTO": STRING,\n"FECHA_EMISION": DATE STRING,\n"FECHA_RECEPCION": DATE STRING,\n"MOTIVO": ALTA/SUSPENSION,\n"NUMERO_DE_CREDITO": STRING,\n"FOLIO": STRING,\n"RFC":STRING,\n"NUMERO_DE_SEGURIDAD_SOCIAL": STRING,\n"RFC_PATRON": STRING,\n"NUMERO_DE_REGISTRO_PATRONAL": STRING,\n "RAZON_SOCIAL": STRING,\n}'
     if type_doc == "SAT":
-        context_data_inyection += '{\n"CODIGO_POSTAL": NUMBER,\n"CURP": STRING,\n"NOMBRE": STRING,\n"PRIMER_APELLIDO": STRING,\n"SEGUNDO_APELLIDO": STRING,\n"RFC": STRING,\n}'
+        context_data_inyection += '{\n"CODIGO_POSTAL": NUMBER,\n"CURP": STRING,\n"NOMBRES": STRING,\n"PRIMER_APELLIDO": STRING,\n"SEGUNDO_APELLIDO": STRING,\n"RFC": STRING,\n, "ESTATUS_EN_EL_PADRON": STRING,\n}'
     
     # Set system role
     system_content = {"role": "system", "content": context_data_inyection}
