@@ -1,0 +1,127 @@
+# %% openai chat completions
+
+import os
+from openai import OpenAI
+from utils.utils import Utils
+from utils.file_utils import FileUtils
+
+# OpenAI API Key
+OpenAI.api_key = os.environ["OPENAI_API_KEY"]
+
+# %% Define functions
+
+def chat_completions_entity_extraction(file_path, data_inject_folder, type_doc):
+    print(f"Processing text file: {file_path}")
+    """
+    -> text_extracted -> result 
+    Receives the extracted text to process and returns a JSON with the relevant fields.
+    """
+    # Set Data for system from folder 'Data inject'
+    context_data_inyection = ""
+    input_results_list = []
+    input_txt_list = []
+    txt_count = 0
+    results_count = 0
+    
+    # Retrieve files from 'Data Inject'
+    if type_doc == "IMSS":
+        data_inject_sub_folder = os.path.join(data_inject_folder, "IMSS")
+    elif type_doc == "INFONAVIT":
+        data_inject_sub_folder = os.path.join(data_inject_folder, "INFONAVIT")
+    elif type_doc == "SAT":
+        data_inject_sub_folder = os.path.join(data_inject_folder, "SAT")
+    else:
+        raise ValueError(
+            "Document type not recognized. Please provide a valid document type: IMSS, INFONAVIT, SAT"
+        )
+    all_data_inject_files = FileUtils.create_list(data_inject_sub_folder)
+    for file in all_data_inject_files:
+        if file.startswith("result"):
+            input_results_list.append(
+                FileUtils.read(os.path.join(data_inject_sub_folder, file))
+            )
+            results_count += 1
+        elif file.startswith("data"):
+            input_txt_list.append(
+                FileUtils.read(os.path.join(data_inject_sub_folder, file))
+            )
+            txt_count += 1
+        else:
+            print(f"File {file} not recognized")
+
+    # Set context data
+    context_data_inyection = f"Your role is to extract relevant information from raw text. In between XML tags you will find {txt_count} examples of raw text inputs and information extracted outputs with the relevant entities to be recognized. \n\n"
+
+    txt_count = 1
+    results_count = 1
+    for input_txt, input_result in zip(input_txt_list, input_results_list):
+        context_data_inyection += f"<raw_text_input_example_1{txt_count}>\n\n{input_txt}\n\n</raw_text_input_example_{txt_count}>\n\n<information_extracted_output_example_{results_count}>\n\n{input_result}\n\n</information_extracted_output_example_{results_count}>\n\n"
+        txt_count += 1
+        results_count += 1
+
+    context_data_inyection += f"\nYou will recive a new raw text by the user. Your task is to analyse the raw text, recognize the entities to be extracted, and create a JSON with the relevant entities. Use the following format for the output JSON:\n\n"
+    if type_doc == "IMSS":
+        context_data_inyection += '{\n"DIAS_AUTORIZADOS": STRING,\n"FECHA_A_PARTIR": DATE STRING,\n"FECHA_EXPEDIDO": DATE STRING,\n"PROBABLE_RIESGO_TRABAJO": STRING,\n"RAMO_DE_SEGURO": STRING,\n"SERIE_Y_FOLIO": STRING,\n"TIPO_INCAPACIDAD": STRING,\n "NUMERO_DE_SEGURIDAD_SOCIAL": STRING,\n"CURP": STRING,\n"NOMBRE_DEL_ASEGURADO": STRING,\n"CLAVE_PATRONAL": STRING,\n"NOMBRE_DEL_PATRON": STRING,\n}'
+    if type_doc == "INFONAVIT":
+        context_data_inyection += '{\n"TITULO": STRING,\n"DESCUENTO": STRING,\n"FECHA_EMISION": DATE STRING,\n"FECHA_RECEPCION": DATE STRING,\n"MOTIVO": ALTA/SUSPENSION,\n"NUMERO_DE_CREDITO": STRING,\n"FOLIO": STRING,\n"RFC":STRING,\n"NUMERO_DE_SEGURIDAD_SOCIAL": STRING,\n"RFC_PATRON": STRING,\n"NUMERO_DE_REGISTRO_PATRONAL": STRING,\n "RAZON_SOCIAL": STRING,\n}'
+    if type_doc == "SAT":
+        context_data_inyection += '{\n"CODIGO_POSTAL": NUMBER,\n"CURP": STRING,\n"NOMBRES": STRING,\n"PRIMER_APELLIDO": STRING,\n"SEGUNDO_APELLIDO": STRING,\n"RFC": STRING,\n, "ESTATUS_EN_EL_PADRON": STRING,\n}'
+    
+    # Set system role
+    system_content = {"role": "system", "content": context_data_inyection}
+    
+    # Create user content
+    try:
+        with open(file_path, encoding='utf-8') as file:
+            user_file = file.read()
+    except UnicodeDecodeError:
+        with open(file_path, encoding='ISO-8859-1') as file:
+            user_file = file.read()
+
+    user_content = {"role": "user", "content": user_file}
+
+    # TODO: Numero de tokens usados [guardar]
+    # num_tokens = FileUtils.num_tokens_from_messages(user_prompt,"gpt-3.5-turbo-0125")
+    # print (f"Tokens in User Prompt: {num_tokens}")
+    # num_tokens = FileUtils.num_tokens_from_messages(system_prompt,"gpt-3.5-turbo-0125")
+    # print (f"Tokens in System Prompt: {system_prompt}")
+
+    # Create instance of openAI client
+    client = OpenAI()
+
+    # Get response
+    response = client.chat.completions.create(
+        model="gpt-4-0125-preview",  # gpt-3.5-turbo-0125 #gpt-4-0125-preview, #gpt-4-vision-preview
+        messages=[
+            system_content,
+            user_content,
+        ],
+        max_tokens=4096,
+        response_format={ "type": "json_object" },
+    )
+
+    # Extract json content from response
+    json_string = response.choices[0].message.content
+    json_string = json_string.replace("```json\n", "").replace("\n```", "")
+
+    # Return json data
+    json_data = Utils.to_dict(json_string)
+
+    tokens_count_by_gpt = response.usage.prompt_tokens
+    print(f"Tokens count by API: {tokens_count_by_gpt}")
+    return json_data
+
+
+# %% TEST
+
+folder_base_path = os.getcwd()
+
+text_extracted_folder = folder_base_path + "/3_text_extracted"
+results_folder = folder_base_path + "/4_results"
+data_inject_folder = folder_base_path + "/data_inject"
+
+file_path = os.path.join(
+    text_extracted_folder, "40 CSF ELIZABETH HERNANDEZ.txt"
+)
+
+# %%
