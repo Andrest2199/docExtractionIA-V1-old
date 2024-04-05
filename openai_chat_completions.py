@@ -10,6 +10,7 @@ OpenAI.api_key = os.environ["OPENAI_API_KEY"]
 
 # %% Define functions
 
+
 def chat_completions_entity_extraction(file_path, data_inject_folder, type_doc):
     print(f"Processing text file: {file_path}")
     """
@@ -22,7 +23,7 @@ def chat_completions_entity_extraction(file_path, data_inject_folder, type_doc):
     input_txt_list = []
     txt_count = 0
     results_count = 0
-    
+
     # Retrieve files from 'Data Inject'
     if type_doc == "IMSS":
         data_inject_sub_folder = os.path.join(data_inject_folder, "IMSS")
@@ -61,21 +62,60 @@ def chat_completions_entity_extraction(file_path, data_inject_folder, type_doc):
 
     context_data_inyection += f"\nYou will recive a new raw text by the user. Your task is to analyse the raw text, recognize the entities to be extracted, and create a JSON with the relevant entities. Use the following format for the output JSON:\n\n"
     if type_doc == "IMSS":
-        context_data_inyection += '{\n"DIAS_AUTORIZADOS": STRING,\n"FECHA_A_PARTIR": DATE STRING,\n"FECHA_EXPEDIDO": DATE STRING,\n"PROBABLE_RIESGO_TRABAJO": STRING,\n"RAMO_DE_SEGURO": STRING,\n"SERIE_Y_FOLIO": STRING,\n"TIPO_INCAPACIDAD": STRING,\n "NUMERO_DE_SEGURIDAD_SOCIAL": STRING,\n"CURP": STRING,\n"NOMBRE_DEL_ASEGURADO": STRING,\n"CLAVE_PATRONAL": STRING,\n"NOMBRE_DEL_PATRON": STRING,\n}'
+        context_data_inyection += """
+    {
+        "SERIE_Y_FOLIO": STRING,
+        "TIPO_INCAPACIDAD": STRING,
+        "RAMO_DE_SEGURO": STRING,
+        "PROBABLE_RIESGO_TRABAJO": STRING,
+        "DIAS_AUTORIZADOS": STRING,
+        "FECHA_A_PARTIR": DATE STRING,
+        "FECHA_EXPEDIDO": DATE STRING,
+        "NUMERO_DE_SEGURIDAD_SOCIAL": STRING,
+        "CURP": STRING,
+        "NOMBRE_DEL_ASEGURADO": STRING,
+        "CLAVE_PATRONAL": STRING,
+        "NOMBRE_DEL_PATRON": STRING
+    }
+    """
     if type_doc == "INFONAVIT":
-        context_data_inyection += '{\n"TITULO": STRING,\n"DESCUENTO": STRING,\n"FECHA_EMISION": DATE STRING,\n"FECHA_RECEPCION": DATE STRING,\n"MOTIVO": ALTA/SUSPENSION,\n"NUMERO_DE_CREDITO": STRING,\n"FOLIO": STRING,\n"RFC":STRING,\n"NUMERO_DE_SEGURIDAD_SOCIAL": STRING,\n"RFC_PATRON": STRING,\n"NUMERO_DE_REGISTRO_PATRONAL": STRING,\n "RAZON_SOCIAL": STRING,\n}'
+        context_data_inyection += """
+    {
+        "TITULO": STRING,
+        "FOLIO": STRING,
+        "FECHA_EMISION": DATE STRING,
+        "FECHA_RECEPCION": DATE STRING,
+        "NUMERO_DE_CREDITO": STRING,
+        "DESCUENTO": STRING,
+        "RFC":STRING,
+        "NUMERO_DE_SEGURIDAD_SOCIAL": STRING,
+        "RFC_PATRON": STRING,
+        "NUMERO_DE_REGISTRO_PATRONAL": STRING,
+        "RAZON_SOCIAL": STRING
+        "SELLO": TRUE/FALSE,
+    }
+    """
     if type_doc == "SAT":
-        context_data_inyection += '{\n"CODIGO_POSTAL": NUMBER,\n"CURP": STRING,\n"NOMBRES": STRING,\n"PRIMER_APELLIDO": STRING,\n"SEGUNDO_APELLIDO": STRING,\n"RFC": STRING,\n, "ESTATUS_EN_EL_PADRON": STRING,\n}'
-    
+        context_data_inyection += """
+    {
+        "CODIGO_POSTAL": NUMBER,
+        "CURP": STRING,
+        "NOMBRES": STRING,
+        "PRIMER_APELLIDO": STRING,
+        "SEGUNDO_APELLIDO": STRING,
+        "RFC": STRING,
+        "ESTATUS_EN_EL_PADRON": STRING
+    }
+    """
     # Set system role
     system_content = {"role": "system", "content": context_data_inyection}
-    
+
     # Create user content
     try:
-        with open(file_path, encoding='utf-8') as file:
+        with open(file_path, encoding="utf-8") as file:
             user_file = file.read()
     except UnicodeDecodeError:
-        with open(file_path, encoding='ISO-8859-1') as file:
+        with open(file_path, encoding="ISO-8859-1") as file:
             user_file = file.read()
 
     user_content = {"role": "user", "content": user_file}
@@ -97,7 +137,7 @@ def chat_completions_entity_extraction(file_path, data_inject_folder, type_doc):
             user_content,
         ],
         max_tokens=4096,
-        response_format={ "type": "json_object" },
+        response_format={"type": "json_object"},
     )
 
     # Extract json content from response
@@ -120,8 +160,6 @@ text_extracted_folder = folder_base_path + "/3_text_extracted"
 results_folder = folder_base_path + "/4_results"
 data_inject_folder = folder_base_path + "/data_inject"
 
-file_path = os.path.join(
-    text_extracted_folder, "40 CSF ELIZABETH HERNANDEZ.txt"
-)
-
+file_path = os.path.join(text_extracted_folder, "40 CSF ELIZABETH HERNANDEZ.txt")
+chat_completions_entity_extraction(file_path, data_inject_folder, "SAT")
 # %%
