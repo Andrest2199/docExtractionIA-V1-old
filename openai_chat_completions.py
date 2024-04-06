@@ -7,6 +7,7 @@ from utils.file_utils import FileUtils
 
 # OpenAI API Key
 OpenAI.api_key = os.environ["OPENAI_API_KEY"]
+api_key = ""
 
 # %% Define functions
 
@@ -23,29 +24,29 @@ def chat_completions_entity_extraction(file_path, data_inject_folder, type_doc):
     input_txt_list = []
     txt_count = 0
     results_count = 0
-
+    all_data_inject_files = []
     # Retrieve files from 'Data Inject'
     if type_doc == "IMSS":
         data_inject_sub_folder = os.path.join(data_inject_folder, "IMSS")
+        all_data_inject_files = FileUtils.get_paths(data_inject_sub_folder, 2)
     elif type_doc == "INFONAVIT":
         data_inject_sub_folder = os.path.join(data_inject_folder, "INFONAVIT")
+        all_data_inject_files = FileUtils.get_paths(data_inject_sub_folder, 2)
     elif type_doc == "SAT":
         data_inject_sub_folder = os.path.join(data_inject_folder, "SAT")
+        all_data_inject_files = FileUtils.get_paths(data_inject_sub_folder, 1)
     else:
         raise ValueError(
             "Document type not recognized. Please provide a valid document type: IMSS, INFONAVIT, SAT"
         )
-    all_data_inject_files = FileUtils.create_list(data_inject_sub_folder)
+
     for file in all_data_inject_files:
-        if file.startswith("result"):
-            input_results_list.append(
-                FileUtils.read(os.path.join(data_inject_sub_folder, file))
-            )
+        file_name = os.path.basename(file)
+        if file_name.startswith("result"):
+            input_results_list.append(FileUtils.read(file))
             results_count += 1
-        elif file.startswith("data"):
-            input_txt_list.append(
-                FileUtils.read(os.path.join(data_inject_sub_folder, file))
-            )
+        elif file_name.startswith("data"):
+            input_txt_list.append(FileUtils.read(file))
             txt_count += 1
         else:
             print(f"File {file} not recognized")
@@ -127,7 +128,7 @@ def chat_completions_entity_extraction(file_path, data_inject_folder, type_doc):
     # print (f"Tokens in System Prompt: {system_prompt}")
 
     # Create instance of openAI client
-    client = OpenAI()
+    client = OpenAI(api_key=api_key)
 
     # Get response
     response = client.chat.completions.create(
@@ -162,4 +163,19 @@ data_inject_folder = folder_base_path + "/data_inject"
 
 file_path = os.path.join(text_extracted_folder, "40 CSF ELIZABETH HERNANDEZ.txt")
 chat_completions_entity_extraction(file_path, data_inject_folder, "SAT")
+
+
+file_path = os.path.join(
+    text_extracted_folder,
+    "685823 FLORES LOPEZ MARIA DEL CARMEN UH 989266 ok.jpg_procesed.jpeg_AWS_extract.txt",
+)
+chat_completions_entity_extraction(file_path, data_inject_folder, "IMSS")
+
+file_path = os.path.join(
+    text_extracted_folder,
+    "Aviso Suspensiขn de Descuentos Jesus Silva page0.jpeg_AWS_analyzed.json",
+)
+chat_completions_entity_extraction(file_path, data_inject_folder, "INFONAVIT")
+
+
 # %%
