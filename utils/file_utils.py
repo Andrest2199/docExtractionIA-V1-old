@@ -4,16 +4,20 @@ import json
 
 class FileUtils:
     @staticmethod
-    def get_paths(folder_path):
+    def get_paths(folder_path, depth=1):
         """
-        Get all file paths in a folder, ignoring .DS_Store and .gitignore files
+        Get all file paths in a folder up to a certain depth, ignoring .DS_Store and .gitignore files
+        parameters:
+            folder_path: str - path to the folder
+            depth: int (default=1) - depth of the folder to search
         """
         file_paths = []
         for root, dirs, files in os.walk(folder_path):
-            for file in files:
-                if ".DS_Store" not in file and ".gitignore" not in file:
-                    file_path = os.path.join(root, file)
-                    file_paths.append(file_path)
+            if root.count(os.sep) - folder_path.count(os.sep) < depth:
+                for file in files:
+                    if ".DS_Store" not in file and ".gitignore" not in file:
+                        file_path = os.path.join(root, file)
+                        file_paths.append(file_path)
         return file_paths
 
     @staticmethod
