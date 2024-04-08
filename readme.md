@@ -18,8 +18,4 @@ conda install numpy
 pip install opencv-python
 pip install deskew
 ```
-
-You will also need to install the Google Cloud SDK. You can find the installation instructions [here](https://cloud.google.com/sdk/docs/install).
-1) Install google CLI https://cloud.google.com/sdk/docs/install
-2) Install google vision python library https://cloud.google.com/vision/docs/libraries
-Additional documentation can be found [here](https://cloud.google.com/vision/docs/ocr).
+Also, you should create a file called `local_settings.py` in the src folder with the configs for the django project

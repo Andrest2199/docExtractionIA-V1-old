@@ -4,10 +4,10 @@ import os
 from openai import OpenAI
 from utils.utils import Utils
 from utils.file_utils import FileUtils
+from django.conf import settings
 
 # OpenAI API Key
-OpenAI.api_key = os.environ["OPENAI_API_KEY"]
-api_key = ""
+api_key = settings.OPENAI_API_KEY
 
 
 def chat_completions_entity_extraction(
@@ -113,7 +113,7 @@ def chat_completions_entity_extraction(
     user_content = {"role": "user", "content": extracted_text}
 
     # Create instance of openAI client
-    client = OpenAI()
+    client = OpenAI(api_key=api_key)
 
     # Get response
     response = client.chat.completions.create(
