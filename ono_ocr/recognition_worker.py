@@ -1,13 +1,19 @@
 import os
 from ono_ocr.models import Extraction
+from ono_ocr.utils import FileUtils
+from ono_ocr.document_handler import document_handler
+from django.conf import settings
 
-cwd = os.getcwd()
-image_raw_folder = os.path.join(cwd, "0_image_raw")
-image_preprocessed_folder = os.path.join(cwd, "1_image_preprocessed")
-image_improved_folder = os.path.join(cwd, "2_image_improved")
-text_extracted_folder = os.path.join(cwd, "3_text_extracted")
-results_folder = os.path.join(cwd, "4_results")
-data_inject_folder = os.path.join(cwd, "data_inject")
+base_dir = os.path.join(settings.BASE_DIR, "ono_ocr")
+
+image_raw_folder = os.path.join(base_dir, "0_image_raw")
+image_preprocessed_folder = os.path.join(base_dir, "1_image_preprocessed")
+# image_improved_folder = os.path.join(base_dir, "2_image_improved")
+# text_extracted_folder = os.path.join(base_dir, "3_text_extracted")
+# results_folder = os.path.join(base_dir, "4_results")
+# data_inject_folder = os.path.join(base_dir, "data_inject")
+
+# TODO: Add logic for two paged documents
 
 
 def recognition_worker(file_path=str, doctype=str) -> dict:
@@ -24,7 +30,13 @@ def recognition_worker(file_path=str, doctype=str) -> dict:
         raise ValueError(
             "Document type not recognized. Please provide a valid document type: IMSS, INFONAVIT, SAT"
         )
-    #     FileUtils.delete_from_folder(text_extracted_folder)
+    # FileUtils.delete_from_folder(text_extracted_folder)
+    FileUtils.delete_from_folder(image_raw_folder)
+
+    # copy file to image_raw_folder
+    file_path = FileUtils.copy_file(file_path, image_raw_folder)
+
+    text_extracted = document_handler(file_path, doctype)
 
     extraction = Extraction(
         doctype=doctype,
@@ -32,11 +44,10 @@ def recognition_worker(file_path=str, doctype=str) -> dict:
         ocr="openai_vision",
         entity_recognition="chat_completions",
         values={"value1": "value1", "value2": "value2"},
-        raw_text="raw_text_asdasdasd",
+        raw_text=text_extracted,
     )
-    data = extraction.to_json()
 
-    return data
+    return extraction.to_json()
 
     # methods = ["openai", "google", "aws_textract", "aws_parser"]
     # for method in methods:
