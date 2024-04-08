@@ -2,3 +2,5 @@
 /SAT/
 .DS_Store
 utils/__pycache__/
+/ono_ocr/__pycache__/
+/src/__pycache__/
