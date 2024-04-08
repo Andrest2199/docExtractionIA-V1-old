@@ -41,7 +41,7 @@ def recognition_worker(file_path=str, doctype=str) -> dict:
     extraction = Extraction(
         doctype=doctype,
         original_filename=os.path.basename(file_path),
-        ocr="openai_vision",
+        # ocr="openai_vision",
         entity_recognition="chat_completions",
         values={"value1": "value1", "value2": "value2"},
         raw_text=text_extracted,
