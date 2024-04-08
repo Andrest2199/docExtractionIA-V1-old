@@ -7,3 +7,4 @@ utils/__pycache__/
 /ono_ocr/utils/__pycache__
 ono_ocr/migrations/__pycache__/
 /src/local_settings.py
+/src/.env
