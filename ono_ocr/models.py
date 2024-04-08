@@ -15,7 +15,7 @@ class Extraction(models.Model):
         return {
             "doctype": self.doctype,
             "original_filename": self.original_filename,
-            "ocr": self.ocr,
+            # "ocr": self.ocr,
             "entity_recognition": self.entity_recognition,
             "values": self.values,
             "raw_text": self.raw_text,
