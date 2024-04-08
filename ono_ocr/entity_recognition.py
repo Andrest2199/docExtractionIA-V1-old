@@ -9,8 +9,6 @@ from utils.file_utils import FileUtils
 OpenAI.api_key = os.environ["OPENAI_API_KEY"]
 api_key = ""
 
-# %% Define functions
-
 
 def chat_completions_entity_extraction(
     extracted_text, data_inject_folder, type_doc
@@ -62,7 +60,7 @@ def chat_completions_entity_extraction(
         txt_count += 1
         results_count += 1
 
-    context_data_inyection += f"\nYou will recive a new raw text by the user. Your task is to analyse the raw text, recognize the entities to be extracted, and create a JSON with the relevant entities. Use the following format for the output JSON:\n\n"
+    context_data_inyection += "\nYou will recive a new raw text by the user. Your task is to analyse the raw text, recognize the entities to be extracted, and create a JSON with the relevant entities. Use the following format for the output JSON:\n\n"
     if type_doc == "IMSS":
         context_data_inyection += """
     {
@@ -112,21 +110,7 @@ def chat_completions_entity_extraction(
     # Set system role
     system_content = {"role": "system", "content": context_data_inyection}
 
-    # Create user content
-    # try:
-    #     with open(file_path, encoding="utf-8") as file:
-    #         user_file = file.read()
-    # except UnicodeDecodeError:
-    #     with open(file_path, encoding="ISO-8859-1") as file:
-    #         user_file = file.read()
-
     user_content = {"role": "user", "content": extracted_text}
-
-    # TODO: Numero de tokens usados [guardar]
-    # num_tokens = FileUtils.num_tokens_from_messages(user_prompt,"gpt-3.5-turbo-0125")
-    # print (f"Tokens in User Prompt: {num_tokens}")
-    # num_tokens = FileUtils.num_tokens_from_messages(system_prompt,"gpt-3.5-turbo-0125")
-    # print (f"Tokens in System Prompt: {system_prompt}")
 
     # Create instance of openAI client
     client = OpenAI()
@@ -150,5 +134,5 @@ def chat_completions_entity_extraction(
     json_data = Utils.to_dict(json_string)
 
     tokens_count_by_gpt = response.usage.prompt_tokens
-    print(f"Tokens count by API: {tokens_count_by_gpt}")
+
     return json_data
