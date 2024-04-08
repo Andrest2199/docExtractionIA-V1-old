@@ -7,7 +7,6 @@ from PIL import Image, ImageDraw
 
 from trp import Document
 
-folder_base_path = os.getcwd()
 
 """
 # Code samples https://github.com/aws-samples/amazon-textract-code-samples
@@ -88,6 +87,7 @@ def get_job_results(client, job_id):
             next_token = response["NextToken"]
 
     return pages
+
 
 """"
 if __name__ == "__main__":
