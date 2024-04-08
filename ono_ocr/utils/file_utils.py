@@ -1,4 +1,5 @@
 import os
+import shutil
 
 
 class FileUtils:
@@ -80,3 +81,29 @@ class FileUtils:
     def read(file_path):
         with open(file_path) as file:
             return file.read()
+
+    @staticmethod
+    def identify_file(file: str) -> str:
+        if file.endswith(".pdf"):
+            return "pdf"
+        elif file.endswith(".jpg") or file.endswith(".jpeg") or file.endswith(".png"):
+            return "image"
+        else:
+            return "other"
+
+    @staticmethod
+    def copy_file(source_path, destination_path):
+        """
+        Copy a file from source path to destination path
+        parameters:
+            source_path: str - path to the source file
+            destination_path: str - path to the destination file
+        """
+        try:
+            file_copied_path = shutil.copy2(source_path, destination_path)
+            return file_copied_path
+        except Exception as e:
+            print(
+                f"Failed to copy file from {source_path} to {destination_path}. Reason: {e}"
+            )
+            return False
