@@ -20,6 +20,6 @@ from django.urls import path
 from ono_ocr import views
 
 urlpatterns = [
-    # path("admin/", admin.site.urls),
+    path("admin/", admin.site.urls),
     path("ocr_recognize", views.ocr_recognize, name="ocr_recognize"),
 ]
