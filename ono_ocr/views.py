@@ -16,12 +16,7 @@ def ocr_recognize(request):
         data = recognition_worker(document_path, doctype)
 
         return JsonResponse(
-            {
-                "message": "Success",
-                "doc_path": document_path,
-                "doctype": doctype,
-                "data": data,
-            },
+            data,
             status=200,
         )
     except Exception as e:
