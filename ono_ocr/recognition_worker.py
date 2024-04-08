@@ -2,6 +2,7 @@ import os
 from ono_ocr.models import Extraction
 from ono_ocr.utils import FileUtils
 from ono_ocr.document_handler import document_handler
+from ono_ocr.entity_recognition import chat_completions_entity_extraction
 from django.conf import settings
 
 base_dir = os.path.join(settings.BASE_DIR, "ono_ocr")
@@ -11,9 +12,10 @@ image_preprocessed_folder = os.path.join(base_dir, "1_image_preprocessed")
 # image_improved_folder = os.path.join(base_dir, "2_image_improved")
 # text_extracted_folder = os.path.join(base_dir, "3_text_extracted")
 # results_folder = os.path.join(base_dir, "4_results")
-# data_inject_folder = os.path.join(base_dir, "data_inject")
+data_inject_folder = os.path.join(base_dir, "data_inject")
 
 # TODO: Add logic for two paged documents
+# TODO: return instructions in the api (system_role and user content)
 
 
 def recognition_worker(file_path=str, doctype=str) -> dict:
@@ -38,68 +40,17 @@ def recognition_worker(file_path=str, doctype=str) -> dict:
 
     text_extracted = document_handler(file_path, doctype)
 
+    fields_extracted = chat_completions_entity_extraction(
+        text_extracted, data_inject_folder, doctype
+    )
+
     extraction = Extraction(
         doctype=doctype,
         original_filename=os.path.basename(file_path),
         # ocr="openai_vision",
         entity_recognition="chat_completions",
-        values={"value1": "value1", "value2": "value2"},
+        values=fields_extracted,
         raw_text=text_extracted,
     )
 
     return extraction.to_json()
-
-    # methods = ["openai", "google", "aws_textract", "aws_parser"]
-    # for method in methods:
-    #     ocr = document_handler(file_path, doctype, method)
-    #     all_text_files = FileUtils.list_text_files(text_extracted_folder)
-
-    #     for text_file in all_text_files:
-    #         print("text file", text_file)
-    #         if text_file.endswith(".txt"):
-    #             entity_methods = [
-    #                 "txt_extraction",
-    #                 "chat_completions",
-    #             ]
-
-    #             for entity_method in entity_methods:
-    #                 raw_text, values, recognition = process_text_file(
-    #                     text_file, doctype, entity_method
-    #                 )
-    #                 data["plain text"] = Utils.decode_text(raw_text)
-    #                 data["values"] = Utils.decode_text(values)
-    #                 data["ocr"] = ocr
-    #                 data["entity_recognition"] = recognition
-
-    #                 data = Extraction.to_json(
-    #                     doctype=doctype,
-    #                     original_filename=os.path.basename(file_path),
-    #                     ocr="openai_vision",
-    #                     entity_recognition="chat_completions",
-    #                     values={"value1": "value1", "value2": "value2"},
-    #                     raw_text="raw_text_asdasdasd",
-    #                 )
-
-    #                 FileUtils.save(
-    #                     f"{results_folder}/{data['name'][:-4]}_{data['ocr']}_{data['entity_recognition']}.json",
-    #                     json.dumps(data, ensure_ascii=True, indent=2, sort_keys=True),
-    #                 )
-    #         elif text_file.endswith(".json"):
-    #             entity_methods = [
-    #                 "json_extraction",
-    #                 "chat_completions",
-    #             ]
-    #             for entity_method in entity_methods:
-    #                 raw_text, values, recognition = process_text_file(
-    #                     text_file, doctype, entity_method
-    #                 )
-    #                 data["plain text"] = Utils.decode_text(raw_text)
-    #                 data["values"] = Utils.decode_text(values)
-    #                 data["ocr"] = ocr
-    #                 data["entity_recognition"] = recognition
-    #                 FileUtils.save(
-    #                     f"{results_folder}/{data['name'][:-4]}_{data['ocr']}_{data['entity_recognition']}.json",
-    #                     json.dumps(data, ensure_ascii=True, indent=2, sort_keys=True),
-    #                 )
-    #     # TODO: call process to get system_accuracy forloop
-    # return data
