@@ -19,3 +19,7 @@ pip install opencv-python
 pip install deskew
 ```
 Also, you should create a file called `local_settings.py` in the src folder with the configs for the django project
+You can run wether with the local settings or the production settings. To run the project with the local settings, you should run the following command:
+```bash
+    python manage.py runserver --settings=src.local_settings
+```
