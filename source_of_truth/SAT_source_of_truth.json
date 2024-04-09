@@ -1,194 +1,219 @@
 {
   "CSF HECTOR DE JESUS SANCHEZ MENDOZA.pdf": {
-    "RFC": "SAMH890206M51",
+    "CODIGO_POSTAL": "03730",
     "CURP": "SAMH890206HGTNNC05",
-    "Nombre": "HECTOR DE JESUS",
-    "Primer_apellido": "SANCHEZ",
-    "Segundo_apellido": "MENDOZA",
-    "Codigo_postal": "03730"
+    "NOMBRES": "HECTOR DE JESUS",
+    "PRIMER_APELLIDO": "SANCHEZ",
+    "SEGUNDO_APELLIDO": "MENDOZA",
+    "RFC": "SAMH890206M51",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
+
   "CSF LUIS URIEL MONCADA GONZALEZ (1).pdf": {
-    "RFC": "MOGL841128P36",
+    "CODIGO_POSTAL": "22225",
     "CURP": "MOGL841128HNYNNS08",
-    "Nombre": "LUIS URIEL",
-    "Primer_apellido": "MONCADA",
-    "Segundo_apellido": "GONZALEZ",
-    "Codigo_postal": "22225"
+    "NOMBRES": "LUIS URIEL",
+    "PRIMER_APELLIDO": "MONCADA",
+    "SEGUNDO_APELLIDO": "GONZALEZ",
+    "RFC": "MOGL841128P36",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF ESPINOSA GOMEZ JOSE MANUEL.pdf": {
-    "RFC": "EIGM910623AT3",
+    "CODIGO_POSTAL": "88709",
     "CURP": "EIGM910623HTSSMN02",
-    "Nombre": "JOSE MANUEL",
-    "Primer_apellido": "ESPINOSA",
-    "Segundo_apellido": "GOMEZ",
-    "Codigo_postal": "88709"
+    "NOMBRES": "JOSE MANUEL",
+    "PRIMER_APELLIDO": "ESPINOSA",
+    "SEGUNDO_APELLIDO": "GOMEZ",
+    "RFC": "EIGM910623AT3",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "104 CSF MAYRA ALEJANDRA MARQUEZ.pdf": {
-    "RFC": "MAMM990130BX1",
+    "CODIGO_POSTAL": "93320",
     "CURP": "MAMM990130MVZRGY03",
-    "Nombre": "MAYRA ALEJANDRA",
-    "Primer_apellido": "MARQUEZ",
-    "Segundo_apellido": "MAGAÑA",
-    "Codigo_postal": "93320"
+    "NOMBRES": "MAYRA ALEJANDRA",
+    "PRIMER_APELLIDO": "MARQUEZ",
+    "SEGUNDO_APELLIDO": "MAGAÑA",
+    "RFC": "MAMM990130BX1",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF GUADALUPE MONSERRATH PACHECO BENAVIDES.pdf": {
-    "RFC": "BEPG981129QB3",
+    "CODIGO_POSTAL": "56356",
     "CURP": "BEPG981129MMCNCD00",
-    "Nombre": "GUADALUPE MONSERRATH",
-    "Primer_apellido": "BENAVIDES",
-    "Segundo_apellido": "PACHECO",
-    "Codigo_postal": "56356"
+    "NOMBRES": "GUADALUPE MONSERRATH",
+    "PRIMER_APELLIDO": "BENAVIDES",
+    "SEGUNDO_APELLIDO": "PACHECO",
+    "RFC": "BEPG981129QB3",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF JESUS MIGUEL SANCHEZ GARCIA.pdf": {
-    "RFC": "SAGJ840820157",
+    "CODIGO_POSTAL": "08230",
     "CURP": "SAGJ840820HDFNRS04",
-    "Nombre": "JESUS MIGUEL",
-    "Primer_apellido": "SANCHEZ",
-    "Segundo_apellido": "GARCIA",
-    "Codigo_postal": "08230"
+    "NOMBRES": "JESUS MIGUEL",
+    "PRIMER_APELLIDO": "SANCHEZ",
+    "SEGUNDO_APELLIDO": "GARCIA",
+    "RFC": "SAGJ840820157",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "42 CSF ENRIQUE ALVA.pdf": {
-    "RFC": "AANE840409ES6",
+    "CODIGO_POSTAL": "07080",
     "CURP": "AANE840409HDFLXN06",
-    "Nombre": "ENRIQUE",
-    "Primer_apellido": "ALVA",
-    "Segundo_apellido": "NUÑEZ",
-    "Codigo_postal": "07080"
+    "NOMBRES": "ENRIQUE",
+    "PRIMER_APELLIDO": "ALVA",
+    "SEGUNDO_APELLIDO": "NUÑEZ",
+    "RFC": "AANE840409ES6",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF JOSE JUAN ROMERO GIRON.pdf": {
-    "RFC": "ROGJ850113IK6",
+    "CODIGO_POSTAL": "04920",
     "CURP": "ROGJ850113HMCMJN08",
-    "Nombre": "JUAN JOSE",
-    "Primer_apellido": "ROMERO",
-    "Segundo_apellido": "GIJON",
-    "Codigo_postal": "04920"
+    "NOMBRES": "JUAN JOSE",
+    "PRIMER_APELLIDO": "ROMERO",
+    "SEGUNDO_APELLIDO": "GIJON",
+    "RFC": "ROGJ850113IK6",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF Georgina Romero.pdf": {
-    "RFC": "CORG970531753",
+    "CODIGO_POSTAL": "94315",
     "CURP": "CORG970531MVZNMR07",
-    "Nombre": "GEORGINA",
-    "Primer_apellido": "CONTRERAS",
-    "Segundo_apellido": "ROMERO",
-    "Codigo_postal": "94315"
+    "NOMBRES": "GEORGINA",
+    "PRIMER_APELLIDO": "CONTRERAS",
+    "SEGUNDO_APELLIDO": "ROMERO",
+    "RFC": "CORG970531753",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF VERONICA FRANCISCO COLMENERO.pdf": {
-    "RFC": "FACV9104193T0",
+    "CODIGO_POSTAL": "15620",
     "CURP": "FACV910419MGRRLR00",
-    "Nombre": "VERONICA",
-    "Primer_apellido": "FRANCISCO",
-    "Segundo_apellido": "COLMENERO",
-    "Codigo_postal": "15620"
+    "NOMBRES": "VERONICA",
+    "PRIMER_APELLIDO": "FRANCISCO",
+    "SEGUNDO_APELLIDO": "COLMENERO",
+    "RFC": "FACV9104193T0",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF Aleck.pdf": {
-    "RFC": "COJX031113MB8",
+    "CODIGO_POSTAL": "27280",
     "CURP": "CXJA031113HCLNMLA1",
-    "Nombre": "ALEKC KEVIN",
-    "Primer_apellido": "CONTRERAS",
-    "Segundo_apellido": "JIMENEZ",
-    "Codigo_postal": "27280"
+    "NOMBRES": "ALEKC KEVIN",
+    "PRIMER_APELLIDO": "CONTRERAS",
+    "SEGUNDO_APELLIDO": "JIMENEZ",
+    "RFC": "COJX031113MB8",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF 1230673 RAMOS RODRIGUEZ VICTOR RAMON.pdf": {
-    "RFC": "RARV920610PZ8",
+    "CODIGO_POSTAL": "83550",
     "CURP": "RARV920610HBSMDC05",
-    "Nombre": "VICTOR RAMON",
-    "Primer_apellido": "RAMOS",
-    "Segundo_apellido": "RODRIGUEZ",
-    "Codigo_postal": "83550"
+    "NOMBRES": "VICTOR RAMON",
+    "PRIMER_APELLIDO": "RAMOS",
+    "SEGUNDO_APELLIDO": "RODRIGUEZ",
+    "RFC": "RARV920610PZ8",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "122 CSF CAROLINA BAUTISTA.pdf": {
-    "RFC": "BABC960627AN9",
+    "CODIGO_POSTAL": "09230",
     "CURP": "BABC960627MDFTLR08",
-    "Nombre": "CAROLINA ELIZABETH",
-    "Primer_apellido": "BAUTISTA",
-    "Segundo_apellido": "BOLAOS",
-    "Codigo_postal": "09230"
+    "NOMBRES": "CAROLINA ELIZABETH",
+    "PRIMER_APELLIDO": "BAUTISTA",
+    "SEGUNDO_APELLIDO": "BOLAOS",
+    "RFC": "BABC960627AN9",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF SANDRA YOLANDA MARTINEZ ESCANDON.pdf": {
-    "RFC": "MAES8303143Q8",
+    "CODIGO_POSTAL": "02060",
     "CURP": "MAES830314MDFRSN03",
-    "Nombre": "SANDRA YOLANDA",
-    "Primer_apellido": "MARTINEZ",
-    "Segundo_apellido": "ESCANDON",
-    "Codigo_postal": "02060"
+    "NOMBRES": "SANDRA YOLANDA",
+    "PRIMER_APELLIDO": "MARTINEZ",
+    "SEGUNDO_APELLIDO": "ESCANDON",
+    "RFC": "MAES8303143Q8",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF MAYBE AVILA MANRIQUEZ.pdf": {
-    "RFC": "AIMM820904P52",
+    "CODIGO_POSTAL": "22203",
     "CURP": "AIMM820904MBCBNY07",
-    "Nombre": "MAYBE",
-    "Primer_apellido": "AVILA",
-    "Segundo_apellido": "MANRIQUEZ",
-    "Codigo_postal": "22203"
+    "NOMBRES": "MAYBE",
+    "PRIMER_APELLIDO": "AVILA",
+    "SEGUNDO_APELLIDO": "MANRIQUEZ",
+    "RFC": "AIMM820904P52",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF HECTOR DE JESUS SANCHEZ MENDOZA 2.pdf": {
-    "RFC": "NA",
-    "CURP": "NA",
-    "Nombre": "NA",
-    "Primer_apellido": "NA",
-    "Segundo_apellido": "NA",
-    "Codigo_postal": "NA"
+    "CODIGO_POSTAL": "NA",
+    "CURP": "SAMH890206HGTNNC05",
+    "NOMBRES": "HECTOR DE JESUS",
+    "PRIMER_APELLIDO": "SANCHEZ",
+    "SEGUNDO_APELLIDO": "MENDOZA",
+    "RFC": "SAMH890206M51",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "40 CSF ELIZABETH HERNANDEZ.pdf": {
-    "RFC": "HEPE970906Q27",
+    "CODIGO_POSTAL": "08400",
     "CURP": "HEPE970906MDFRTL00",
-    "Nombre": "ELIZABETH",
-    "Primer_apellido": "HERNANDEZ",
-    "Segundo_apellido": "PATIÑO",
-    "Codigo_postal": "08400"
+    "NOMBRES": "ELIZABETH",
+    "PRIMER_APELLIDO": "HERNANDEZ",
+    "SEGUNDO_APELLIDO": "PATIÑO",
+    "RFC": "HEPE970906Q27",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF OMA,,A HERNANDEZ GABRIEL.pdf": {
-    "RFC": "OAHG960704ER1",
+    "CODIGO_POSTAL": "54030",
     "CURP": "OAHG960704HMCMRB04",
-    "Nombre": "GABRIEL DE JESUS",
-    "Primer_apellido": "OMAÑA",
-    "Segundo_apellido": "HERNANDEZ",
-    "Codigo_postal": "54030"
+    "NOMBRES": "GABRIEL DE JESUS",
+    "PRIMER_APELLIDO": "OMAÑA",
+    "SEGUNDO_APELLIDO": "HERNANDEZ",
+    "RFC": "OAHG960704ER1",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF FERNANDO ARRIETA GONZALEZ.pdf": {
-    "RFC": "AIGF841102T8A",
+    "CODIGO_POSTAL": "15530",
     "CURP": "AIGF841102HDFRNR05",
-    "Nombre": "FERNANDO",
-    "Primer_apellido": "ARRIETA",
-    "Segundo_apellido": "GONZALEZ",
-    "Codigo_postal": "15530"
+    "NOMBRES": "FERNANDO",
+    "PRIMER_APELLIDO": "ARRIETA",
+    "SEGUNDO_APELLIDO": "GONZALEZ",
+    "RFC": "AIGF841102T8A",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF FRANCISCO JAVIER TELLEZ QUINTANAR.pdf": {
-    "RFC": "TEQF951215MFA",
+    "CODIGO_POSTAL": "07130",
     "CURP": "TEQF951215HDFLNR07",
-    "Nombre": "FRANCISCO JAVIER",
-    "Primer_apellido": "TELLEZ",
-    "Segundo_apellido": "QUINTANAR",
-    "Codigo_postal": "07130"
+    "NOMBRES": "FRANCISCO JAVIER",
+    "PRIMER_APELLIDO": "TELLEZ",
+    "SEGUNDO_APELLIDO": "QUINTANAR",
+    "RFC": "TEQF951215MFA",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF SALAZAR ZARSA CESAR DANIEL.pdf": {
-    "RFC": "SAZC891025129",
+    "CODIGO_POSTAL": "54805",
     "CURP": "SAZC891025HDFLRS05",
-    "Nombre": "CESAR DANIEL",
-    "Primer_apellido": "SALAZAR",
-    "Segundo_apellido": "ZARZA",
-    "Codigo_postal": "54805"
+    "NOMBRES": "CESAR DANIEL",
+    "PRIMER_APELLIDO": "SALAZAR",
+    "SEGUNDO_APELLIDO": "ZARZA",
+    "RFC": "SAZC891025129",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF RICARDO NAPOLEON GOMEZ BARRON.pdf": {
-    "RFC": "GOBR830601GG8",
+    "CODIGO_POSTAL": "54743",
     "CURP": "GOBR830601HMCMRC05",
-    "Nombre": "RICARDO NAPOLEON",
-    "Primer_apellido": "GOMEZ",
-    "Segundo_apellido": "BARRON",
-    "Codigo_postal": "54743"
+    "NOMBRES": "RICARDO NAPOLEON",
+    "PRIMER_APELLIDO": "GOMEZ",
+    "SEGUNDO_APELLIDO": "BARRON",
+    "RFC": "GOBR830601GG8",
+    "ESTATUS_EN_EL_PADRON": "NA"
   },
   "CSF CANSECO MARQUEZ JOSE MANUEL2.pdf": {
-    "RFC": "CAMM9903055K6",
+    "CODIGO_POSTAL": "45140",
     "CURP": "CAMM990305HJCNRN04",
-    "Nombre": "JOSE MANUEL",
-    "Primer_apellido": "CANSECO",
-    "Segundo_apellido": "MARQUEZ",
-    "Codigo_postal": "45140"
+    "NOMBRES": "JOSE MANUEL",
+    "PRIMER_APELLIDO": "CANSECO",
+    "SEGUNDO_APELLIDO": "MARQUEZ",
+    "RFC": "CAMM9903055K6",
+    "ESTATUS_EN_EL_PADRON": "ACTIVO"
   },
   "CSF EDUARDO BONILLA.pdf": {
-    "RFC": "BODA771209B68",
+    "CODIGO_POSTAL": "03023",
     "CURP": "BODA771209HMNNXD07",
-    "Nombre": "ADAN EDUARDO",
-    "Primer_apellido": "BONILLA",
-    "Segundo_apellido": "DUEÑAS",
-    "Codigo_postal": "03023"
+    "NOMBRES": "ADAN EDUARDO",
+    "PRIMER_APELLIDO": "BONILLA",
+    "SEGUNDO_APELLIDO": "DUEÑAS",
+    "RFC": "BODA771209B68",
+    "ESTATUS_EN_EL_PADRON": "REACTIVADO"
   }
 }
