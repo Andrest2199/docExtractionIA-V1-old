@@ -5,9 +5,6 @@ import os
 import boto3
 from PIL import Image, ImageDraw
 
-from trp import Document
-
-
 """
 # Code samples https://github.com/aws-samples/amazon-textract-code-samples
 
@@ -26,7 +23,6 @@ pip install amazon-textract-response-parser
 #     imageBytes = bytearray(document.read())
 
 # Amazon Textract client
-textract = boto3.client("textract")
 
 # Call Amazon Textract
 # response = textract.detect_document_text(Document={"Bytes": imageBytes})
@@ -239,44 +235,5 @@ def extract_text_from_image(image_path: str) -> str:
             text_corpus += item["Text"] + " "
 
     return text_corpus
-
-
-# Analyze document and create dictionary with fields
-def anlyse_text_and_create_dict(image_path: str) -> dict:
-    print("Analyzing text and creating dictionary with AWS...")
-
-    # Call Amazon Textract / analyze document
-    with open(image_path, "rb") as document:
-        response = textract.analyze_document(
-            Document={
-                "Bytes": document.read(),
-            },
-            FeatureTypes=["FORMS"],
-        )
-
-    # Parse response into document with awz-textract-response-parser
-    doc = Document(response)
-
-    # Create new empty dictionary
-    fields_dict = {}
-
-    # Iterate over each page in the document
-    for page in doc.pages:
-        print("Fields:")
-        # Iterate over each field in the form on the page
-        for field in page.form.fields:
-            # Print the key and value of the field
-            print("Key: {}, Value: {}".format(field.key, field.value))
-            # If both the key and value of the field exist
-            if field.key and field.value:
-                # Add the text of the key and value to the fields_dict dictionary
-                fields_dict[field.key.text] = field.value.text
-            # If only the key of the field exists
-            elif field.key:
-                # Add the text of the key to the fields_dict dictionary with a value of None
-                fields_dict[field.key.text] = None
-
-        return fields_dict
-
 
 # %%

@@ -2,8 +2,7 @@
 
 import os
 from openai import OpenAI
-from utils.utils import Utils
-from utils.file_utils import FileUtils
+from ono_ocr.utils import Utils,FileUtils
 from django.conf import settings
 
 # OpenAI API Key

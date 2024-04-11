@@ -5,7 +5,7 @@ from PIL import Image
 import os
 import shutil
 import json
-from utils.file_utils import FileUtils
+from ono_ocr.utils import FileUtils
 import re
 from pdf2image import convert_from_path
 

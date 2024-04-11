@@ -17,6 +17,9 @@ conda install anaconda::pillow
 conda install numpy
 pip install opencv-python
 pip install deskew
+pip install pdf2image
+pip install boto3
+pip install trp
 ```
 Also, you should create a file called `local_settings.py` in the src folder with the configs for the django project
 You can run wether with the local settings or the production settings. To run the project with the local settings, you should run the following command:
