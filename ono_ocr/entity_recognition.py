@@ -2,8 +2,7 @@
 
 import os
 from openai import OpenAI
-from utils.utils import Utils
-from utils.file_utils import FileUtils
+from ono_ocr.utils import Utils, FileUtils
 from django.conf import settings
 
 # OpenAI API Key
@@ -112,6 +111,11 @@ def chat_completions_entity_extraction(
 
     user_content = {"role": "user", "content": extracted_text}
 
+    # get the user content
+    user_role = user_content
+    # get the system role
+    system_role = system_content
+
     # Create instance of openAI client
     client = OpenAI(api_key=api_key)
 
@@ -132,6 +136,16 @@ def chat_completions_entity_extraction(
 
     # Return json data
     json_data = Utils.to_dict(json_string)
+    json_data.update(
+        {
+            "instructions": [
+                {"system_role": system_role},
+                {
+                    "user_role": user_role,
+                },
+            ]
+        }
+    )
 
     tokens_count_by_gpt = response.usage.prompt_tokens
 
