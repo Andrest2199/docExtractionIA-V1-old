@@ -76,7 +76,7 @@ numpy
 oauthlib==3.2.2
 onnxruntime==1.17.0
 openai==1.14.0
-opencv-python==4.9.0
+opencv-python==4.9.0.80
 opencv-python-headless==4.9.0.80
 opt-einsum==3.3.0
 packaging
@@ -127,7 +127,6 @@ tensorboard-data-server==0.7.2
 tensorflow==2.15.0
 tensorflow-estimator==2.15.0
 tensorflow-io-gcs-filesystem==0.34.0
-tensorflow-macos==2.15.0
 termcolor==2.4.0
 tifffile==2024.1.30
 tiktoken==0.6.0
