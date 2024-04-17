@@ -18,8 +18,12 @@ env = environ.Env(DEBUG=(bool, False))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(str(BASE_DIR / ".env"))
-OPENAI_API_KEY = env("OPENAI_API_KEY")
 
+# env variables
+OPENAI_API_KEY = env("OPENAI_API_KEY")
+AWS_ACCESS_KEY = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET = env("AWS_SECRET_ACCESS_KEY")
+AWS_REGION = env("AWS_REGION")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -31,10 +35,12 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 
 if DEBUG:
-    ALLOWED_HOSTS = ["127.0.0.1"]
+    ALLOWED_HOSTS = ["127.0.0.1", "44.197.174.193", "api.ono.starlight.science"]
 else:
-    ALLOWED_HOSTS = ['44.197.174.193']
-
+    ALLOWED_HOSTS = ['44.197.174.193', "api.ono.starlight.science"]
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # Application definition
 
@@ -82,10 +88,12 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
     "http://0.0.0.0:3000",
+    "https://api.ono.starlight.science/",
 ]
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
+    "https://api.ono.starlight.science/",
 ]
 
 # Database
