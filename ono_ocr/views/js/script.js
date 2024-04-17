@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         const formData = new FormData(form);
 
-        fetch("http://127.0.0.1:8000/ocr_recognize", {
+        fetch("https://api.ono.starlight.science/ocr_recognize", {
             method: "POST",
             body: formData
         })

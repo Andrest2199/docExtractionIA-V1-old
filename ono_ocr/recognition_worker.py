@@ -4,7 +4,7 @@ from ono_ocr.utils import FileUtils
 from ono_ocr.document_handler import document_handler
 from ono_ocr.entity_recognition import chat_completions_entity_extraction
 from django.conf import settings
-
+from base64 import b64encode, b64decode
 base_dir = os.path.join(settings.BASE_DIR, "ono_ocr")
 
 image_raw_folder = os.path.join(base_dir, "0_image_raw")
@@ -18,7 +18,9 @@ data_inject_folder = os.path.join(base_dir, "data_inject")
 # TODO: return instructions in the api (system_role and user content)
 
 
-def recognition_worker(file_path=str, doctype=str) -> dict:
+def recognition_worker(filename=str, doctype=str, file_base64=str) -> dict:
+
+    
     """
     Main function to process the document and extract the information from it.
     Args:
@@ -34,10 +36,11 @@ def recognition_worker(file_path=str, doctype=str) -> dict:
         )
     # FileUtils.delete_from_folder(text_extracted_folder)
     FileUtils.delete_from_folder(image_raw_folder)
-
-    # copy file to image_raw_folder
-    file_path = FileUtils.copy_file(file_path, image_raw_folder)
-
+    image = b64decode(file_base64)
+    file_path = FileUtils.save(image_raw_folder + "/" + filename, image)
+    
+    # file_path = FileUtils.copy_file(file_path, image_raw_folder)
+    # file_path = image_raw_folder + "/" + os.path.basename(file_path)
     text_extracted = document_handler(file_path, doctype)
 
     fields_extracted = chat_completions_entity_extraction(

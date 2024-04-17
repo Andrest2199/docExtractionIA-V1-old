@@ -21,5 +21,6 @@ from ono_ocr import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("index", views.index, name="index"),
     path("ocr_recognize", views.ocr_recognize, name="ocr_recognize"),
 ]

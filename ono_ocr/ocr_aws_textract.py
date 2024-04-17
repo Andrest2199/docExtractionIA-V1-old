@@ -4,7 +4,13 @@ import time
 import os
 import boto3
 from PIL import Image, ImageDraw
+from django.conf import settings
 
+aws_config = {
+    "aws_access_key_id": settings.AWS_ACCESS_KEY,
+    "aws_secret_access_key": settings.AWS_SECRET,
+    "region_name": settings.AWS_REGION,
+}
 """
 # Code samples https://github.com/aws-samples/amazon-textract-code-samples
 
@@ -219,7 +225,9 @@ img.save("redacted-{}".format(documentName))
 def extract_text_from_image(image_path: str) -> str:
     print("Extracting text from image with AWS...")
     # Amazon Textract client
-    textract = boto3.client("textract")
+    textract = boto3.client("textract", region_name=aws_config["region_name"],
+    aws_access_key_id=aws_config["aws_access_key_id"],
+    aws_secret_access_key=aws_config["aws_secret_access_key"])
 
     # Read document content
     with open(image_path, "rb") as document:

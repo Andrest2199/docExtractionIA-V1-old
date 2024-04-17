@@ -8,7 +8,7 @@ from ono_ocr.image_pre_procesing import (
 )
 from ono_ocr.improve_image_quality import improve_image_quality
 from ono_ocr.ocr_aws_textract import extract_text_from_image
-
+from base64 import b64encode
 
 from django.conf import settings
 
