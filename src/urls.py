@@ -17,10 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from ono_ocr import views
+from ono_ocr import views as ocr_views
+from ono_arrastre import views as arrastre_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("index", views.index, name="index"),
-    path("ocr_recognize", views.ocr_recognize, name="ocr_recognize"),
+    path("index", ocr_views.index, name="index"),
+    path("ocr_recognize", ocr_views.ocr_recognize, name="ocr_recognize"),
+    path("arrastre", arrastre_views.index, name="arrastre"),
 ]

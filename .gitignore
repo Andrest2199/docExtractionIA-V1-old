@@ -9,3 +9,5 @@ ono_ocr/migrations/__pycache__/
 /src/local_settings.py
 /src/.env
 .env
+
+ono_arrastre/__pycache__/
