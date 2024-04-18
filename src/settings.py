@@ -37,8 +37,8 @@ DEBUG = env("DEBUG")
 if DEBUG:
     ALLOWED_HOSTS = ["127.0.0.1", "44.197.174.193", "api.ono.starlight.science"]
 else:
-    ALLOWED_HOSTS = ['44.197.174.193', "api.ono.starlight.science"]
-SECURE_SSL_REDIRECT = True
+    ALLOWED_HOSTS = ["44.197.174.193", "api.ono.starlight.science"]
+SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "ono_ocr",
+    "ono_arrastre",
 ]
 
 MIDDLEWARE = [
@@ -69,7 +70,7 @@ ROOT_URLCONF = "src.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": ["templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -142,7 +143,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static/css"),
+    os.path.join(BASE_DIR, "static/js"),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 
 # Default primary key field type
