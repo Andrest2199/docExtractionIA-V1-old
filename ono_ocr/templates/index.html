@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Formulario de Carga</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" type="text/css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Formulario de Carga</h2>
+      <form id="uploadForm" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="fileInput">Seleccionar archivo (JPG o PDF)</label>
+          <input
+            type="file"
+            id="fileInput"
+            name="file"
+            accept=".jpg,.jpeg,.pdf"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="response">RESPONSE</label>
+          <textarea id="response" name="response" rows="5" cols="33">
+          </textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="tipo">TIPO DOCUMENTO</label>
+          <select id="tipo" name="tipo" required>
+            <option value="IMSS">IMSS</option>
+            <option value="INFONAVIT">INFONAVIT</option>
+            <option value="SAT">SAT</option>
+          </select>
+        </div>
+        <!-- <div class="form-group">
+          <label for="tipoIncapacidad">TIPO_INCAPACIDAD</label>
+          <input
+            type="text"
+            id="tipoIncapacidad"
+            name="TIPO_INCAPACIDAD"
+            required
+          />
+        </div> -->
+        <!-- Agregar más campos aquí -->
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
+    <script src="{% static 'script.js' %}"></script>
+  </body>
+</html>
