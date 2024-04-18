@@ -9,4 +9,3 @@ ono_ocr/migrations/__pycache__/
 /src/local_settings.py
 /src/.env
 .env
-/static/
