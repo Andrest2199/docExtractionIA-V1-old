@@ -8,6 +8,7 @@ from django.template import loader
 
 @csrf_exempt
 def index(request):
+    # return HttpResponse("Hello, world. You're at the ono_ocr index.")
     return render(request, "index.html")
 
 

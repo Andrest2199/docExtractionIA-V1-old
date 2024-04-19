@@ -26,3 +26,4 @@ urlpatterns = [
     path("ocr_recognize", ocr_views.ocr_recognize, name="ocr_recognize"),
     path("arrastre", arrastre_views.index, name="arrastre"),
 ]
+
