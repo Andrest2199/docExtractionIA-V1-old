@@ -8,35 +8,45 @@ document.addEventListener("DOMContentLoaded", function () {
     let file = formData.get("file");
 
     getBase64(file, (base64_file) => {
-      //   console.log("base64_file", base64_file);
-
       let requestBody = {
         filename: file.name,
         doctype: formData.get("tipo"),
         file_base64: base64_file,
       };
-      //   console.log(requestBody);
+
       fetch("http://127.0.0.1:8000/ocr_recognize", {
         method: "POST",
         body: JSON.stringify(requestBody),
         headers: {
           "Content-Type": "application/json",
-          //   "x-api-key":
-          //     "c2tfdGVzdF9hcGlfa2V5XzIwMjEgrupo-ono-92f3fdbd-633c-4487-bead-4c311a60a1c7",
         },
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then((data) => {
-          // Actualizar los divs con la información devuelta por la API
-          document.getElementById("response").innerText =
-            JSON.stringify(data) || "N/A";
-          // Agregar más campos aquí
+          // Update divs with the information returned by the API
+          let responseDiv = document.getElementById("response");
+          responseDiv.innerText = "";
+          for (let key in data) {
+            let newElement = document.createElement("pre"); // Changed 'p' to 'pre'
+            let value = data[key];
+            // Check if value is an object and if so, convert it to a string
+            if (typeof value === "object" && value !== null) {
+              value = JSON.stringify(value, null, 2); // Convert to JSON string with indentation
+            }
+            newElement.textContent = `${key}: ${value}`;
+            responseDiv.appendChild(newElement);
+          }
 
-          // Limpiar el formulario después de recibir la respuesta
+          // Clear the form after receiving the response
           form.reset();
         })
         .catch((error) => {
-          console.error("Error al enviar el formulario:", error);
+          console.error("Error when submitting the form:", error);
         });
     });
   });
