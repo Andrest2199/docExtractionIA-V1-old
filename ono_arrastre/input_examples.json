@@ -1,0 +1,110 @@
+{
+    "empleado": "0001",
+    "serie_folio": "TA000001",
+    "fecha_a_partir": "15/04/24",
+    "fecha_actual": "15/04/24",
+    "dias_autorizados": "CUATRO",
+    "tipo_incapacidad": "INICIAL",
+    "tipo_nomina": "QUINCENAL",
+    "historico_incapacidades": "list",
+    "tabla_periodos_ciclos": "list"
+},
+{
+    "empleado": "0002",
+    "serie_folio": "TB000002",
+    "fecha_a_partir": "12/04/24",
+    "fecha_actual": "15/04/24",
+    "dias_autorizados": "DOS",
+    "tipo_incapacidad": "INICIAL",
+    "tipo_nomina": "QUINCENAL",
+    "historico_incapacidades": "list",
+    "tabla_periodos_ciclos": "list"
+},
+{
+    "empleado": "0003",
+    "serie_folio": "TC000003",
+    "fecha_a_partir": "12/03/24",
+    "fecha_actual": "15/04/24",
+    "dias_autorizados": "TRES",
+    "tipo_incapacidad": "INICIAL",
+    "tipo_nomina": "QUINCENAL",
+    "historico_incapacidades": "list",
+    "tabla_periodos_ciclos": "list"
+},
+{
+    "empleado": "0004",
+    "serie_folio": "TD000004",
+    "fecha_a_partir": "15/04/24",
+    "fecha_actual": "15/04/24",
+    "dias_autorizados": "VEINTICINCO",
+    "tipo_incapacidad": "INICIAL",
+    "tipo_nomina": "SEMANAL",
+    "historico_incapacidades": "list",
+    "tabla_periodos_ciclos": "list"
+},
+{
+    "empleado": "0004",
+    "serie_folio": "TD000005",
+    "fecha_a_partir": "10/05/24",
+    "fecha_actual": "10/05/24",
+    "dias_autorizados": "CUATRO",
+    "tipo_incapacidad": "SUBSECUENTE",
+    "tipo_nomina": "SEMANAL",
+    "historico_incapacidades": "list",
+    "tabla_periodos_ciclos": "list"
+},
+{
+    "empleado": "0004",
+    "serie_folio": "TD000006",
+    "fecha_a_partir": "22/05/24",
+    "fecha_actual": "22/05/24",
+    "dias_autorizados": "TRES",
+    "tipo_incapacidad": "SUBSECUENTE", //pasaria a INICIAL
+    "tipo_nomina": "SEMANAL",
+    "historico_incapacidades": "list",
+    "tabla_periodos_ciclos": "list"
+},
+{
+    "empleado": "0005",
+    "serie_folio": "TE000007",
+    "fecha_a_partir": "15/04/24",
+    "fecha_actual": "15/04/24",
+    "dias_autorizados": "DIEZ",
+    "tipo_incapacidad": "INICIAL",
+    "tipo_nomina": "MENSUAL",
+    "historico_incapacidades": "list",
+    "tabla_periodos_ciclos": "list"
+},
+{
+    "empleado": "0006", //PREGUNTAR CASO DE ESTE EMPLEADO
+    "serie_folio": "TF000008",
+    "fecha_a_partir": "10/04/24",
+    "fecha_actual": "15/04/24",
+    "dias_autorizados": "DIEZ",
+    "tipo_incapacidad": "INICIAL", 
+    "tipo_nomina": "QUINCENAL",
+    "historico_incapacidades": "list",
+    "tabla_periodos_ciclos": "list"
+},
+{
+    "empleado": "0006", //PREGUNTAR CASO DE ESTE EMPLEADO
+    "serie_folio": "TF000009",
+    "fecha_a_partir": "15/04/24",
+    "fecha_actual": "15/04/24",
+    "dias_autorizados": "VEINTE",
+    "tipo_incapacidad": "SUBSECUENTE",
+    "tipo_nomina": "QUINCENAL",
+    "historico_incapacidades": "list",
+    "tabla_periodos_ciclos": "list"
+},
+{
+    "empleado": "0007",
+    "serie_folio": "TF000010",
+    "fecha_a_partir": "15/04/24",
+    "fecha_actual": "15/04/24",
+    "dias_autorizados": "NUEVE",
+    "tipo_incapacidad": "SUBSECUENTE",
+    "tipo_nomina": "QUINCENAL",
+    "historico_incapacidades": "list",
+    "tabla_periodos_ciclos": "list"
+}
