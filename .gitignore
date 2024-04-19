@@ -11,3 +11,5 @@ ono_ocr/migrations/__pycache__/
 .env
 
 ono_arrastre/__pycache__/
+
+ono_arrastre/migrations/__pycache__/
