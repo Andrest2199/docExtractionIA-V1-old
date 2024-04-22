@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
+    document.getElementById("loading").style.display = "flex";
 
     const formData = new FormData(form);
     let file = formData.get("file");
@@ -19,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         body: JSON.stringify(requestBody),
         headers: {
           "Content-Type": "application/json",
+          "x-api-key": apiKey,
         },
       })
         .then((response) => {
@@ -28,6 +30,9 @@ document.addEventListener("DOMContentLoaded", function () {
           return response.json();
         })
         .then((data) => {
+          document.getElementById("loading").style.display = "none";
+          document.getElementById("loading").style.display = "none";
+
           // Update divs with the information returned by the API
           let responseDiv = document.getElementById("response");
           responseDiv.innerText = "";
@@ -46,6 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
           form.reset();
         })
         .catch((error) => {
+          document.getElementById("loading").style.display = "none";
+
           console.error("Error when submitting the form:", error);
         });
     });
