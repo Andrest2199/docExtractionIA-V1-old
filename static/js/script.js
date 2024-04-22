@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         file_base64: base64_file,
       };
 
-      fetch("http://127.0.0.1:8000/ocr_recognize", {
+      fetch("https://api.ono.starlight.science/ocr_recognize", {
         method: "POST",
         body: JSON.stringify(requestBody),
         headers: {

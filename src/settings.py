@@ -24,6 +24,7 @@ OPENAI_API_KEY = env("OPENAI_API_KEY")
 AWS_ACCESS_KEY = env("AWS_ACCESS_KEY_ID")
 AWS_SECRET = env("AWS_SECRET_ACCESS_KEY")
 AWS_REGION = env("AWS_REGION")
+API_KEY = env("API_KEY")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
