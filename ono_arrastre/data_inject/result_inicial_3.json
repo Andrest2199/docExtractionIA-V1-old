@@ -1,0 +1,14 @@
+{
+    "no_empleado": "2477",
+    "serie_folio": "YC255144",
+    "tipo_incapacidad": "INICIAL",
+    "fecha_desde": "08/03/24",
+    "fecha_hasta": "10/03/24",
+    "dias_autorizados": 3,
+    "dias_incapacidad_aplicados_a_periodos": [
+        {
+            "periodo_nomina": "20240301",
+            "dias_aplicados": 3
+        }
+    ]
+}

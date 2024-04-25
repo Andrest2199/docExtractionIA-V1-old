@@ -1,0 +1,36 @@
+{
+    "no_empleado": "2232",
+    "serie_folio": "MK879939",
+    "fecha_a_partir": "28/11/23",
+    "fecha_actual": "01/12/23",
+    "dias_autorizados": "OCHENTA Y CUATRO",
+    "tipo_incapacidad": "INICIAL",
+    "tipo_nomina": "MENSUAL",
+    "historico_incapacidades": [],
+    "tabla_periodos_ciclos": [
+        {
+            "descripcion_nomina": "MENSUAL",
+            "periodo": "20231101",
+            "fecha_desde": "01/11/23",
+            "fecha_hasta": "30/11/23"
+        },
+        {
+            "descripcion_nomina": "MENSUAL",
+            "periodo": "20231201",
+            "fecha_desde": "01/12/23",
+            "fecha_hasta": "31/12/23"
+        },
+        {
+            "descripcion_nomina": "MENSUAL",
+            "periodo": "20240101",
+            "fecha_desde": "01/01/24",
+            "fecha_hasta": "31/01/24"
+        },
+        {
+            "descripcion_nomina": "MENSUAL",
+            "periodo": "20240201",
+            "fecha_desde": "01/02/24",
+            "fecha_hasta": "29/02/24"
+        }
+    ]
+}
