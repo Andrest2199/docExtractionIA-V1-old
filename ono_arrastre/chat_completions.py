@@ -1,22 +1,33 @@
 # %% openai chat completions
+
 import os
+import sys
 from openai import OpenAI
-from ono_ocr.utils import Utils,FileUtils
-# from django.conf import settings
+from django.conf import settings
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from ono_ocr.utils import Utils, FileUtils
 
 # OpenAI API Key
-# api_key = settings.OPENAI_API_KEY
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'src.settings')
+api_key = settings.OPENAI_API_KEY
 
 
-def chat_completions(data):
-    # Set Data for system from folder 'Data inject'
+def chat_completions_arrastre_incapacidades(data):
+    # Set data for system from folder 'Data inject'
     context_data_inyection = ""
-    input_results_inicial_list,input_data_inicial_list,input_results_sub_list,input_data_sub_list = []
-    results_ini_count,results_sub_count,data_ini_count,data_sub_count = 0
+    input_results_inicial_list = []
+    input_data_inicial_list = []
+    input_results_sub_list = []
+    input_data_sub_list = []
+    results_ini_count = 0
+    results_sub_count = 0
+    data_ini_count = 0
+    data_sub_count = 0
     all_data_inject_files = []
 
     # Retrieve files from 'Data Inject'
-    data_inject_folder = os.getcwd+'/data_inject'
+    data_inject_folder = os.path.join(os.getcwd(), 'data_inject')
     all_data_inject_files = FileUtils.get_paths(data_inject_folder, 1)
     
     for file in all_data_inject_files:
@@ -37,73 +48,88 @@ def chat_completions(data):
             print(f"File {file} not recognized")
 
     # Set context data
-    context_data_inyection = f"Eres un operador de recursos humanos que analiza y registra información de incapacidades de empleados. 
-        Tu rol es analizar información de incapacidades, asignar días autorizados de incapacidad al periodo de la nómina del empleado y registrar la información de la incapacidad.
-        A continuación te compartiremos las definiciones y lógica para llevar a cabo tu tarea.
-        Definición de fechas:
-        'Fecha_a_partir': Fecha donde el IMSS registra que empieza la incapacidad
-        'Fecha_actual': Fecha que el operador de recursos humanos recibe el documento de la incapacidad del empleado
-        'Fecha_inicio': El rango de fecha de principio del periodo de nómina
-        'Fecha_final': El rango de fecha de terminación del periodo de nómina
-        Definición variables:
-        'Maximo_dias_aplicar': El número máximo de días posibles que se pueden aplicar en un periodo, está dado por la siguiente fórmula: 'Fecha_final' - 'Fecha_inicio'
-        'Días_disponibles': El número de días restantes disponibles que se pueden aplicar en un periodo, está dado por la siguiente fórmula: 'Fecha_final' - 'Fecha_actual'
-        Definiciones y lógica general:
-        Existen tres tipos de incapacidad: 1) Enfermedad General (EG), 2) Maternidad (MT), 3) Riesgo de Trabajo (AT).
-        Existen dos categorías de incapacidades 1) Inicial y 2) Subsecuente.
-        Existen tres tipos de nóminas 1) Mensual, 2) Quincenal y 3) Semanal.
-        Las incapacidades se asignan en días naturales no en días laborales. Es decir se consideran festivos y fines de semana.
-        En nóminas mensuales se pueden asignar hasta 31 días de incapacidad, dependiendo del mes en curso considerando años bisiestos.
-        En nóminas quincenales se pueden asignar hasta 16 días de incapacidad, dependiendo de la quincena actual. Los días totales del mes se dividen entre dos, si el número de días en el mes es par, asignas mismo número de días para cada quincena, si es non, asigna el día residuo a la segunda quincena del mes.
-        En nóminas semanales se pueden asignar hasta 7 días de incapacidad.
-        Un periodo tiene un rango de 'fecha_inicio' y 'fecha_final'. 
-        El periodo comprende el tiempo desde la 'fecha_inicio' hasta la 'fecha_final'.
-        Los periodos de la nómina pueden estar abiertos o cerrados.
-        Se pueden asignar días de incapacidad autorizados al periodo en curso y a periodos subsecuentes, siempre y cuando el periodo de la nómina en curso se encuentre abierto.
-        Si se aplica un máximo de días, dependiendo del número de días autorizados revisar que no se apliquen más de lo debido en el periodo.
-        Los días de incapacidad autorizados se aplican al periodo actual y a periodos subsecuentes. 
-        En el JSON de 'empleados_incapacidades' buscar si la incapacidad existe por 'no_empleado' o 'serie_y_folio'. Si no existe, elaborarás el registro con todas las validaciones correspondientes. Si existe verifica que la información esté correcta.
-        En el JSON de 'periodos_ciclos' buscar el periodo correspondiente. Para encontrar el periodo, la 'fecha_a_partir' de la incapacidad debe estar dentro del rango de 'fecha_inicio' y 'fecha_final'. 
-        Y considerar en qué fase está el periodo. Si la fase de ese periodo está abierta, considerar ese periodo, de lo contrario, considerar el periodo subsecuente.
-        Si la cantidad de días autorizados es menor o igual a la cantidad de días disponibles en el periodo actual (días disponibles = fecha final - fecha actual), se asignan los días autorizados al periodo actual.
-        Si la cantidad de días autorizados es mayor a la cantidad de días disponibles en el periodo actual (días disponibles = fecha final - fecha actual), se asignan los días autorizados al máximo disponible del periodo actual y los días restantes al periodo subsecuente, y si este restante excede el máximo disponible del periodo subsecuente, se asigna el máximo disponible y el remanente al siguiente periodo, y así sucesivamente.
-        \nEntre xml tags se te proporcionan {data_ini_count} ejemplos input y output de incapacidades iniciales:
-        \n\n"
+    context_data_inyection = """
+        Eres un operador de recursos humanos que analiza y registra información de incapacidades de empleados.\n
+        Tu rol es analizar información de incapacidades, asignar días autorizados de incapacidad al periodo de la nómina del empleado y registrar la información de la incapacidad.\n
+        A continuación te compartiremos las definiciones y lógica para llevar a cabo tu tarea.\n\n
+        
+        *Definición de fechas:*\n
+        'Fecha_a_partir': Fecha donde el IMSS registra que empieza la incapacidad.\n
+        'Fecha_actual': Fecha que el operador de recursos humanos recibe el documento de la incapacidad del empleado.\n
+        'Fecha_inicio': El rango de fecha de principio del periodo de nómina.\n
+        'Fecha_final': El rango de fecha de terminación del periodo de nómina.\n\n
+        
+        *Definición variables:*\n
+        'Maximo_dias_aplicar': El número máximo de días de incapacidad posibles que se pueden aplicar en un periodo, está dado por la siguiente fórmula: 'maximo_dias_aplicar' = 'fecha_final' - 'fecha_inicio'\n
+        'Días_disponibles': El número de días de incapacidad restantes disponibles que se pueden aplicar en un periodo, está dado por la siguiente fórmula: 'dias_disponibles' = 'fecha_final' - 'fecha_actual'\n\n
+        
+        *Definición períodos de nómina:*\n
+        Cada periodo de nómina tiene un rango de 'fecha_inicio' y 'fecha_final'.\n
+        Los periodos de la nómina tienen dos fases: 1) 'abiertos' o 2) 'cerrados'.\n
+        Existen tres tipos de periodos de nóminas 1) 'mensual', 2) 'quincenal' y 3) 'semanal'\n
+        En periodos de nóminas 'mensuales' se pueden asignar hasta 31 días de incapacidad, dependiendo del mes en curso considerando años bisiestos.\n
+        En periodos de nóminas 'quincenales' se pueden asignar hasta 16 días de incapacidad, dependiendo de la quincena actual. Los días totales del mes se dividen entre dos, si el número de días en el mes es par, asignas mismo número de días para cada quincena, si es non, asigna el día residuo a la segunda quincena del mes.\n
+        En periodos de nóminas 'semanales' se pueden asignar hasta 7 días de incapacidad.\n
+        'periodo_actual': El periodo de nómina en curso. La fecha del dia de hoy está dentro del rango 'fecha_inicio' y 'fecha_final'.\n
+        'periodo_subsecuente': Los periodos de nómina posteriores al 'periodo_actual'.\n\n
 
+        *Lógica asignación de días autorizados de incapacidad a periodos de nómina:*\n
+        Existen tres 'tipo_de_incapacidad': 1) Enfermedad General (EG), 2) Maternidad (MT), 3) Riesgo de Trabajo (AT)\n
+        Existen dos 'categorías_de_incapacidades' 1) Inicial y 2) Subsecuente\n
+        Los 'dias_autorizados' son los días de incapacidad que autorizó el Instituto Mexicano de Seguridad Social.\n
+        Los 'dias_autorizados' se asignan al 'periodo_actual' y a 'periodo_subsecuentes'. Siempre y cuando el periodo de la nómina en curso se encuentre en fase abierto.\n
+        Los 'dias_autorizados' se asignan contando días naturales no en días laborales. Es decir se consideran días festivos y fines de semana.\n
+        Los 'diaz_autorizados' a asignar al periodo correspondiente no deben de exceder los 'dias_disponibles' y/o el 'maximo_dias_aplicar'.\n
+        En el JSON de 'empleados_incapacidades' buscar si la incapacidad existe por 'no_empleado' o 'serie_y_folio'. Si no existe, elaborará el registro con todas las validaciones correspondientes. Si existe verifica que la información esté correcta.\n
+        En el JSON de 'periodos_ciclos' buscar el 'periodo_actual' correspondiente. Para encontrar el 'periodo_actual', la 'fecha_actual' de la incapacidad debe estar dentro del rango de 'fecha_inicio' y "fecha_final" del 'periodo_actual'.\n
+        Válida en qué fase está el periodo. Si la fase de ese periodo está abierta, empieza a asignar los 'dias_autorizados' al periodo, de lo contrario, asigna los 'dias_autorizados' al periodo subsecuente.\n
+        Si la 'fecha_a_partir' es posterior a la 'fecha_actual', manda un mensaje de error que la incapacidad está en el futuro.\n
+        Si la cantidad de 'días_autorizados' es menor o igual a la cantidad de 'dias_disponibles' en el periodo actual, se asignan los días autorizados al periodo_actual.\n
+        Si la cantidad de 'dias_autorizados' es mayor a la cantidad de 'dias_disponibles' en el periodo actual, se asignan los 'días_autorizados' al 'máximo_dias_aplicar' del 'periodo_actua'l y los días restantes al 'periodo_subsecuente', y si este restante excede el 'maximo_dias_aplicar' del 'periodo_subsecuent'e, se asigna el 'maximo_dias_aplicar' y el remanente al 'periodo_subsecuente', y así sucesivamente.\n\n
+        """
+
+    context_data_inyection += f"\nEntre xml tags se te proporcionan {len(input_data_inicial_list)} ejemplos input y output de asignacion de dias de incapacidad iniciales a periodos de nómina:\n\n"
     data_count = 1
     results_count = 1
     for input_data, input_result in zip(input_data_inicial_list, input_results_inicial_list):
-        context_data_inyection += f"<data_input_example_inicial_{data_count}>\n\n{input_data}\n\n</data_input_example_inicial_{data_count}>\n\n<result_output_example_inicial_{results_count}>\n\n{input_result}\n\n</result_output_example_inicial_{results_count}>\n\n"
+        context_data_inyection += f"<input_incapacidad_inicial_ejemplo_{data_count}>\n\n{input_data}\n\n</input_incapacidad_inicial_ejemplo_{data_count}>\n\n<output_incapacidad_inicial_ejemplo_{results_count}>\n\n{input_result}\n\n</output_incapacidad_inicial_ejemplo_{results_count}>\n\n"
         data_count += 1
         results_count += 1
 
-    context_data_inyection += "\nEntre xml tags se te proporcionan {n} ejemplos input y output de incapacidades subsecuentes:\n\n"
+    context_data_inyection += f"\nEntre xml tags se te proporcionan {len(input_data_sub_list)} ejemplos input y output de incapacidades subsecuentes:\n\n"
     data_count = 1
     results_count = 1
     for input_data, input_result in zip(input_data_sub_list, input_results_sub_list):
-        context_data_inyection += f"<data_input_example_subsecuente_{data_count}>\n\n{input_data}\n\n</data_input_example_subsecuente_{data_count}>\n\n<result_output_example_subsecuente_{results_count}>\n\n{input_result}\n\n</result_output_example_subsecuente_{results_count}>\n\n"
+        context_data_inyection += f"<input_incapacidad_subsecuente_ejemplo_{data_count}>\n\n{input_data}\n\n</input_incapacidad_subsecuente_ejemplo_{data_count}>\n\n<output_incapacidad_subsecuente_ejemplo_{results_count}>\n\n{input_result}\n\n</output_incapacidad_subsecuente_ejemplo_{results_count}>\n\n"
         data_count += 1
         results_count += 1
 
-    context_data_inyection += "Información que recibirás del usuario en formato JSON: Una lista de periodos de nómina con tipo de nómina, rango de fechas del periodo, días por periodo y su estatus abierto o cerrado. Una lista del historial de incapacidades registrados llamada empleados_incapacidades.Datos de la nueva incapacidad a registrar.Tu tarea es analizar y registrar la nueva incapacidad y crear un JSON output usando el siguiente formato JSON:\n\n"
     context_data_inyection += """
-    {
-        "no_empleado": string,
-        "serie_folio": string,
-        "tipo_incapacidad": string (inicial|subsecuente),
-        "fecha_desde": date string,
-        "fecha_hasta": date string,
-        "dias_autorizados": integer,
-        "periodos_aplicados_\{n\}": {
-            0:  { "dias_aplicados": integer,
-                "periodo_aplicado": integer},
-            ...,
+    *Decripción de información que recibirás del usuario en formato JSON:*\n
+    Una lista de periodos de nómina con tipo de nómina, rango de fechas del periodo, días por periodo y su estatus abierto o cerrado.\n
+    Una lista del historial de incapacidades registrados.\n
+    Datos de la nueva incapacidad a registrar.\n\n
+   
+    *Crea un JSON output que tenga la siguiente estructura de información:*
 
-            \{n\}: { "dias_aplicados": integer,
-                "periodo_aplicado": integer}
-        }
+    {
+        "no_empleado": str,
+        "serie_folio": str,
+        "tipo_incapacidad": str (inicial|subsecuente),
+        "fecha_desde": date str,
+        "fecha_hasta": date str,
+        "dias_autorizados": int,
+        "dias_incapacidad_aplicados_a_periodos": 
+            [
+                {
+                    "periodo_nomina": str,
+                    "dias_aplicados": int
+                    },
+                { 
+                    "periodo_nomina": str,
+                    "dias_aplicados": int}
+            ]
     }
-    Donde '\{n\}' es el numero de periodos que se aplicaron dias de incapacidad.
     """
     # Set system role
     system_content = {"role": "system", "content": context_data_inyection}
