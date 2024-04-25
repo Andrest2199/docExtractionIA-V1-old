@@ -1,0 +1,36 @@
+{
+    "no_empleado": "2691",
+    "serie_folio": "MS736601",
+    "fecha_a_partir": "09/03/24",
+    "fecha_actual": "16/03/24",
+    "dias_autorizados": "TRES",
+    "tipo_incapacidad": "INICIAL",
+    "tipo_nomina": "QUINCENAL",
+    "historico_incapacidades": [],
+    "tabla_periodos_ciclos": [
+        {
+            "descripcion_nomina": "QUINCENAL",
+            "periodo": "20240301",
+            "fecha_desde": "01/03/24",
+            "fecha_hasta": "15/03/24"
+        },
+        {
+            "descripcion_nomina": "QUINCENAL",
+            "periodo": "20240302",
+            "fecha_desde": "15/03/24",
+            "fecha_hasta": "31/03/24"
+        },
+        {
+            "descripcion_nomina": "QUINCENAL",
+            "periodo": "20240401",
+            "fecha_desde": "01/04/24",
+            "fecha_hasta": "15/04/24"
+        },
+        {
+            "descripcion_nomina": "QUINCENAL",
+            "periodo": "20240402",
+            "fecha_desde": "15/04/24",
+            "fecha_hasta": "30/04/24"
+        }
+    ]
+}
