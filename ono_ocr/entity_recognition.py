@@ -1,11 +1,15 @@
 # %% openai chat completions
 
 import os
+import sys
 from openai import OpenAI
-from ono_ocr.utils import Utils, FileUtils
 from django.conf import settings
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from ono_ocr.utils import Utils, FileUtils
+
 # OpenAI API Key
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'src.settings')
 api_key = settings.OPENAI_API_KEY
 
 
