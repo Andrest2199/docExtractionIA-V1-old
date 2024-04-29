@@ -1,6 +1,9 @@
 # %% data injecy samples
 
 import json
+import os
+
+folder_base_path = os.getcwd()
 
 # %% Incapacidades iniciales
 
@@ -228,102 +231,129 @@ result_inicial_4 = {
 
 # TODO: incapacidad inicial 5 / nomina semanal / asignación en 1 periodo
 data_inicial_5 = {
-    "no_empleado": "2477",
-    "serie_folio": "YC255144",
-    "fecha_a_partir": "08/03/24",
-    "fecha_actual": "20/03/24",
-    "dias_autorizados": "CINCO",
+    "no_empleado": "2705",
+    "serie_folio": "MS736651",
+    "fecha_a_partir": "16/03/24",
+    "fecha_actual": "02/04/24",
+    "dias_autorizados": "TRES",
     "tipo_incapacidad": "INICIAL",
-    "tipo_nomina": "MENSUAL",
+    "tipo_nomina": "SEMANAL",
     "historico_incapacidades": [],
     "tabla_periodos_ciclos": [
         {
-            'descripcion_nomina': 'MENSUAL',
-            'periodo': '20240301',
-            'fecha_desde': '01/03/24',
+            'descripcion_nomina': 'SEMANAL',
+            'periodo': '20240304',
+            'fecha_desde': '25/03/24',
             'fecha_hasta': '31/03/24',
         },
         {
-            'descripcion_nomina': 'MENSUAL',
+            'descripcion_nomina': 'SEMANAL',
             'periodo': '20240401',
             'fecha_desde': '01/04/24',
-            'fecha_hasta': '30/04/24',
+            'fecha_hasta': '07/04/24',
         },
         {
-            'descripcion_nomina': 'MENSUAL',
-            'periodo': '20240501',
-            'fecha_desde': '01/04/24',
-            'fecha_hasta': '31/04/24',
+            'descripcion_nomina': 'SEMANAL',
+            'periodo': '20240402',
+            'fecha_desde': '08/04/24',
+            'fecha_hasta': '14/04/24',
+        },
+        {
+            'descripcion_nomina': 'SEMANAL',
+            'periodo': '20240403',
+            'fecha_desde': '15/04/24',
+            'fecha_hasta': '21/04/24',
         },
     ]
 }
 
 result_inicial_5 = {
-        "no_empleado": "2477",
-        "serie_folio": "YC255144",
+        "no_empleado": "2705",
+        "serie_folio": "MS736651",
         "tipo_incapacidad": "INICIAL",
-        "fecha_desde": "08/03/24",
-        "fecha_hasta": "10/03/24",
+        "fecha_desde": "16/03/24",
+        "fecha_hasta": "18/03/24",
         "dias_autorizados": 3,
         "dias_incapacidad_aplicados_a_periodos": 
             [
                 {
-                    "periodo_nomina": "20240301",
+                    "periodo_nomina": "20240401",
                     "dias_aplicados": 3
                     }
             ]
 }
 
-# TODO: incapacidad inicial 6 / nomina semanal / asignación en multiples periodos
+# Incapacidad inicial 6 / nomina semanal / asignación en multiples periodos
 data_inicial_6 = {
-    "no_empleado": "2477",
-    "serie_folio": "YC255144",
-    "fecha_a_partir": "08/03/24",
-    "fecha_actual": "20/03/24",
-    "dias_autorizados": "CINCO",
+    "no_empleado": "2538",
+    "serie_folio": "MO571502",
+    "fecha_a_partir": "14/03/24",
+    "fecha_actual": "02/04/24",
+    "dias_autorizados": "OCHO",
     "tipo_incapacidad": "INICIAL",
-    "tipo_nomina": "MENSUAL",
+    "tipo_nomina": "SEMANAL",
     "historico_incapacidades": [],
     "tabla_periodos_ciclos": [
         {
-            'descripcion_nomina': 'MENSUAL',
-            'periodo': '20240301',
-            'fecha_desde': '01/03/24',
+            'descripcion_nomina': 'SEMANAL',
+            'periodo': '20240304',
+            'fecha_desde': '25/03/24',
             'fecha_hasta': '31/03/24',
         },
         {
-            'descripcion_nomina': 'MENSUAL',
+            'descripcion_nomina': 'SEMANAL',
             'periodo': '20240401',
             'fecha_desde': '01/04/24',
-            'fecha_hasta': '30/04/24',
+            'fecha_hasta': '07/04/24',
         },
         {
-            'descripcion_nomina': 'MENSUAL',
-            'periodo': '20240501',
-            'fecha_desde': '01/04/24',
-            'fecha_hasta': '31/04/24',
+            'descripcion_nomina': 'SEMANAL',
+            'periodo': '20240402',
+            'fecha_desde': '08/04/24',
+            'fecha_hasta': '14/04/24',
+        },
+        {
+            'descripcion_nomina': 'SEMANAL',
+            'periodo': '20240403',
+            'fecha_desde': '15/04/24',
+            'fecha_hasta': '21/04/24',
         },
     ]
 }
 
 result_inicial_6 = {
-        "no_empleado": "2477",
-        "serie_folio": "YC255144",
+        "no_empleado": "2538",
+        "serie_folio": "MO571502",
         "tipo_incapacidad": "INICIAL",
-        "fecha_desde": "08/03/24",
-        "fecha_hasta": "10/03/24",
-        "dias_autorizados": 3,
+        "fecha_desde": "14/03/24",
+        "fecha_hasta": "21/03/24",
+        "dias_autorizados": 8,
         "dias_incapacidad_aplicados_a_periodos": 
             [
                 {
-                    "periodo_nomina": "20240301",
-                    "dias_aplicados": 3
+                    "periodo_nomina": "20240401",
+                    "dias_aplicados": 7
+                    },
+                {
+                    "periodo_nomina": "20240402",
+                    "dias_aplicados": 1
                     }
             ]
 }
 
+# %% Save as json
 
+# Define the list of variables to save as json files
+json_files_list = ['data_inicial_1', 'result_inicial_1', 'data_inicial_2', 'result_inicial_2', 'data_inicial_3', 'result_inicial_3', 'data_inicial_4', 'result_inicial_4'] # 'data_inicial_5', 'result_inicial_5', 'data_inicial_6', 'result_inicial_6'
 
-
+# Save each variable as a json file
+for file in json_files_list:
+    if file in globals():
+        file_path = os.path.join(folder_base_path, f'data_inject/{file}.json')
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, 'w') as f:
+            json.dump(globals()[file], f, indent=4)
+    else:
+        print(f"Variable {file} is not defined.")
 
 
