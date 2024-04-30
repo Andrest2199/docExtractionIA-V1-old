@@ -24,16 +24,16 @@
     ],
     "tabla_periodos_ciclos": [
         {
-            "descripcion_nomina": "QUINCENAL",
             "periodo": "20231201",
             "fecha_desde": "01/12/23",
-            "fecha_hasta": "15/12/23"
+            "fecha_hasta": "15/12/23",
+            "estatus_del_periodo": "CERRADO"
         },
         {
-            "descripcion_nomina": "QUINCENAL",
             "periodo": "20231202",
             "fecha_desde": "15/12/23",
-            "fecha_hasta": "31/12/23"
+            "fecha_hasta": "31/12/23",
+            "estatus_del_periodo": "ABIERTO"
         }
     ]
 }

@@ -155,7 +155,6 @@ def chat_completions_arrastre_incapacidades(data):
     json_string = json_string.replace("```json\n", "").replace("\n```", "")
 
     # Return json data
-    # json_data = json.loads(json_string)
     json_data = Utils.to_dict(json_string)
 
     tokens_count = response.usage.prompt_tokens
@@ -164,3 +163,41 @@ def chat_completions_arrastre_incapacidades(data):
 
 # %% Run chat completions
 
+data_inicial = {
+    "no_empleado": "2811",
+    "serie_folio": "123456",
+    "fecha_a_partir": "22/04/24",
+    "fecha_actual": "23/04/24",
+    "dias_autorizados": "DIEZ",
+    "tipo_incapacidad": "INICIAL",
+    "tipo_nomina": "MENSUAL",
+    "historico_incapacidades": [],
+    "tabla_periodos_ciclos": [
+        {
+            "descripcion_nomina": "MENSUAL",
+            "periodo": "20240401",
+            "fecha_desde": "01/04/24",
+            "fecha_hasta": "30/04/24"
+        },
+        {
+            "descripcion_nomina": "MENSUAL",
+            "periodo": "20240501",
+            "fecha_desde": "01/05/24",
+            "fecha_hasta": "31/05/24"
+        },
+        {
+            "descripcion_nomina": "MENSUAL",
+            "periodo": "20240601",
+            "fecha_desde": "01/06/24",
+            "fecha_hasta": "30/06/24"
+        },
+        {
+            "descripcion_nomina": "MENSUAL",
+            "periodo": "20240701",
+            "fecha_desde": "01/07/24",
+            "fecha_hasta": "31/07/24"
+        }
+    ]
+}
+
+result_inicial, tokens, context = chat_completions_arrastre_incapacidades(str(data_inicial))

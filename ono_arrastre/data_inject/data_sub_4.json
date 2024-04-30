@@ -24,28 +24,28 @@
     ],
     "tabla_periodos_ciclos": [
         {
-            "descripcion_nomina": "SEMANAL",
             "periodo": "20240202",
             "fecha_desde": "08/02/24",
-            "fecha_hasta": "14/02/24"
+            "fecha_hasta": "14/02/24",
+            "estatus_del_periodo": "CERRADO"
         },
         {
-            "descripcion_nomina": "SEMANAL",
             "periodo": "20240203",
             "fecha_desde": "15/02/24",
-            "fecha_hasta": "22/02/24"
+            "fecha_hasta": "22/02/24",
+            "estatus_del_periodo": "ABIERTO"
         },
         {
-            "descripcion_nomina": "SEMANAL",
             "periodo": "20240204",
             "fecha_desde": "23/02/24",
-            "fecha_hasta": "29/02/24"
+            "fecha_hasta": "29/02/24",
+            "estatus_del_periodo": "ABIERTO"
         },
         {
-            "descripcion_nomina": "SEMANAL",
             "periodo": "20240301",
             "fecha_desde": "01/03/24",
-            "fecha_hasta": "07/03/24"
+            "fecha_hasta": "07/03/24",
+            "estatus_del_periodo": "ABIERTO"
         }
     ]
 }
