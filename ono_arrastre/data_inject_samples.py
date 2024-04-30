@@ -132,10 +132,10 @@ data_inicial_3 = {
             "fecha_hasta": "30/04/24",
         },
         {
-            "descripcion_nomina": "MENSUAL",
-            "periodo": "20240501",
-            "fecha_desde": "01/04/24",
-            "fecha_hasta": "31/04/24",
+            'descripcion_nomina': 'MENSUAL',
+            'periodo': '20240501',
+            'fecha_desde': '01/05/24',
+            'fecha_hasta': '31/05/24',
         },
     ],
 }
