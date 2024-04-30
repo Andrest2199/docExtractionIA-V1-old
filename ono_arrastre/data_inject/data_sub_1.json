@@ -1,36 +1,39 @@
 {
-  "no_empleado": "1467",
-  "serie_folio": "QP628808",
-  "fecha_a_partir": "21/12/23",
-  "fecha_actual": "29/01/24",
-  "dias_autorizados": "SIETE",
-  "tipo_incapacidad": "SUBSECUENTE",
-  "tipo_nomina": "QUINCENAL",
-  "historico_incapacidades": [],
-  "tabla_periodos_ciclos": [
-    {
-      "descripcion_nomina": "QUINCENAL",
-      "periodo": "20231201",
-      "fecha_desde": "01/12/23",
-      "fecha_hasta": "15/12/23"
-    },
-    {
-      "descripcion_nomina": "QUINCENAL",
-      "periodo": "20231202",
-      "fecha_desde": "15/03/24",
-      "fecha_hasta": "31/03/24"
-    },
-    {
-      "descripcion_nomina": "QUINCENAL",
-      "periodo": "20240101",
-      "fecha_desde": "01/01/24",
-      "fecha_hasta": "15/01/24"
-    },
-    {
-      "descripcion_nomina": "QUINCENAL",
-      "periodo": "20240102",
-      "fecha_desde": "15/01/24",
-      "fecha_hasta": "31/01/24"
-    }
-  ]
+    "no_empleado": "1467",
+    "serie_folio": "QP628808",
+    "fecha_a_partir": "21/12/23",
+    "fecha_actual": "22/12/23",
+    "dias_autorizados": "SIETE",
+    "tipo_incapacidad": "SUBSECUENTE",
+    "tipo_nomina": "QUINCENAL",
+    "historico_incapacidades": [
+        {
+            "no_empleado": "1467",
+            "serie_folio": "MK878347",
+            "tipo_incapacidad": "INICIAL",
+            "fecha_desde": "20/12/23",
+            "fecha_hasta": "20/12/23",
+            "dias_autorizados": 1,
+            "dias_incapacidad_aplicados_a_periodos": [
+                {
+                    "periodo_nomina": "20231202",
+                    "dias_aplicados": 1
+                }
+            ]
+        }
+    ],
+    "tabla_periodos_ciclos": [
+        {
+            "descripcion_nomina": "QUINCENAL",
+            "periodo": "20231201",
+            "fecha_desde": "01/12/23",
+            "fecha_hasta": "15/12/23"
+        },
+        {
+            "descripcion_nomina": "QUINCENAL",
+            "periodo": "20231202",
+            "fecha_desde": "15/12/23",
+            "fecha_hasta": "31/12/23"
+        }
+    ]
 }

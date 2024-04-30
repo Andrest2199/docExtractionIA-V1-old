@@ -1,36 +1,49 @@
 {
-  "no_empleado": "1499",
-  "serie_folio": "VL240491",
-  "fecha_a_partir": "25/02/24",
-  "fecha_actual": "30/03/24",
-  "dias_autorizados": "CINCO",
-  "tipo_incapacidad": "SUBSECUENTE",
-  "tipo_nomina": "QUINCENAL",
-  "historico_incapacidades": [],
-  "tabla_periodos_ciclos": [
-    {
-      "descripcion_nomina": "QUINCENAL",
-      "periodo": "20240301",
-      "fecha_desde": "01/03/24",
-      "fecha_hasta": "15/03/24"
-    },
-    {
-      "descripcion_nomina": "QUINCENAL",
-      "periodo": "20240302",
-      "fecha_desde": "15/03/24",
-      "fecha_hasta": "31/03/24"
-    },
-    {
-      "descripcion_nomina": "QUINCENAL",
-      "periodo": "20240401",
-      "fecha_desde": "01/04/24",
-      "fecha_hasta": "15/04/24"
-    },
-    {
-      "descripcion_nomina": "QUINCENAL",
-      "periodo": "20240402",
-      "fecha_desde": "15/04/24",
-      "fecha_hasta": "30/04/24"
-    }
-  ]
+    "no_empleado": "1499",
+    "serie_folio": "VL240491",
+    "fecha_a_partir": "25/02/24",
+    "fecha_actual": "30/03/24",
+    "dias_autorizados": "CINCO",
+    "tipo_incapacidad": "SUBSECUENTE",
+    "tipo_nomina": "QUINCENAL",
+    "historico_incapacidades": [
+        {
+            "no_empleado": "1499",
+            "serie_folio": "MQ778848",
+            "tipo_incapacidad": "INICIAL",
+            "fecha_desde": "28/01/24",
+            "fecha_hasta": "24/02/24",
+            "dias_autorizados": 28,
+            "dias_incapacidad_aplicados_a_periodos": [
+                {
+                    "periodo_nomina": "2024021",
+                    "dias_aplicados": 15
+                },
+                {
+                    "periodo_nomina": "2024022",
+                    "dias_aplicados": 13
+                }
+            ]
+        }
+    ],
+    "tabla_periodos_ciclos": [
+        {
+            "descripcion_nomina": "QUINCENAL",
+            "periodo": "20240202",
+            "fecha_desde": "15/02/24",
+            "fecha_hasta": "29/02/24"
+        },
+        {
+            "descripcion_nomina": "QUINCENAL",
+            "periodo": "20240301",
+            "fecha_desde": "01/03/24",
+            "fecha_hasta": "15/03/24"
+        },
+        {
+            "descripcion_nomina": "QUINCENAL",
+            "periodo": "20240302",
+            "fecha_desde": "15/03/24",
+            "fecha_hasta": "31/03/24"
+        }
+    ]
 }

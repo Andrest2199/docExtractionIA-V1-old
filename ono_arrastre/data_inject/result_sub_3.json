@@ -1,0 +1,18 @@
+{
+    "no_empleado": "2561",
+    "serie_folio": "UN035361",
+    "tipo_incapacidad": "SUBSECUENTE",
+    "fecha_desde": "25/01/24",
+    "fecha_hasta": "01/02/24",
+    "dias_autorizados": 8,
+    "dias_incapacidad_aplicados_a_periodos": [
+        {
+            "periodo_nomina": "20240101",
+            "dias_aplicados": 7
+        },
+        {
+            "periodo_nomina": "20240201",
+            "dias_aplicados": 1
+        }
+    ]
+}
