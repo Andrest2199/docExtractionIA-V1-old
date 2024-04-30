@@ -1,14 +1,14 @@
 {
-    "no_empleado": "1467",
-    "serie_folio": "QP628808",
-    "tipo_incapacidad": "SUBSECUENTE",
-    "fecha_desde": "21/12/23",
-    "fecha_hasta": "17/12/23",
-    "dias_autorizados": 7,
-    "dias_incapacidad_aplicados_a_periodos": [
-        {
-            "periodo_nomina": "20231202",
-            "dias_aplicados": 7
-        }
-    ]
+  "no_empleado": "1467",
+  "serie_folio": "QP628808",
+  "tipo_incapacidad": "SUBSECUENTE",
+  "fecha_desde": "21/12/23",
+  "fecha_hasta": "17/12/23",
+  "dias_autorizados": 7,
+  "dias_incapacidad_aplicados_a_periodos": [
+    {
+      "periodo_nomina": "20240101",
+      "dias_aplicados": 7
+    }
+  ]
 }

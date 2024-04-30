@@ -1,0 +1,36 @@
+{
+    "no_empleado": "2538",
+    "serie_folio": "MO571502",
+    "fecha_a_partir": "14/03/24",
+    "fecha_actual": "02/04/24",
+    "dias_autorizados": "OCHO",
+    "tipo_incapacidad": "INICIAL",
+    "tipo_nomina": "SEMANAL",
+    "historico_incapacidades": [],
+    "tabla_periodos_ciclos": [
+        {
+            "descripcion_nomina": "SEMANAL",
+            "periodo": "20240304",
+            "fecha_desde": "25/03/24",
+            "fecha_hasta": "31/03/24"
+        },
+        {
+            "descripcion_nomina": "SEMANAL",
+            "periodo": "20240401",
+            "fecha_desde": "01/04/24",
+            "fecha_hasta": "07/04/24"
+        },
+        {
+            "descripcion_nomina": "SEMANAL",
+            "periodo": "20240402",
+            "fecha_desde": "08/04/24",
+            "fecha_hasta": "14/04/24"
+        },
+        {
+            "descripcion_nomina": "SEMANAL",
+            "periodo": "20240403",
+            "fecha_desde": "15/04/24",
+            "fecha_hasta": "21/04/24"
+        }
+    ]
+}

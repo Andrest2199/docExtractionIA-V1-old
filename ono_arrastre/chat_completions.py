@@ -48,7 +48,7 @@ def chat_completions_arrastre_incapacidades(data):
             print(f"File {file} not recognized")
 
     # Set context data
-    context_data_inyection = """
+    context_data_inyection += """
     Eres un operador de recursos humanos que analiza y registra información de incapacidades de empleados.
     Tu rol es analizar información de incapacidades, asignar días autorizados de incapacidad al periodo de la nómina del empleado y registrar la información de la incapacidad.
     A continuación te compartiremos las definiciones y lógica para llevar a cabo tu tarea.
@@ -158,6 +158,9 @@ def chat_completions_arrastre_incapacidades(data):
     # json_data = json.loads(json_string)
     json_data = Utils.to_dict(json_string)
 
-    tokens_count_by_gpt = response.usage.prompt_tokens
+    tokens_count = response.usage.prompt_tokens
 
-    return json_data, tokens_count_by_gpt, context_data_inyection
+    return json_data, tokens_count, context_data_inyection
+
+# %% Run chat completions
+
