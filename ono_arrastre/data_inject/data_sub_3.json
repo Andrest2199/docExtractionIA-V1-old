@@ -1,0 +1,45 @@
+{
+    "no_empleado": "2561",
+    "serie_folio": "UN035361",
+    "fecha_a_partir": "25/01/24",
+    "fecha_actual": "29/01/24",
+    "dias_autorizados": "OCHO",
+    "tipo_incapacidad": "SUBSECUENTE",
+    "tipo_nomina": "MENSUAL",
+    "historico_incapacidades": [
+        {
+            "no_empleado": "2561",
+            "serie_folio": "UN035369",
+            "tipo_incapacidad": "INICIAL",
+            "fecha_desde": "22/01/24",
+            "fecha_hasta": "24/01/24",
+            "dias_autorizados": 3,
+            "dias_incapacidad_aplicados_a_periodos": [
+                {
+                    "periodo_nomina": "20240201",
+                    "dias_aplicados": 3
+                }
+            ]
+        }
+    ],
+    "tabla_periodos_ciclos": [
+        {
+            "descripcion_nomina": "MENSUAL",
+            "periodo": "20240101",
+            "fecha_desde": "01/01/24",
+            "fecha_hasta": "31/01/24"
+        },
+        {
+            "descripcion_nomina": "MENSUAL",
+            "periodo": "20240201",
+            "fecha_desde": "01/02/24",
+            "fecha_hasta": "29/02/24"
+        },
+        {
+            "descripcion_nomina": "MENSUAL",
+            "periodo": "20240301",
+            "fecha_desde": "01/03/24",
+            "fecha_hasta": "31/03/24"
+        }
+    ]
+}

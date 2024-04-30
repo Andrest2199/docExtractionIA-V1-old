@@ -1,0 +1,51 @@
+{
+    "no_empleado": "1299",
+    "serie_folio": "PKF32361",
+    "fecha_a_partir": "14/02/24",
+    "fecha_actual": "21/02/24",
+    "dias_autorizados": "OCHO",
+    "tipo_incapacidad": "SUBSECUENTE",
+    "tipo_nomina": "SEMANAL",
+    "historico_incapacidades": [
+        {
+            "no_empleado": "1299",
+            "serie_folio": "PKF33362",
+            "tipo_incapacidad": "INICIAL",
+            "fecha_desde": "10/02/24",
+            "fecha_hasta": "13/02/24",
+            "dias_autorizados": 4,
+            "dias_incapacidad_aplicados_a_periodos": [
+                {
+                    "periodo_nomina": "20240201",
+                    "dias_aplicados": 4
+                }
+            ]
+        }
+    ],
+    "tabla_periodos_ciclos": [
+        {
+            "descripcion_nomina": "SEMANAL",
+            "periodo": "20240202",
+            "fecha_desde": "08/02/24",
+            "fecha_hasta": "14/02/24"
+        },
+        {
+            "descripcion_nomina": "SEMANAL",
+            "periodo": "20240203",
+            "fecha_desde": "15/02/24",
+            "fecha_hasta": "22/02/24"
+        },
+        {
+            "descripcion_nomina": "SEMANAL",
+            "periodo": "20240204",
+            "fecha_desde": "23/02/24",
+            "fecha_hasta": "29/02/24"
+        },
+        {
+            "descripcion_nomina": "SEMANAL",
+            "periodo": "20240301",
+            "fecha_desde": "01/03/24",
+            "fecha_hasta": "07/03/24"
+        }
+    ]
+}
