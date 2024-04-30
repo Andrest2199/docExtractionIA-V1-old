@@ -9,28 +9,28 @@
     "historico_incapacidades": [],
     "tabla_periodos_ciclos": [
         {
-            "descripcion_nomina": "QUINCENAL",
             "periodo": "20240201",
             "fecha_desde": "01/02/24",
-            "fecha_hasta": "15/02/24"
+            "fecha_hasta": "15/02/24",
+            "estatus_del_periodo": "ABIERTO"
         },
         {
-            "descripcion_nomina": "QUINCENAL",
             "periodo": "20240202",
             "fecha_desde": "15/02/24",
-            "fecha_hasta": "28/02/24"
+            "fecha_hasta": "28/02/24",
+            "estatus_del_periodo": "ABIERTO"
         },
         {
-            "descripcion_nomina": "QUINCENAL",
             "periodo": "20240301",
             "fecha_desde": "01/03/24",
-            "fecha_hasta": "15/04/24"
+            "fecha_hasta": "15/03/24",
+            "estatus_del_periodo": "ABIERTO"
         },
         {
-            "descripcion_nomina": "QUINCENAL",
             "periodo": "20240302",
             "fecha_desde": "15/03/24",
-            "fecha_hasta": "31/03/24"
+            "fecha_hasta": "31/03/24",
+            "estatus_del_periodo": "ABIERTO"
         }
     ]
 }

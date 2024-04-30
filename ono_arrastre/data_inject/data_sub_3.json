@@ -24,22 +24,22 @@
     ],
     "tabla_periodos_ciclos": [
         {
-            "descripcion_nomina": "MENSUAL",
             "periodo": "20240101",
             "fecha_desde": "01/01/24",
-            "fecha_hasta": "31/01/24"
+            "fecha_hasta": "31/01/24",
+            "estatus_del_periodo": "CERRADO"
         },
         {
-            "descripcion_nomina": "MENSUAL",
             "periodo": "20240201",
             "fecha_desde": "01/02/24",
-            "fecha_hasta": "29/02/24"
+            "fecha_hasta": "29/02/24",
+            "estatus_del_periodo": "ABIERTO"
         },
         {
-            "descripcion_nomina": "MENSUAL",
             "periodo": "20240301",
             "fecha_desde": "01/03/24",
-            "fecha_hasta": "31/03/24"
+            "fecha_hasta": "31/03/24",
+            "estatus_del_periodo": "ABIERTO"
         }
     ]
 }

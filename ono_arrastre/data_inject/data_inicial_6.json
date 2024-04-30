@@ -9,28 +9,28 @@
     "historico_incapacidades": [],
     "tabla_periodos_ciclos": [
         {
-            "descripcion_nomina": "SEMANAL",
             "periodo": "20240304",
             "fecha_desde": "25/03/24",
-            "fecha_hasta": "31/03/24"
+            "fecha_hasta": "31/03/24",
+            "estatus_del_periodo": "CERRADO"
         },
         {
-            "descripcion_nomina": "SEMANAL",
             "periodo": "20240401",
             "fecha_desde": "01/04/24",
-            "fecha_hasta": "07/04/24"
+            "fecha_hasta": "07/04/24",
+            "estatus_del_periodo": "ABIERTO"
         },
         {
-            "descripcion_nomina": "SEMANAL",
             "periodo": "20240402",
             "fecha_desde": "08/04/24",
-            "fecha_hasta": "14/04/24"
+            "fecha_hasta": "14/04/24",
+            "estatus_del_periodo": "ABIERTO"
         },
         {
-            "descripcion_nomina": "SEMANAL",
             "periodo": "20240403",
             "fecha_desde": "15/04/24",
-            "fecha_hasta": "21/04/24"
+            "fecha_hasta": "21/04/24",
+            "estatus_del_periodo": "ABIERTO"
         }
     ]
 }
