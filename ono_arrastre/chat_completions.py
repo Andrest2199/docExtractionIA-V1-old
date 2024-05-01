@@ -174,28 +174,28 @@ data_inicial = {
     "historico_incapacidades": [],
     "tabla_periodos_ciclos": [
         {
-            "descripcion_nomina": "MENSUAL",
             "periodo": "20240401",
             "fecha_desde": "01/04/24",
-            "fecha_hasta": "30/04/24"
+            "fecha_hasta": "30/04/24",
+            "estatus_del_periodo": "ABIERTO"
         },
         {
-            "descripcion_nomina": "MENSUAL",
             "periodo": "20240501",
             "fecha_desde": "01/05/24",
-            "fecha_hasta": "31/05/24"
+            "fecha_hasta": "31/05/24",
+            "estatus_del_periodo": "ABIERTO"
         },
         {
-            "descripcion_nomina": "MENSUAL",
             "periodo": "20240601",
             "fecha_desde": "01/06/24",
-            "fecha_hasta": "30/06/24"
+            "fecha_hasta": "30/06/24",
+            "estatus_del_periodo": "ABIERTO"
         },
         {
-            "descripcion_nomina": "MENSUAL",
             "periodo": "20240701",
             "fecha_desde": "01/07/24",
-            "fecha_hasta": "31/07/24"
+            "fecha_hasta": "31/07/24",
+            "estatus_del_periodo": "ABIERTO"
         }
     ]
 }
