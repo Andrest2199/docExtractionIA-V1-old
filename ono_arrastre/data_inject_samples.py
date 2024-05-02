@@ -18,29 +18,29 @@ data_inicial_1 = {
     "tipo_nomina": "QUINCENAL",
     "historico_incapacidades": [],
     "tabla_periodos_ciclos": [
-        {           
+        {
             "periodo": "20240301",
             "fecha_desde": "01/03/24",
             "fecha_hasta": "15/03/24",
-            "estatus_del_periodo": "CERRADO"
+            "estatus_del_periodo": "CERRADO",
         },
         {
             "periodo": "20240302",
             "fecha_desde": "15/03/24",
             "fecha_hasta": "31/03/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240401",
             "fecha_desde": "01/04/24",
             "fecha_hasta": "15/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240402",
             "fecha_desde": "15/04/24",
             "fecha_hasta": "30/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
     ],
 }
@@ -68,29 +68,29 @@ data_inicial_2 = {
     "tipo_nomina": "QUINCENAL",
     "historico_incapacidades": [],
     "tabla_periodos_ciclos": [
-        {  
+        {
             "periodo": "20240201",
             "fecha_desde": "01/02/24",
             "fecha_hasta": "15/02/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240202",
             "fecha_desde": "15/02/24",
             "fecha_hasta": "28/02/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240301",
             "fecha_desde": "01/03/24",
             "fecha_hasta": "15/03/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
-        { 
+        {
             "periodo": "20240302",
             "fecha_desde": "15/03/24",
             "fecha_hasta": "31/03/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
     ],
 }
@@ -123,19 +123,19 @@ data_inicial_3 = {
             "periodo": "20240301",
             "fecha_desde": "01/03/24",
             "fecha_hasta": "31/03/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240401",
             "fecha_desde": "01/04/24",
             "fecha_hasta": "30/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
-            'periodo': '20240501',
-            'fecha_desde': '01/05/24',
-            'fecha_hasta': '31/05/24',
-            "estatus_del_periodo": "ABIERTO"
+            "periodo": "20240501",
+            "fecha_desde": "01/05/24",
+            "fecha_hasta": "31/05/24",
+            "estatus_del_periodo": "ABIERTO",
         },
     ],
 }
@@ -163,29 +163,29 @@ data_inicial_4 = {
     "tipo_nomina": "MENSUAL",
     "historico_incapacidades": [],
     "tabla_periodos_ciclos": [
-        {    
+        {
             "periodo": "20231101",
             "fecha_desde": "01/11/23",
             "fecha_hasta": "30/11/23",
-            "estatus_del_periodo": "CERRADO"
+            "estatus_del_periodo": "CERRADO",
         },
         {
             "periodo": "20231201",
             "fecha_desde": "01/12/23",
             "fecha_hasta": "31/12/23",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240101",
             "fecha_desde": "01/01/24",
             "fecha_hasta": "31/01/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240201",
             "fecha_desde": "01/02/24",
             "fecha_hasta": "29/02/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
     ],
 }
@@ -219,25 +219,25 @@ data_inicial_5 = {
             "periodo": "20240304",
             "fecha_desde": "25/03/24",
             "fecha_hasta": "31/03/24",
-            "estatus_del_periodo": "CERRADO"
+            "estatus_del_periodo": "CERRADO",
         },
         {
             "periodo": "20240401",
             "fecha_desde": "01/04/24",
             "fecha_hasta": "07/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240402",
             "fecha_desde": "08/04/24",
             "fecha_hasta": "14/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240403",
             "fecha_desde": "15/04/24",
             "fecha_hasta": "21/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
     ],
 }
@@ -269,25 +269,25 @@ data_inicial_6 = {
             "periodo": "20240304",
             "fecha_desde": "25/03/24",
             "fecha_hasta": "31/03/24",
-            "estatus_del_periodo": "CERRADO"
+            "estatus_del_periodo": "CERRADO",
         },
         {
             "periodo": "20240401",
             "fecha_desde": "01/04/24",
             "fecha_hasta": "07/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240402",
             "fecha_desde": "08/04/24",
             "fecha_hasta": "14/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
-        {   
+        {
             "periodo": "20240403",
             "fecha_desde": "15/04/24",
             "fecha_hasta": "21/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
     ],
 }
@@ -311,7 +311,7 @@ data_sub_1 = {
     "no_empleado": "1467",
     "serie_folio": "QP628808",
     "fecha_a_partir": "21/12/23",
-    "fecha_actual": "22/12/23",
+    "fecha_actual": "23/12/23",
     "dias_autorizados": "SIETE",
     "tipo_incapacidad": "SUBSECUENTE",
     "tipo_nomina": "QUINCENAL",
@@ -329,17 +329,17 @@ data_sub_1 = {
         }
     ],
     "tabla_periodos_ciclos": [
-        { 
+        {
             "periodo": "20231201",
             "fecha_desde": "01/12/23",
             "fecha_hasta": "15/12/23",
-            "estatus_del_periodo": "CERRADO"
+            "estatus_del_periodo": "CERRADO",
         },
         {
             "periodo": "20231202",
             "fecha_desde": "15/12/23",
             "fecha_hasta": "31/12/23",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
     ],
 }
@@ -360,7 +360,7 @@ data_sub_2 = {
     "no_empleado": "1499",
     "serie_folio": "VL240491",
     "fecha_a_partir": "25/02/24",
-    "fecha_actual": "30/03/24",
+    "fecha_actual": "30/02/24",
     "dias_autorizados": "CINCO",
     "tipo_incapacidad": "SUBSECUENTE",
     "tipo_nomina": "QUINCENAL",
@@ -383,19 +383,19 @@ data_sub_2 = {
             "periodo": "20240202",
             "fecha_desde": "15/02/24",
             "fecha_hasta": "29/02/24",
-            "estatus_del_periodo": "CERRADO"
+            "estatus_del_periodo": "CERRADO",
         },
         {
             "periodo": "20240301",
             "fecha_desde": "01/03/24",
             "fecha_hasta": "15/03/24",
-            "estatus_del_periodo": "CERRADO"
+            "estatus_del_periodo": "CERRADO",
         },
         {
             "periodo": "20240302",
             "fecha_desde": "15/03/24",
             "fecha_hasta": "31/03/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
     ],
 }
@@ -438,19 +438,19 @@ data_sub_3 = {
             "periodo": "20240101",
             "fecha_desde": "01/01/24",
             "fecha_hasta": "31/01/24",
-            "estatus_del_periodo": "CERRADO"
+            "estatus_del_periodo": "CERRADO",
         },
-        {   
+        {
             "periodo": "20240201",
             "fecha_desde": "01/02/24",
             "fecha_hasta": "29/02/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240301",
             "fecha_desde": "01/03/24",
             "fecha_hasta": "31/03/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
     ],
 }
@@ -471,8 +471,8 @@ result_sub_3 = {
 data_sub_4 = {
     "no_empleado": "1299",
     "serie_folio": "PKF32361",
-    "fecha_a_partir": "14/02/24",
-    "fecha_actual": "21/02/24",
+    "fecha_a_partir": "17/02/24",
+    "fecha_actual": "24/02/24",
     "dias_autorizados": "OCHO",
     "tipo_incapacidad": "SUBSECUENTE",
     "tipo_nomina": "SEMANAL",
@@ -481,11 +481,11 @@ data_sub_4 = {
             "no_empleado": "1299",
             "serie_folio": "PKF33362",
             "tipo_incapacidad": "INICIAL",
-            "fecha_desde": "10/02/24",
-            "fecha_hasta": "13/02/24",
+            "fecha_desde": "13/02/24",
+            "fecha_hasta": "16/02/24",
             "dias_autorizados": 4,
             "dias_incapacidad_aplicados_a_periodos": [
-                {"periodo_nomina": "20240201", "dias_aplicados": 4}
+                {"periodo_nomina": "20240203", "dias_aplicados": 4}
             ],
         }
     ],
@@ -494,25 +494,25 @@ data_sub_4 = {
             "periodo": "20240202",
             "fecha_desde": "08/02/24",
             "fecha_hasta": "14/02/24",
-            "estatus_del_periodo": "CERRADO"
+            "estatus_del_periodo": "CERRADO",
         },
-        {   
+        {
             "periodo": "20240203",
             "fecha_desde": "15/02/24",
             "fecha_hasta": "22/02/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
-        {   
+        {
             "periodo": "20240204",
             "fecha_desde": "23/02/24",
             "fecha_hasta": "29/02/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
-        {   
+        {
             "periodo": "20240301",
             "fecha_desde": "01/03/24",
             "fecha_hasta": "07/03/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
     ],
 }
@@ -521,12 +521,12 @@ result_sub_4 = {
     "no_empleado": "1299",
     "serie_folio": "PKF32361",
     "tipo_incapacidad": "INICIAL",
-    "fecha_desde": "14/02/24",
-    "fecha_hasta": "21/02/24",
+    "fecha_desde": "17/02/24",
+    "fecha_hasta": "24/02/24",
     "dias_autorizados": 8,
     "dias_incapacidad_aplicados_a_periodos": [
-        {"periodo_nomina": "20240202", "dias_aplicados": 1},
-        {"periodo_nomina": "20240203", "dias_aplicados": 7},
+        {"periodo_nomina": "20240203", "dias_aplicados": 6},
+        {"periodo_nomina": "20240204", "dias_aplicados": 2},
     ],
 }
 
@@ -542,9 +542,9 @@ json_files_list = [
     "result_inicial_3",
     "data_inicial_4",
     "result_inicial_4",
-    "data_inicial_5", 
-    "result_inicial_5", 
-    "data_inicial_6", 
+    "data_inicial_5",
+    "result_inicial_5",
+    "data_inicial_6",
     "result_inicial_6",
     "data_sub_1",
     "result_sub_1",
@@ -554,7 +554,7 @@ json_files_list = [
     "result_sub_3",
     "data_sub_4",
     "result_sub_4",
-] 
+]
 
 # Save each variable as a json file
 for file in json_files_list:
