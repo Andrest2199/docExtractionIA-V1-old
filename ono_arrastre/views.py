@@ -2,6 +2,7 @@ import json
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from json.decoder import JSONDecodeError
+from .chat_completions import chat_completions_arrastre_incapacidades
 
 
 @csrf_exempt
@@ -33,8 +34,9 @@ def generate_arrastre(request: HttpRequest) -> JsonResponse:
         }
 
         # Process the data and perform necessary operations
+        response, tokens, context = chat_completions_arrastre_incapacidades(str(data))
 
-        return JsonResponse({"message": "Success"}, status=200)
+        return JsonResponse({"message": "Success", "response": response}, status=200)
 
     except JSONDecodeError as e:
         return JsonResponse({"error": str(e)}, status=400)
