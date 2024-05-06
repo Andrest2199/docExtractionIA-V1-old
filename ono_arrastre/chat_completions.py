@@ -152,6 +152,7 @@ def chat_completions_arrastre_incapacidades(data):
 
     # Extract json content from response
     json_string = response.choices[0].message.content
+    
     json_string = json_string.replace("```json\n", "").replace("\n```", "")
 
     # Return json data
@@ -200,4 +201,4 @@ data_inicial = {
     ]
 }
 
-result_inicial, tokens, context = chat_completions_arrastre_incapacidades(str(data_inicial))
+# result_inicial, tokens, context = chat_completions_arrastre_incapacidades(str(data_inicial))
