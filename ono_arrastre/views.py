@@ -11,7 +11,7 @@ def generate_arrastre(request: HttpRequest) -> JsonResponse:
         return JsonResponse({"error": "Method not allowed"}, status=405)
     try:
         req = json.loads(request.body.decode("utf-8"))
-        empleado = req.get("empleado")
+        empleado = req.get("no_empleado")
         serie_folio = req.get("serie_folio")
         fecha_a_partir = req.get("fecha_a_partir")
         fecha_actual = req.get("fecha_actual")
@@ -22,7 +22,7 @@ def generate_arrastre(request: HttpRequest) -> JsonResponse:
         tabla_periodos_ciclos = req.get("tabla_periodos_ciclos")
 
         data = {
-            "empleado": empleado,
+            "no_empleado": empleado,
             "serie_folio": serie_folio,
             "fecha_a_partir": fecha_a_partir,
             "fecha_actual": fecha_actual,
