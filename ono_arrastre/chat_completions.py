@@ -115,9 +115,12 @@ def chat_completions_arrastre_incapacidades(data):
     {
         "no_empleado": str,
         "serie_folio": str,
-        "tipo_incapacidad": str (inicial|subsecuente),
-        "fecha_desde": date str,
-        "fecha_hasta": date str,
+        "tipo_incapacidad": str,
+        "categoria_incapacidad": str (inicial|subsecuente),
+        "fecha_desde_incapacidad": date str,
+        "fecha_hasta_incapacidad": date str,
+        "fecha_desde_aplicado_nomina": date str,
+        "fecha_hasta_aplicado_nomina": date str,
         "dias_autorizados": int,
         "dias_incapacidad_aplicados_a_periodos": 
             [
@@ -170,7 +173,8 @@ data_inicial = {
     "fecha_a_partir": "22/04/24",
     "fecha_actual": "23/04/24",
     "dias_autorizados": "DIEZ",
-    "tipo_incapacidad": "INICIAL",
+    "tipo_incapacidad": "EG",
+    "categoria_incapacidad": "INICIAL",
     "tipo_nomina": "MENSUAL",
     "historico_incapacidades": [],
     "tabla_periodos_ciclos": [
