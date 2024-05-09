@@ -1,4 +1,4 @@
-# EXAMPLE INICIAL 1 / NOMINA QUINCENAL
+# EXAMPLE INICIAL 1 / NOMINA QUINCENAL check
 {
     "no_empleado": "1666",
     "serie_folio": "WG336076",
@@ -45,7 +45,7 @@
     "dias_autorizados": "VEINTE",
     "tipo_incapacidad": "MT",
     "categoria_incapacidad": "INICIAL",
-    "tipo_nomina": "QUINCENAL",
+    "tipo_nomina": "MENSUAL",
     "historico_incapacidades": "NA",
     "tabla_periodos_ciclos": [
         {
