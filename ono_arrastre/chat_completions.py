@@ -56,13 +56,16 @@ def chat_completions_arrastre_incapacidades(data):
     *Definicion de fechas:*
     'fecha_a_partir': Fecha donde el IMSS registra que empieza la incapacidad.
     'fecha_actual': Fecha que el operador de recursos humanos recibe el documento de la incapacidad del empleado.
+    'fecha_desde_incapacidad': Es igual a la 'fecha_a_partir'. 
+    'fecha_hasta_incapacidad': Es la suma de los 'dias_autorizados' a la 'fecha_a_partir', esta dado por la siguient formula: 'fecha_a_partir'+'dias_autorizados'-1.
     'fecha_desde': El rango de fecha de principio del periodo de nomina.
     'fecha_hasta': El rango de fecha de terminacion del periodo de nomina.
     
     *Definicion variables:*
     'maximo_dias_aplicar': El numero maximo de dias de incapacidad posibles que se pueden aplicar en un periodo, esta dado por la siguiente formula: 'maximo_dias_aplicar' = 'fecha_hasta' - 'fecha_desde'
     'dias_disponibles': El numero de dias de incapacidad restantes disponibles que se pueden aplicar en un periodo, esta dado por la siguiente formula: 'dias_disponibles' = 'fecha_hasta' - 'fecha_actual'
-    
+    'dias_autorizados': Son los dias de incapacidad que autorizo el Instituto Mexicano de Seguridad Social.
+
     *Definicion periodos de nomina:*
     Cada periodo de nomina tiene un rango de 'fecha_desde' y 'fecha_hasta'.
     Los periodos de la nomina tienen dos fases: 1) 'abierto' o 2) 'cerrado'.
@@ -76,7 +79,6 @@ def chat_completions_arrastre_incapacidades(data):
     *Logica asignacion de dias autorizados de incapacidad a periodos de nomina:*
     Existen tres 'tipo_de_incapacidad': 1) Enfermedad General (EG), 2) Maternidad (MT), 3) Riesgo de Trabajo (AT)
     Existen dos 'categorias_de_incapacidades' 1) Inicial y 2) Subsecuente
-    Los 'dias_autorizados' son los dias de incapacidad que autorizo el Instituto Mexicano de Seguridad Social.
     Los 'dias_autorizados' se asignan al 'periodo_actual' y a 'periodo_subsecuentes'. Siempre y cuando el periodo de la nomina en curso se encuentre en fase 'abierto'.
     Los 'dias_autorizados' se asignan contando dias naturales no en dias laborales. Es decir se consideran dias festivos y fines de semana.
     Los 'diaz_autorizados' a asignar al periodo correspondiente no deben de exceder los 'dias_disponibles' y/o el 'maximo_dias_aplicar'.
@@ -88,7 +90,7 @@ def chat_completions_arrastre_incapacidades(data):
     Solo se pueden asignar 'dias_autorizados' a periodos en fase 'abierto'.
     Si la cantidad de 'dias_autorizados' es mayor a la cantidad de 'dias_disponibles' en el periodo, se asignan los 'dias_autorizados' al 'maximo_dias_aplicar' del 'periodo' y los dias restantes al 'periodo_subsecuente', y si este restante excede el 'maximo_dias_aplicar' del 'periodo_subsecuente', se asigna el 'maximo_dias_aplicar' y el remanente al 'periodo_subsecuente', y asi sucesivamente.\n\n
     """
-
+    # El conteo de los 'diaz_autorizados' inicia a partir de la fecha a la que se esta sumando. Es decir si la fecha es 10/01/24 y los 'diaz_autorizados' son 3, la fecha resultante sería '12/01/24'
     context_data_inyection += f"Entre xml tags se te proporcionan {len(input_data_inicial_list)} ejemplos input y output de asignacion de dias de incapacidad iniciales a periodos de nomina:\n\n"
     data_count = 1
     results_count = 1
