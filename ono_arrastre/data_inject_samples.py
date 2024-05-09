@@ -6,7 +6,6 @@ import os
 folder_base_path = os.getcwd()
 
 # %% Incapacidades iniciales
-tipo_incapacidad
 # incapacidad inicial 1 / nomina quincenal / asignación en 1 periodo
 data_inicial_1 = {
     "no_empleado": "2691",
