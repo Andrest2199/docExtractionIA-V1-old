@@ -1,0 +1,36 @@
+{
+    "no_empleado": "2705",
+    "serie_folio": "MS736651",
+    "fecha_a_partir": "16/03/24",
+    "fecha_actual": "02/04/24",
+    "dias_autorizados": "TRES",
+    "tipo_incapacidad": "INICIAL",
+    "tipo_nomina": "SEMANAL",
+    "historico_incapacidades": [],
+    "tabla_periodos_ciclos": [
+        {
+            "periodo": "20240304",
+            "fecha_desde": "25/03/24",
+            "fecha_hasta": "31/03/24",
+            "estatus_del_periodo": "CERRADO"
+        },
+        {
+            "periodo": "20240401",
+            "fecha_desde": "01/04/24",
+            "fecha_hasta": "07/04/24",
+            "estatus_del_periodo": "ABIERTO"
+        },
+        {
+            "periodo": "20240402",
+            "fecha_desde": "08/04/24",
+            "fecha_hasta": "14/04/24",
+            "estatus_del_periodo": "ABIERTO"
+        },
+        {
+            "periodo": "20240403",
+            "fecha_desde": "15/04/24",
+            "fecha_hasta": "21/04/24",
+            "estatus_del_periodo": "ABIERTO"
+        }
+    ]
+}

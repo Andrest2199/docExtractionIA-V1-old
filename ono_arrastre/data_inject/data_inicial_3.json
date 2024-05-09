@@ -1,0 +1,30 @@
+{
+    "no_empleado": "2477",
+    "serie_folio": "YC255144",
+    "fecha_a_partir": "08/03/24",
+    "fecha_actual": "20/03/24",
+    "dias_autorizados": "CINCO",
+    "tipo_incapacidad": "INICIAL",
+    "tipo_nomina": "MENSUAL",
+    "historico_incapacidades": [],
+    "tabla_periodos_ciclos": [
+        {
+            "periodo": "20240301",
+            "fecha_desde": "01/03/24",
+            "fecha_hasta": "31/03/24",
+            "estatus_del_periodo": "ABIERTO"
+        },
+        {
+            "periodo": "20240401",
+            "fecha_desde": "01/04/24",
+            "fecha_hasta": "30/04/24",
+            "estatus_del_periodo": "ABIERTO"
+        },
+        {
+            "periodo": "20240501",
+            "fecha_desde": "01/05/24",
+            "fecha_hasta": "31/05/24",
+            "estatus_del_periodo": "ABIERTO"
+        }
+    ]
+}

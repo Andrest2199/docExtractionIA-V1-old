@@ -1,0 +1,39 @@
+{
+    "no_empleado": "1467",
+    "serie_folio": "QP628808",
+    "fecha_a_partir": "21/12/23",
+    "fecha_actual": "22/12/23",
+    "dias_autorizados": "SIETE",
+    "tipo_incapacidad": "SUBSECUENTE",
+    "tipo_nomina": "QUINCENAL",
+    "historico_incapacidades": [
+        {
+            "no_empleado": "1467",
+            "serie_folio": "MK878347",
+            "tipo_incapacidad": "INICIAL",
+            "fecha_desde": "20/12/23",
+            "fecha_hasta": "20/12/23",
+            "dias_autorizados": 1,
+            "dias_incapacidad_aplicados_a_periodos": [
+                {
+                    "periodo_nomina": "20231202",
+                    "dias_aplicados": 1
+                }
+            ]
+        }
+    ],
+    "tabla_periodos_ciclos": [
+        {
+            "periodo": "20231201",
+            "fecha_desde": "01/12/23",
+            "fecha_hasta": "15/12/23",
+            "estatus_del_periodo": "CERRADO"
+        },
+        {
+            "periodo": "20231202",
+            "fecha_desde": "15/12/23",
+            "fecha_hasta": "31/12/23",
+            "estatus_del_periodo": "ABIERTO"
+        }
+    ]
+}
