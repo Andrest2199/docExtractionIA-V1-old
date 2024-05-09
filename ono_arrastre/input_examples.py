@@ -14,25 +14,25 @@
             "periodo": "2021081",
             "fecha_desde": "01/08/21",
             "fecha_hasta": "15/08/21",
-            "status": "CERRADO"
+            "fase": "CERRADO"
         },
         {
             "periodo": "2021082",
             "fecha_desde": "15/08/21",
             "fecha_hasta": "31/08/21",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         },
         {
             "periodo": "2021091",
             "fecha_desde": "01/09/21",
             "fecha_hasta": "15/09/21",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         },
         {
             "periodo": "2021092",
             "fecha_desde": "15/09/21",
             "fecha_hasta": "30/09/21",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         }
     ]
 },
@@ -52,19 +52,19 @@
             "periodo": "2024031",
             "fecha_desde": "01/03/24",
             "fecha_hasta": "31/03/24",
-            "status": "CERRADO"
+            "fase": "CERRADO"
         },
         {
             "periodo": "2024041",
             "fecha_desde": "01/04/24",
             "fecha_hasta": "30/04/24",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         },
         {
             "periodo": "2024051",
             "fecha_desde": "01/05/24",
             "fecha_hasta": "31/05/24",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         }
     ]
 },
@@ -98,25 +98,25 @@
             "periodo": "2021081",
             "fecha_desde": "01/08/21",
             "fecha_hasta": "15/08/21",
-            "status": "CERRADO"
+            "fase": "CERRADO"
         },
         {
             "periodo": "2021082",
             "fecha_desde": "16/08/21",
             "fecha_hasta": "31/08/21",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         },
         {
             "periodo": "2021091",
             "fecha_desde": "01/09/21",
             "fecha_hasta": "15/09/21",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         },
         {
             "periodo": "2021092",
             "fecha_desde": "16/09/21",
             "fecha_hasta": "30/09/21",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         }
     ]
 },
@@ -150,19 +150,19 @@
             "periodo": "2023121",
             "fecha_desde": "01/12/23",
             "fecha_hasta": "31/12/23",
-            "status": "CERRADO"
+            "fase": "CERRADO"
         },
         {
             "periodo": "2024011",
             "fecha_desde": "01/01/24",
             "fecha_hasta": "31/01/24",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         },
         {
             "periodo": "2024021",
             "fecha_desde": "01/02/24",
             "fecha_hasta": "29/02/24",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         }
     ]
 },
@@ -197,25 +197,25 @@
             "periodo": "2024062",
             "fecha_desde": "16/06/24",
             "fecha_hasta": "30/06/24",
-            "status": "CERRADO"
+            "fase": "CERRADO"
         },
         {
             "periodo": "2024071",
             "fecha_desde": "01/07/24",
             "fecha_hasta": "15/07/24",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         },
         {
             "periodo": "2024072",
             "fecha_desde": "16/07/24",
             "fecha_hasta": "31/07/24",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         },
         {
             "periodo": "2024081",
             "fecha_desde": "01/08/24",
             "fecha_hasta": "15/08/24",
-            "status": "ABIERTO"
+            "fase": "ABIERTO"
         },
     ]
 }
