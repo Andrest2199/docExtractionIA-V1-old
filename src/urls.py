@@ -24,6 +24,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("index", ocr_views.index, name="index"),
     path("ocr_recognize", ocr_views.ocr_recognize, name="ocr_recognize"),
-    path("arrastre", arrastre_views.index, name="arrastre"),
+    path("incapacidades", arrastre_views.generate_arrastre, name="incapacidades"),
 ]
 
