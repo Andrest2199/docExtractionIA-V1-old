@@ -85,6 +85,7 @@ def chat_completions_arrastre_incapacidades(data):
     Los 'dias_autorizados' se asignan contando dias naturales no en dias laborales. Es decir se consideran dias festivos y fines de semana.
     Los 'diaz_autorizados' a asignar al periodo correspondiente no deben de exceder los 'dias_disponibles' y/o el 'maximo_dias_aplicar'.
     En el JSON de 'historico_incapacidades' validar que el 'no_empleado' coincida.
+    En el JSON de 'historico_incapacidades' validar que 'fecha_hasta_incapacidad' sea menor a la 'fecha_a_partir', si no manda un error: 'ERROR: la fecha a partir de la incapacidad esta fuera de rango'.
     En el JSON de 'tabla_periodos_ciclos' buscar el 'periodo' correspondiente. Para encontrar el 'periodo_actual', la 'fecha_actual' de la incapacidad debe estar dentro del rango de 'fecha_desde' y 'fecha_hasta' del 'periodo'.
     Valida en que fase esta el periodo. Si la fase de ese periodo esta 'abierta', empieza a asignar los 'dias_autorizados' al periodo, de lo contrario, asigna los 'dias_autorizados' al periodo subsecuente.
     Si la 'fecha_a_partir' es posterior a la 'fecha_actual', manda un mensaje de error: 'ERROR: la fecha a partir de la incapacidad esta en el futuro'.

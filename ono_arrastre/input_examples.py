@@ -1,4 +1,4 @@
-# EXAMPLE INICIAL 1 / NOMINA QUINCENAL check
+# EXAMPLE INICIAL 1 / NOMINA QUINCENAL CHECK
 {
     "no_empleado": "1666",
     "serie_folio": "WG336076",
@@ -36,7 +36,7 @@
         }
     ]
 },
-# EXAMPLE INICIAL 2 / NOMINA MENSUAL
+# EXAMPLE INICIAL 2 / NOMINA MENSUAL CHECK
 {
     "no_empleado": "2345",
     "serie_folio": "WX321288",
