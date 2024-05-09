@@ -58,6 +58,8 @@ def chat_completions_arrastre_incapacidades(data):
     'fecha_actual': Fecha que el operador de recursos humanos recibe el documento de la incapacidad del empleado.
     'fecha_desde_incapacidad': Es igual a la 'fecha_a_partir'. 
     'fecha_hasta_incapacidad': Es la suma de los 'dias_autorizados' a la 'fecha_a_partir', esta dado por la siguient formula: 'fecha_a_partir'+'dias_autorizados'-1.
+    'fecha_desde_aplicado_nomina': Es la fecha en la que se captura la incapacidad, por lo regular es igual a la 'fecha_actual'.
+    'fecha_hasta_aplicado_nomina': Es la fecha resultante de la suma de los 'dias_autorizados' a la 'fecha_desde_aplicado_nomina', esta dado por la siguient formula: 'fecha_desde_aplicado_nomina'+'fecha_hasta_aplicado_nomina'-1.
     'fecha_desde': El rango de fecha de principio del periodo de nomina.
     'fecha_hasta': El rango de fecha de terminacion del periodo de nomina.
     
