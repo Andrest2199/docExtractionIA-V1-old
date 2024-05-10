@@ -68,7 +68,7 @@
         }
     ]
 },
-# EXAMPLE SUBSECUENTE 1 / NOMINA QUINCENAL
+# EXAMPLE SUBSECUENTE 1 / NOMINA QUINCENAL CHECK
 {
     "no_empleado": "1666",
     "serie_folio": "WG336205",
@@ -119,8 +119,33 @@
             "fase": "ABIERTO"
         }
     ]
-},
-# EXAMPLE SUBSECUENTE 2 / NOMINA MENSUAL
+}
+#Result
+{
+    "message": "Success",
+    "response": {
+        "no_empleado": "1666",
+        "serie_folio": "WG336205",
+        "tipo_incapacidad": "EG",
+        "categoria_incapacidad": "SUBSECUENTE",
+        "fecha_desde_incapacidad": "23/08/21",
+        "fecha_hasta_incapacidad": "05/09/21",
+        "fecha_desde_aplicado_nomina": "23/08/21",
+        "fecha_hasta_aplicado_nomina": "05/09/21",
+        "dias_autorizados": 14,
+        "dias_incapacidad_aplicados_a_periodos": [
+            {
+                "periodo_nomina": "2021082",
+                "dias_aplicados": 9
+            },
+            {
+                "periodo_nomina": "2021091",
+                "dias_aplicados": 5
+            }
+        ]
+    }
+}
+# EXAMPLE SUBSECUENTE 2 / NOMINA MENSUAL CHECK
 {
     "no_empleado": "1892",
     "serie_folio": "WG337602",
@@ -135,13 +160,13 @@
             "no_empleado": "1892",
             "serie_folio":"WG336205",
             "tipo_incapacidad": "EG",
-            "fecha_desde_incapacidad":"02/01/24",
+            "fecha_desde_incapacidad":"02/02/24",
             "fecha_hasta_incapacidad":"05/02/24",
-            "fecha_desde_aplicado_nomina":"02/01/24",
+            "fecha_desde_aplicado_nomina":"02/02/24",
             "fecha_hasta_aplicado_nomina":"05/02/24",
             "dias_autorizados": 4,
             "dias_incapacidad_aplicados_a_periodos": [
-                {"periodo_nomina": "2024011", "dias_aplicados": 4}
+                {"periodo_nomina": "2024021", "dias_aplicados": 4}
             ],
         }
     ],
@@ -165,7 +190,28 @@
             "fase": "ABIERTO"
         }
     ]
-},
+}
+#Resutl
+{
+    "message": "Success",
+    "response": {
+        "no_empleado": "1892",
+        "serie_folio": "WG337602",
+        "tipo_incapacidad": "EG",
+        "categoria_incapacidad": "SUBSECUENTE",
+        "fecha_desde_incapacidad": "06/02/24",
+        "fecha_hasta_incapacidad": "19/02/24",
+        "fecha_desde_aplicado_nomina": "06/02/24",
+        "fecha_hasta_aplicado_nomina": "19/02/24",
+        "dias_autorizados": 14,
+        "dias_incapacidad_aplicados_a_periodos": [
+            {
+                "periodo_nomina": "2024021",
+                "dias_aplicados": 14
+            }
+        ]
+    }
+}
 # EXAMPLE SUBSECUENTE 3 / NOMINA QUINCENAL
 {
     "no_empleado": "2190",
@@ -216,6 +262,12 @@
             "fecha_desde": "01/08/24",
             "fecha_hasta": "15/08/24",
             "fase": "ABIERTO"
-        },
+        }
     ]
 }
+#Comment
+"""Try
+# line 60: 'fecha_hasta_incapacidad': Es la suma de los 'dias_autorizados' a la 'fecha_a_partir' menos un día, esta dado por la siguiente formula: 'fecha_hasta_incapacidad' = 'fecha_a_partir' + 'dias_autorizados' - 1
+# line 62: 'fecha_hasta_aplicado_nomina': Es la fecha resultante de la suma de los 'dias_autorizados' a la 'fecha_desde_aplicado_nomina', esta dado por la siguient formula: 'fecha_hasta_aplicado_nomina' = 'fecha_desde_aplicado_nomina' + 'dias_autorizados' - 1
+"""
+#Result
