@@ -17,6 +17,7 @@ def generate_arrastre(request: HttpRequest) -> JsonResponse:
         fecha_actual = req.get("fecha_actual")
         dias_autorizados = req.get("dias_autorizados")
         tipo_incapacidad = req.get("tipo_incapacidad")
+        categoria_incapacidad = req.get("categoria_incapacidad")
         tipo_nomina = req.get("tipo_nomina")
         historico_incapacidades = req.get("historico_incapacidades")
         tabla_periodos_ciclos = req.get("tabla_periodos_ciclos")
@@ -28,6 +29,7 @@ def generate_arrastre(request: HttpRequest) -> JsonResponse:
             "fecha_actual": fecha_actual,
             "dias_autorizados": dias_autorizados,
             "tipo_incapacidad": tipo_incapacidad,
+            "categoria_incapacidad": categoria_incapacidad,
             "tipo_nomina": tipo_nomina,
             "historico_incapacidades": historico_incapacidades,
             "tabla_periodos_ciclos": tabla_periodos_ciclos,
