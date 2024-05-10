@@ -36,15 +36,15 @@ def generate_arrastre(request: HttpRequest) -> JsonResponse:
         # Data Validatation
         tipo_nomina= data['nomina']
         if tipo_nomina != 'MENSUAL' or tipo_nomina != 'SEMANAL' or tipo_nomina != 'QUINCENAL':
-            return JsonResponse({"error": "El tipo de nomina no existe."}, status=405)
+            return JsonResponse({"error": "El tipo de nomina no existe."}, status=404)
         fecha_a_partir = datetime.strptime(data['fecha_a_partir'], '%d/%m/%y') 
         fecha_actual = datetime.strptime(data['fecha_actual'], '%d/%m/%y')
         if fecha_a_partir > fecha_actual:
-            return JsonResponse({"error": "La fecha a partir de la incapacidad está en el futuro."}, status=405)
+            return JsonResponse({"error": "La fecha a partir de la incapacidad está en el futuro."}, status=400)
         if len(data['historico_incapacidades']) != 0:
             fecha_hasta_incapacidad = datetime.strptime(data['historico_incapacidades'][0]['fecha_hasta_incapacidad'], '%d/%m/%y') 
             if fecha_hasta_incapacidad > fecha_a_partir :
-                return JsonResponse({"error": "La fecha a partir de la incapacidad esta fuera de rango"}, status=405)
+                return JsonResponse({"error": "La fecha a partir de la incapacidad esta fuera de rango"}, status=400)
             
         # Process the data and perform necessary operations
         response, tokens, context = chat_completions_arrastre_incapacidades(str(data))
