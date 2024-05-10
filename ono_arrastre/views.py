@@ -36,8 +36,8 @@ def generate_arrastre(request: HttpRequest) -> JsonResponse:
         }
 
         # Data Validatation
-        tipo_nomina= data['nomina']
-        if tipo_nomina != 'MENSUAL' or tipo_nomina != 'SEMANAL' or tipo_nomina != 'QUINCENAL':
+        tipo_nomina = data['tipo_nomina']
+        if tipo_nomina not in ['MENSUAL', 'SEMANAL', 'QUINCENAL']:
             return JsonResponse({"error": "El tipo de nomina no existe."}, status=404)
         fecha_a_partir = datetime.strptime(data['fecha_a_partir'], '%d/%m/%y') 
         fecha_actual = datetime.strptime(data['fecha_actual'], '%d/%m/%y')
