@@ -57,9 +57,9 @@ def chat_completions_arrastre_incapacidades(data):
     'fecha_a_partir': Fecha donde el IMSS registra que empieza la incapacidad.
     'fecha_actual': Fecha que el operador de recursos humanos recibe el documento de la incapacidad del empleado.
     'fecha_desde_incapacidad': Es igual a la 'fecha_a_partir'. 
-    'fecha_hasta_incapacidad': Es la suma de los 'dias_autorizados' a la 'fecha_a_partir', esta dado por la siguient formula: 'fecha_a_partir'+'dias_autorizados'-1.
+    'fecha_hasta_incapacidad': Es la suma de los 'dias_autorizados' a la 'fecha_a_partir' menos un día, esta dado por la siguiente formula: 'fecha_hasta_incapacidad' = 'fecha_a_partir' + 'dias_autorizados' - 1
     'fecha_desde_aplicado_nomina': Es la fecha en la que se captura la incapacidad, por lo regular es igual a la 'fecha_actual'.
-    'fecha_hasta_aplicado_nomina': Es la fecha resultante de la suma de los 'dias_autorizados' a la 'fecha_desde_aplicado_nomina', esta dado por la siguient formula: 'fecha_desde_aplicado_nomina'+'fecha_hasta_aplicado_nomina'-1.
+    'fecha_hasta_aplicado_nomina': Es la fecha resultante de la suma de los 'dias_autorizados' a la 'fecha_desde_aplicado_nomina', esta dado por la siguient formula: 'fecha_hasta_aplicado_nomina' = 'fecha_desde_aplicado_nomina' + 'dias_autorizados' - 1
     'fecha_desde': El rango de fecha de principio del periodo de nomina.
     'fecha_hasta': El rango de fecha de terminacion del periodo de nomina.
     
@@ -85,10 +85,8 @@ def chat_completions_arrastre_incapacidades(data):
     Los 'dias_autorizados' se asignan contando dias naturales no en dias laborales. Es decir se consideran dias festivos y fines de semana.
     Los 'diaz_autorizados' a asignar al periodo correspondiente no deben de exceder los 'dias_disponibles' y/o el 'maximo_dias_aplicar'.
     En el JSON de 'historico_incapacidades' validar que el 'no_empleado' coincida.
-    En el JSON de 'historico_incapacidades' validar que 'fecha_hasta_incapacidad' sea menor a la 'fecha_a_partir', si no manda un error: 'ERROR: la fecha a partir de la incapacidad esta fuera de rango'.
     En el JSON de 'tabla_periodos_ciclos' buscar el 'periodo' correspondiente. Para encontrar el 'periodo_actual', la 'fecha_actual' de la incapacidad debe estar dentro del rango de 'fecha_desde' y 'fecha_hasta' del 'periodo'.
     Valida en que fase esta el periodo. Si la fase de ese periodo esta 'abierta', empieza a asignar los 'dias_autorizados' al periodo, de lo contrario, asigna los 'dias_autorizados' al periodo subsecuente.
-    Si la 'fecha_a_partir' es posterior a la 'fecha_actual', manda un mensaje de error: 'ERROR: la fecha a partir de la incapacidad esta en el futuro'.
     Si la cantidad de 'dias_autorizados' es menor o igual a la cantidad de 'dias_disponibles' en un periodo, se asignan los dias autorizados al 'periodo'.
     Solo se pueden asignar 'dias_autorizados' a periodos en fase 'abierto'.
     Si la cantidad de 'dias_autorizados' es mayor a la cantidad de 'dias_disponibles' en el periodo, se asignan los 'dias_autorizados' al 'maximo_dias_aplicar' del 'periodo' y los dias restantes al 'periodo_subsecuente', y si este restante excede el 'maximo_dias_aplicar' del 'periodo_subsecuente', se asigna el 'maximo_dias_aplicar' y el remanente al 'periodo_subsecuente', y asi sucesivamente.\n\n
