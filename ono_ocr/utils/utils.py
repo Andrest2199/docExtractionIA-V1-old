@@ -3,7 +3,8 @@ import re
 from unidecode import unidecode
 import tiktoken
 import base64
-from datetime import datetime 
+from datetime import datetime
+
 
 class Utils:
     @classmethod
@@ -148,87 +149,144 @@ class Utils:
             print(f"Unexpected error: {str(e)}")
 
     def validate_fields(data):
-        if 'values' in data.keys() and data['values'] != '':
-            fields = data['values']
+        if "values" in data.keys() and data["values"] != "":
+            fields = data["values"]
         else:
-            data['values']=f"Error: No se extrajo ningun campo, favor de validar documento."
+            data["values"] = (
+                "Error: No se extrajo ningun campo, favor de validar documento."
+            )
             return data
-        
-        #Validacion de código postal 
-        if 'CODIGO_POSTAL' in fields:
-            if len(fields['CODIGO_POSTAL']) != 5:
-                fields['CODIGO_POSTAL'] = f"Error: El código postal '{fields['CODIGO_POSTAL']}' es incorrecto."
-        
-        #Validacion de CURP
-        if 'CURP' in fields:
+
+        # Validacion de código postal
+        if "CODIGO_POSTAL" in fields:
+            if len(fields["CODIGO_POSTAL"]) != 5:
+                fields["CODIGO_POSTAL"] = (
+                    f"Error: El código postal '{fields['CODIGO_POSTAL']}' es incorrecto."
+                )
+
+        # Validacion de CURP
+        if "CURP" in fields:
             # Expresión regular para validar el formato de CURP
-            patron_CURP = re.compile(r'^[A-Z]{4}[0-9]{6}[HM][A-Z]{5}[0-9]{2}$')
+            patron_CURP = re.compile(r"^[A-Z]{4}[0-9]{6}[HM][A-Z]{5}[0-9]{2}$")
 
             # Validar el formato de CURP
-            if not patron_CURP.match(fields['CURP']):
-                fields['CURP'] = f"Error: El CURP '{fields['CURP']}' es incorrecto."
-            
-            # Calcular el dígito verificador        
-            if not "Error" in fields['CURP']:    
+            if not patron_CURP.match(fields["CURP"]):
+                fields["CURP"] = f"Error: El CURP '{fields['CURP']}' es incorrecto."
+
+            # Calcular el dígito verificador
+            if "Error" not in fields["CURP"]:
                 suma = 0
-                diccionario_reemplazo = {'A': '10', 'B': '11', 'C': '12', 'D': '13', 'E': '14', 'F': '15', 'G': '16',
-                                            'H': '17', 'I': '18', 'J': '19', 'K': '20', 'L': '21', 
-                                            'M': '22', 'N': '23', 'Ñ':'24', 'O': '25', 'P': '26', 
-                                            'Q': '27', 'R': '28', 'S': '29', 'T': '30', 'U': '31', 
-                                            'V': '32', 'W': '33', 'X': '34', 'Y': '35', 'Z': '36'}
-                for i in range(len(fields['CURP'])-1):
-                    if fields['CURP'][i].isdigit():
-                        suma += int(fields['CURP'][i]) * (18 - i)
+                diccionario_reemplazo = {
+                    "A": "10",
+                    "B": "11",
+                    "C": "12",
+                    "D": "13",
+                    "E": "14",
+                    "F": "15",
+                    "G": "16",
+                    "H": "17",
+                    "I": "18",
+                    "J": "19",
+                    "K": "20",
+                    "L": "21",
+                    "M": "22",
+                    "N": "23",
+                    "Ñ": "24",
+                    "O": "25",
+                    "P": "26",
+                    "Q": "27",
+                    "R": "28",
+                    "S": "29",
+                    "T": "30",
+                    "U": "31",
+                    "V": "32",
+                    "W": "33",
+                    "X": "34",
+                    "Y": "35",
+                    "Z": "36",
+                }
+                for i in range(len(fields["CURP"]) - 1):
+                    if fields["CURP"][i].isdigit():
+                        suma += int(fields["CURP"][i]) * (18 - i)
                     else:
-                        suma += int(diccionario_reemplazo[fields['CURP'][i]]) * (18 - i)
-                
+                        suma += int(diccionario_reemplazo[fields["CURP"][i]]) * (18 - i)
+
                 digito_verificador = 10 - (suma % 10)
                 if digito_verificador == 10:
                     digito_verificador = 0
 
                 # Verificar el dígito verificador
-                if int(fields['CURP'][-1]) != digito_verificador:
-                    fields['CURP'] = f"Error: El dígito verificador del CURP '{fields['CURP']}' es incorrecto."
-        
-        #Validacion de RFC
-        if 'RFC' in fields:
+                if int(fields["CURP"][-1]) != digito_verificador:
+                    fields["CURP"] = (
+                        f"Error: El dígito verificador del CURP '{fields['CURP']}' es incorrecto."
+                    )
+
+        # Validacion de RFC
+        if "RFC" in fields:
             # Expresión regular para validar el formato de RFC
-            patron_RFC = re.compile(r'^[A-ZÑ]{3,4}[0-9]{6}[A-V0-9]{2}[0-9A]$')
+            patron_RFC = re.compile(r"^[A-ZÑ]{3,4}[0-9]{6}[A-V0-9]{2}[0-9A]$")
 
             # Validar el formato de RFC
-            if not patron_RFC.match(fields['RFC']):
-                fields['RFC'] = f"Error: El RFC '{fields['RFC']}' es incorrecto."
-        
-        #Validacion de Fechas
+            if not patron_RFC.match(fields["RFC"]):
+                fields["RFC"] = f"Error: El RFC '{fields['RFC']}' es incorrecto."
+
+        # Validacion de Fechas
         for key in fields.keys():
-            if 'FECHA' in key.upper():
+            if "FECHA" in key.upper():
                 fecha = fields[key]
 
-                patron_fecha = re.compile(r'\d{2}/\d{2}/\d{2}$')
+                patron_fecha = re.compile(r"\d{2}/\d{2}/\d{2}$")
                 if not patron_fecha.match(fecha):
-                    fields[key] = f"Error: El formato de la fecha '{fecha}' es incorrecto."
-                if not 'Error' in fields[key]:
+                    fields[key] = (
+                        f"Error: El formato de la fecha '{fecha}' es incorrecto."
+                    )
+                if "Error" not in fields[key]:
                     try:
                         # Dividir la fecha en día, mes y año
-                        dia, mes, anio = map(int, fecha.split('/'))
-                        
+                        dia, mes, anio = map(int, fecha.split("/"))
+
                         # Verificar si el año es válido (en un rango razonable)
                         anio_min = int(str(datetime.today().year)[2:4]) - 5
                         anio_max = int(str(datetime.today().year)[2:4]) + 5
                         if anio < anio_min or anio > anio_max:
-                            fields[key] = f"Error: El año de la fecha '{fecha}' es invalido."
-                            
+                            fields[key] = (
+                                f"Error: El año de la fecha '{fecha}' es invalido."
+                            )
+
                         # Verificar si el mes está en el rango de 1 a 12
-                        if not 'Error' in fields[key]:
+                        if "Error" not in fields[key]:
                             if mes < 1 or mes > 12:
-                                fields[key] = f"Error: El mes de la fecha '{fecha}' es invalido."
-                            
-                            if not 'Error' in fields[key]:
+                                fields[key] = (
+                                    f"Error: El mes de la fecha '{fecha}' es invalido."
+                                )
+
+                            if "Error" not in fields[key]:
                                 # Verificar si el día está en el rango adecuado para cada mes
-                                dias_por_mes = [31, 28 if anio % 4 != 0 or (anio % 100 == 0 and anio % 400 != 0) else 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                                dias_por_mes = [
+                                    31,
+                                    (
+                                        28
+                                        if anio % 4 != 0
+                                        or (anio % 100 == 0 and anio % 400 != 0)
+                                        else 29
+                                    ),
+                                    31,
+                                    30,
+                                    31,
+                                    30,
+                                    31,
+                                    31,
+                                    30,
+                                    31,
+                                    30,
+                                    31,
+                                ]
                                 if dia < 1 or dia > dias_por_mes[mes - 1]:
-                                    fields[key] = f"Error: El día de la fecha '{fecha}' es invalido."
+                                    fields[key] = (
+                                        f"Error: El día de la fecha '{fecha}' es invalido."
+                                    )
 
                     except ValueError:
                         fields[key] = f"Error: La fecha '{fecha}' es invalida."
+        print("Fields validated.")
         return fields
