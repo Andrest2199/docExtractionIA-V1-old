@@ -1,10 +1,11 @@
 import os
 from ono_ocr.models import Extraction
-from ono_ocr.utils import FileUtils
+from ono_ocr.utils import FileUtils, Utils
 from ono_ocr.document_handler import document_handler
 from ono_ocr.entity_recognition import chat_completions_entity_extraction
 from django.conf import settings
 from base64 import b64encode, b64decode
+
 import re
 import traceback
 
@@ -60,6 +61,8 @@ def recognition_worker(filename=str, doctype=str, file_base64=str) -> dict:
             values=fields_extracted,
             raw_text=text_extracted,
         )
+        validated_values = Utils.validate_fields(extraction.to_json())
+        extraction.values = validated_values
 
         return extraction.to_json()
     except Exception as e:
