@@ -11,5 +11,6 @@
   "RFC_PATRON": "LSM660818M98",
   "NUMERO_DE_REGISTRO_PATRONAL": "Z2969597108",
   "RAZON_SOCIAL": "LEVI STRAUSS DE MEXICO SA DE CV",
-  "SELLO": "TRUE"
+  "SELLO": "TRUE",
+  "LEYENDA_APLICACION_DESCUENTO": "a partir de la fecha en que se reciba este aviso, deberá suspender los descuentos que por concepto de amortización se vienen efectuando al trabajador"
 }
