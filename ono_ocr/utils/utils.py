@@ -204,7 +204,7 @@ class Utils:
             if 'FECHA' in key.upper():
                 fecha = fields[key]
 
-                patron_fecha = re.compile(r'\d{2}/\d{2}/\d{4}$')
+                patron_fecha = re.compile(r'\d{2}/\d{2}/\d{2}(\d{2})?$')
                 if not patron_fecha.match(fecha):
                     fields[key] = f"Error: El formato de la fecha '{fecha}' es incorrecto."
                 if not 'Error' in fields[key]:
