@@ -11,5 +11,6 @@
   "RFC_PATRON": "LSM660818M98",
   "NUMERO_DE_REGISTRO_PATRONAL": "B1014849108",
   "RAZON_SOCIAL": "LEVI STRAUSS DE MEX SA CV",
-  "SELLO": "NA"
+  "SELLO": "FALSE",
+  "LEYENDA_APLICACION_DESCUENTO": "a partir del día siguiente a aquel en que se le hay a notificado el presente aviso"
 }

@@ -95,6 +95,8 @@ def chat_completions_entity_extraction(
         "RFC_PATRON": STRING,
         "NUMERO_DE_REGISTRO_PATRONAL": STRING,
         "RAZON_SOCIAL": STRING
+        "SELLO:": TRUE/FALSE,
+        "LEYENDA_APLICACION_DESCUENTO": STRING,
     }
     """
         # "SELLO": TRUE/FALSE,
