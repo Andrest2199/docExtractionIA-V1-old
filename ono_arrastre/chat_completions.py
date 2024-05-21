@@ -4,16 +4,18 @@ import os
 import sys
 from openai import OpenAI
 from django.conf import settings
-
+import json
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from ono_ocr.utils import Utils, FileUtils
 
 # OpenAI API Key
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'src.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.settings")
 api_key = settings.OPENAI_API_KEY
 
 
-def chat_completions_arrastre_incapacidades(data):
+def chat_completions_arrastre_incapacidades(data: dict):
+    auth_fase_cerrada = data["auth_fase_cerrada"]
+    data = str(data)
     # Set data for system from folder 'Data inject'
     context_data_inyection = ""
     input_results_inicial_list = []
@@ -27,9 +29,9 @@ def chat_completions_arrastre_incapacidades(data):
     all_data_inject_files = []
 
     # Retrieve files from 'Data Inject'
-    data_inject_folder = os.path.join(os.getcwd(), 'data_inject')
+    data_inject_folder = os.path.join(os.getcwd(), "data_inject")
     all_data_inject_files = FileUtils.get_paths(data_inject_folder, 1)
-    
+
     for file in all_data_inject_files:
         file_name = os.path.basename(file)
         if file_name.startswith("result_inicial"):
@@ -83,14 +85,14 @@ def chat_completions_arrastre_incapacidades(data):
     Existen tres 'tipo_de_incapacidad': 1) Enfermedad General (EG), 2) Maternidad (MT), 3) Riesgo de Trabajo (AT)
     Existen dos 'categorias_de_incapacidades': Inicial y Subsecuente.\n"""
 
-    if  data['auth_fase_cerrada'] == False:
+    if auth_fase_cerrada == "False":
         context_data_inyection += """
     Solo se pueden asignar 'dias_autorizados' a periodos en fase 'abierto'.
     Valida en que fase esta el periodo, si la fase de ese periodo esta 'abierta', empieza a asignar los 'dias_autorizados' al periodo, de lo contrario, asigna los 'dias_autorizados' al periodo subsecuente, siempre y cuando el periodo de la nomina en curso se encuentre en fase 'abierto'.
     """
     else:
         context_data_inyection += """Los 'dias_autorizados' pueden aplicarse a periodo de nomina en fase 'cerrado'."""
-    
+
     context_data_inyection += """
     Los 'dias_autorizados' se asignan al 'periodo_actual' y a 'periodo_subsecuentes'. Siempre y cuando el periodo de la nomina en curso se encuentre en fase 'abierto'.
     Los 'dias_autorizados' se asignan contando dias naturales no en dias laborales. Es decir se consideran dias festivos y fines de semana.
@@ -107,7 +109,9 @@ def chat_completions_arrastre_incapacidades(data):
     context_data_inyection += f"Entre xml tags se te proporcionan {len(input_data_inicial_list)} ejemplos input y output de asignacion de dias de incapacidad iniciales a periodos de nomina:\n\n"
     data_count = 1
     results_count = 1
-    for input_data, input_result in zip(input_data_inicial_list, input_results_inicial_list):
+    for input_data, input_result in zip(
+        input_data_inicial_list, input_results_inicial_list
+    ):
         context_data_inyection += f"<input_incapacidad_inicial_ejemplo_{data_count}>\n\n{input_data}\n\n</input_incapacidad_inicial_ejemplo_{data_count}>\n\n<output_incapacidad_inicial_ejemplo_{results_count}>\n\n{input_result}\n\n</output_incapacidad_inicial_ejemplo_{results_count}>\n\n"
         data_count += 1
         results_count += 1
@@ -172,7 +176,7 @@ def chat_completions_arrastre_incapacidades(data):
 
     # Extract json content from response
     json_string = response.choices[0].message.content
-    
+
     json_string = json_string.replace("```json\n", "").replace("\n```", "")
 
     # Return json data
@@ -181,6 +185,7 @@ def chat_completions_arrastre_incapacidades(data):
     tokens_count = response.usage.prompt_tokens
 
     return json_data, tokens_count, context_data_inyection
+
 
 # %% Run chat completions
 
@@ -199,32 +204,32 @@ data_inicial = {
             "periodo": "20240401",
             "fecha_desde": "01/04/24",
             "fecha_hasta": "30/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240501",
             "fecha_desde": "01/05/24",
             "fecha_hasta": "31/05/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240601",
             "fecha_desde": "01/06/24",
             "fecha_hasta": "30/06/24",
-            "estatus_del_periodo": "ABIERTO"
+            "estatus_del_periodo": "ABIERTO",
         },
         {
             "periodo": "20240701",
             "fecha_desde": "01/07/24",
             "fecha_hasta": "31/07/24",
-            "estatus_del_periodo": "ABIERTO"
-        }
-    ]
+            "estatus_del_periodo": "ABIERTO",
+        },
+    ],
 }
 
 # result_inicial, tokens, context = chat_completions_arrastre_incapacidades(str(data_inicial))
 
-#%%
+# %%
 # data = True
 # test = """hey"""
 # if data == True:

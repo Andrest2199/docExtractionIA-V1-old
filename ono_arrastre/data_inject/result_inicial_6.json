@@ -1,17 +1,20 @@
 {
     "no_empleado": "2538",
     "serie_folio": "MO571502",
-    "tipo_incapacidad": "INICIAL",
-    "fecha_desde": "14/03/24",
-    "fecha_hasta": "21/03/24",
+    "tipo_incapacidad": "EG",
+    "categoria_incapacidad": "INICIAL",
+    "fecha_desde_incapacidad": "14/03/24",
+    "fecha_hasta_incapacidad": "21/03/24",
+    "fecha_desde_aplicado_nomina": "01/04/24",
+    "fecha_hasta_aplicado_nomina": "08/04/24",
     "dias_autorizados": 8,
     "dias_incapacidad_aplicados_a_periodos": [
         {
-            "periodo_nomina": "20240401",
+            "periodo_nomina": "2024041",
             "dias_aplicados": 7
         },
         {
-            "periodo_nomina": "20240402",
+            "periodo_nomina": "2024042",
             "dias_aplicados": 1
         }
     ]
