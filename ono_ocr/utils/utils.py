@@ -235,7 +235,7 @@ class Utils:
             if "FECHA" in key.upper():
                 fecha = fields[key]
 
-                patron_fecha = re.compile(r"\d{2}/\d{2}/\d{2}$")
+                patron_fecha = re.compile(r'\d{2}/\d{2}/\d{2}(\d{2})?$')
                 if not patron_fecha.match(fecha):
                     fields[key] = (
                         f"Error: El formato de la fecha '{fecha}' es incorrecto."
@@ -249,10 +249,8 @@ class Utils:
                         anio_min = int(str(datetime.today().year)[2:4]) - 5
                         anio_max = int(str(datetime.today().year)[2:4]) + 5
                         if anio < anio_min or anio > anio_max:
-                            fields[key] = (
-                                f"Error: El año de la fecha '{fecha}' es invalido."
-                            )
-
+                            fields[key] = f"Error: La fecha '{fecha}' no se encuentra dentro del rango más/menos 5 años."
+                            
                         # Verificar si el mes está en el rango de 1 a 12
                         if "Error" not in fields[key]:
                             if mes < 1 or mes > 12:

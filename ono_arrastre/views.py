@@ -21,6 +21,7 @@ def generate_arrastre(request: HttpRequest) -> JsonResponse:
         tipo_nomina = req.get("tipo_nomina")
         historico_incapacidades = req.get("historico_incapacidades")
         tabla_periodos_ciclos = req.get("tabla_periodos_ciclos")
+        auth_fase_cerrada = req.get("auth_fase_cerrada")
 
         data = {
             "no_empleado": empleado,
@@ -33,9 +34,10 @@ def generate_arrastre(request: HttpRequest) -> JsonResponse:
             "tipo_nomina": tipo_nomina,
             "historico_incapacidades": historico_incapacidades,
             "tabla_periodos_ciclos": tabla_periodos_ciclos,
+            "auth_fase_cerrada": auth_fase_cerrada,
         }
 
-        # Data Validatation
+        # Data Validation
         tipo_nomina = data['tipo_nomina']
         if tipo_nomina not in ['MENSUAL', 'SEMANAL', 'QUINCENAL']:
             return JsonResponse({"error": "El tipo de nomina no existe."}, status=404)
