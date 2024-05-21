@@ -246,8 +246,13 @@ class Utils:
                         dia, mes, anio = map(int, fecha.split("/"))
 
                         # Verificar si el año es válido (en un rango razonable)
-                        anio_min = int(str(datetime.today().year)) - 5
-                        anio_max = int(str(datetime.today().year)) + 5
+                        if len(str(anio)) == 2:
+                            anio_min = int(str(datetime.today().year)[2:4]) - 5
+                            anio_max = int(str(datetime.today().year)[2:4]) + 5
+                        else:
+                            anio_min = int(str(datetime.today().year)) - 5
+                            anio_max = int(str(datetime.today().year)) + 5
+
                         if anio < anio_min or anio > anio_max:
                             fields[key] = (
                                 f"Error: La fecha '{fecha}' no se encuentra dentro del rango más/menos 5 años."
