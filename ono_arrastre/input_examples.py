@@ -342,9 +342,3 @@
         ]
     }
 }
-#Comment
-"""Try
-# line 60: 'fecha_hasta_incapacidad': Es la suma de los 'dias_autorizados' a la 'fecha_a_partir' menos un día, esta dado por la siguiente formula: 'fecha_hasta_incapacidad' = 'fecha_a_partir' + 'dias_autorizados' - 1
-# line 62: 'fecha_hasta_aplicado_nomina': Es la fecha resultante de la suma de los 'dias_autorizados' a la 'fecha_desde_aplicado_nomina', esta dado por la siguient formula: 'fecha_hasta_aplicado_nomina' = 'fecha_desde_aplicado_nomina' + 'dias_autorizados' - 1
-"""
-#Result
