@@ -83,7 +83,7 @@ def chat_completions_arrastre_incapacidades(data: dict):
 
     *Logica asignacion de dias autorizados de incapacidad a periodos de nomina:*
     Existen tres 'tipo_de_incapacidad': 1) Enfermedad General (EG), 2) Maternidad (MT), 3) Riesgo de Trabajo (AT)
-    Existen dos 'categorias_de_incapacidades': Inicial y Subsecuente.\n"""
+    Existen dos 'categoria_incapacidad': Inicial y Subsecuente.\n"""
 
     if auth_fase_cerrada == "False":
         context_data_inyection += """
@@ -103,7 +103,8 @@ def chat_completions_arrastre_incapacidades(data: dict):
     Si la cantidad de 'dias_autorizados' es menor o igual a la cantidad de 'dias_disponibles' en un periodo, se asignan los dias autorizados al 'periodo'.
     Si la 'fecha_a_partir' es de meses anteriores a el mes de 'fecha_actual', los 'dias_autorizados' se asignan desde la 'fecha_desde' del periodo.
     Si el mes de la 'fecha_a_partir' y 'fecha_actual' es igual, los 'dias_autorizados' se asignan desde la 'fecha_actual'.
-    Si la cantidad de 'dias_autorizados' es mayor a la cantidad de 'dias_disponibles' en el periodo, se asignan los 'dias_autorizados' al 'maximo_dias_aplicar' del 'periodo' y los dias restantes al 'periodo_subsecuente', y si este restante excede el 'maximo_dias_aplicar' del 'periodo_subsecuente', se asigna el 'maximo_dias_aplicar' y el remanente al 'periodo_subsecuente', y asi sucesivamente.\n\n
+    Si la cantidad de 'dias_autorizados' es mayor a la cantidad de 'dias_disponibles' en el periodo, se asignan los 'dias_autorizados' al 'maximo_dias_aplicar' del 'periodo' y los dias restantes al 'periodo_subsecuente', y si este restante excede el 'maximo_dias_aplicar' del 'periodo_subsecuente', se asigna el 'maximo_dias_aplicar' y el remanente al 'periodo_subsecuente', y asi sucesivamente.
+    Si 'categoria_incapacidad' es subsecuente, verificar que la 'fecha_a_partir' sea consecutiva a la 'fecha_hasta_incapacidad' de 'historico_incapacidades' sino la 'categoria_incapacidad' se convierte en inicial.\n\n
     """
     # El conteo de los 'diaz_autorizados' inicia a partir de la fecha a la que se esta sumando. Es decir si la fecha es 10/01/24 y los 'diaz_autorizados' son 3, la fecha resultante seria '12/01/24'
     context_data_inyection += f"Entre xml tags se te proporcionan {len(input_data_inicial_list)} ejemplos input y output de asignacion de dias de incapacidad iniciales a periodos de nomina:\n\n"
@@ -165,7 +166,7 @@ def chat_completions_arrastre_incapacidades(data: dict):
 
     # Get response
     response = client.chat.completions.create(
-        model="gpt-4-0125-preview",  # gpt-3.5-turbo-0125 #gpt-4-0125-preview, #gpt-4-vision-preview
+        model="gpt-4-turbo",  # gpt-3.5-turbo-0125 #gpt-4-0125-preview, #gpt-4-vision-preview
         messages=[
             system_content,
             user_content,

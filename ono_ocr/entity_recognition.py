@@ -127,7 +127,7 @@ def chat_completions_entity_extraction(
 
     # Get response
     response = client.chat.completions.create(
-        model="gpt-4-0125-preview",  # gpt-3.5-turbo-0125 #gpt-4-0125-preview, #gpt-4-vision-preview
+        model="gpt-4-turbo-preview",  # gpt-3.5-turbo-0125 #gpt-4-0125-preview, #gpt-4-vision-preview
         messages=[
             system_content,
             user_content,
