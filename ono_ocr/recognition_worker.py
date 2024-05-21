@@ -10,7 +10,6 @@ from base64 import b64encode, b64decode
 
 import re
 import traceback
-
 base_dir = os.path.join(settings.BASE_DIR, "ono_ocr")
 
 image_raw_folder = os.path.join(base_dir, "0_image_raw")
@@ -40,7 +39,7 @@ def recognition_worker(filename=str, doctype=str, file_base64=str) -> dict:
         )
     # FileUtils.delete_from_folder(text_extracted_folder)
 
-    data_url_pattern = re.compile(r"data:(application|image)/\w+;base64,")
+    data_url_pattern = re.compile(r"data:(application|image)/(jpeg|jpg|pdf|png);base64,")
 
     if data_url_pattern.match(file_base64):
         file_base64 = data_url_pattern.sub("", file_base64)
