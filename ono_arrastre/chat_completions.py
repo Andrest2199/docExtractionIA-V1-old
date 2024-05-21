@@ -225,10 +225,10 @@ data_inicial = {
 # result_inicial, tokens, context = chat_completions_arrastre_incapacidades(str(data_inicial))
 
 #%%
-data = True
-test = """hey"""
-if data == True: 
-    test += "test"
-test += """hola"""
-print (test)
+# data = True
+# test = """hey"""
+# if data == True:
+#     test += "test"
+# test += """hola"""
+# print (test)
 # %%
