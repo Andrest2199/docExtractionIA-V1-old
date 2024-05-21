@@ -8,7 +8,7 @@
     "tipo_incapacidad": "EG",
     "categoria_incapacidad": "INICIAL",
     "tipo_nomina": "QUINCENAL",
-    "historico_incapacidades": "NA",
+    "historico_incapacidades": [],
     "tabla_periodos_ciclos": [
         {
             "periodo": "2021081",
@@ -34,8 +34,31 @@
             "fecha_hasta": "30/09/21",
             "fase": "ABIERTO"
         }
-    ]
+    ],
+    "auth_fase_cerrada": "False"
 },
+
+# RESULT INICIAL 1 / NOMINA QUINCENAL CHECK
+{
+    "message": "Success",
+    "response": {
+        "no_empleado": "1666",
+        "serie_folio": "WG336076",
+        "tipo_incapacidad": "EG",
+        "categoria_incapacidad": "inicial",
+        "fecha_desde_incapacidad": "20/08/21",
+        "fecha_hasta_incapacidad": "22/08/21",
+        "fecha_desde_aplicado_nomina": "20/08/21",
+        "fecha_hasta_aplicado_nomina": "22/08/21",
+        "dias_autorizados": 3,
+        "dias_incapacidad_aplicados_a_periodos": [
+            {
+                "periodo_nomina": "2021082",
+                "dias_aplicados": 3
+            }
+        ]
+    }
+}
 # EXAMPLE INICIAL 2 / NOMINA MENSUAL CHECK
 {
     "no_empleado": "2345",
@@ -46,7 +69,7 @@
     "tipo_incapacidad": "MT",
     "categoria_incapacidad": "INICIAL",
     "tipo_nomina": "MENSUAL",
-    "historico_incapacidades": "NA",
+    "historico_incapacidades": [],
     "tabla_periodos_ciclos": [
         {
             "periodo": "2024031",
@@ -66,7 +89,8 @@
             "fecha_hasta": "31/05/24",
             "fase": "ABIERTO"
         }
-    ]
+    ],
+    "auth_fase_cerrada": "False"
 },
 # EXAMPLE SUBSECUENTE 1 / NOMINA QUINCENAL CHECK
 {
@@ -118,7 +142,8 @@
             "fecha_hasta": "30/09/21",
             "fase": "ABIERTO"
         }
-    ]
+    ],
+    "auth_fase_cerrada": "False"
 }
 #Result
 {
@@ -189,7 +214,8 @@
             "fecha_hasta": "29/02/24",
             "fase": "ABIERTO"
         }
-    ]
+    ],
+    "auth_fase_cerrada": "False"
 }
 #Resutl
 {
@@ -263,7 +289,8 @@
             "fecha_hasta": "15/08/24",
             "fase": "ABIERTO"
         }
-    ]
+    ],
+    "auth_fase_cerrada": "False"
 }
 #Comment
 """Try

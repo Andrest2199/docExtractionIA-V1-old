@@ -1,21 +1,24 @@
 {
     "no_empleado": "2232",
     "serie_folio": "MK879939",
-    "tipo_incapacidad": "INICIAL",
-    "fecha_desde": "28/11/23",
-    "fecha_hasta": "19/28/24",
+    "tipo_incapacidad": "MT",
+    "categoria_incapacidad": "INICIAL",
+    "fecha_desde_incapacidad": "28/11/23",
+    "fecha_hasta_incapacidad": "19/02/24",
+    "fecha_desde_aplicado_nomina": "01/12/23",
+    "fecha_hasta_aplicado_nomina": "22/02/24",
     "dias_autorizados": 84,
     "dias_incapacidad_aplicados_a_periodos": [
         {
-            "periodo_nomina": "20231201",
+            "periodo_nomina": "2023121",
             "dias_aplicados": 31
         },
         {
-            "periodo_nomina": "20240101",
+            "periodo_nomina": "2024011",
             "dias_aplicados": 31
         },
         {
-            "periodo_nomina": "20240201",
+            "periodo_nomina": "2024021",
             "dias_aplicados": 22
         }
     ]

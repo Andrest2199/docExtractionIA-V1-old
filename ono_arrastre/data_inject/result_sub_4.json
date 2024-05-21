@@ -1,18 +1,21 @@
 {
     "no_empleado": "1299",
     "serie_folio": "PKF32361",
-    "tipo_incapacidad": "INICIAL",
-    "fecha_desde": "14/02/24",
-    "fecha_hasta": "21/02/24",
+    "tipo_incapacidad": "EG",
+    "categoria_incapacidad": "INICIAL",
+    "fecha_desde_incapacidad": "17/02/24",
+    "fecha_hasta_incapacidad": "24/02/24",
+    "fecha_desde_aplicado_nomina": "01/03/24",
+    "fecha_hasta_aplicado_nomina": "08/03/24",
     "dias_autorizados": 8,
     "dias_incapacidad_aplicados_a_periodos": [
         {
-            "periodo_nomina": "20240202",
-            "dias_aplicados": 1
+            "periodo_nomina": "2024031",
+            "dias_aplicados": 7
         },
         {
-            "periodo_nomina": "20240203",
-            "dias_aplicados": 7
+            "periodo_nomina": "2024032",
+            "dias_aplicados": 1
         }
     ]
 }

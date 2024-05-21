@@ -1,14 +1,21 @@
 {
     "no_empleado": "1499",
     "serie_folio": "VL240491",
-    "tipo_incapacidad": "SUBSECUENTE",
-    "fecha_desde": "25/02/24",
-    "fecha_hasta": "29/02/24",
+    "tipo_incapacidad": "EG",
+    "categoria_incapacidad": "SUBSECUENTE",
+    "fecha_desde_incapacidad": "25/02/24",
+    "fecha_hasta_incapacidad": "29/02/24",
+    "fecha_desde_aplicado_nomina": "29/02/24",
+    "fecha_hasta_aplicado_nomina": "04/03/24",
     "dias_autorizados": 5,
     "dias_incapacidad_aplicados_a_periodos": [
         {
-            "periodo_nomina": "20240202",
-            "dias_aplicados": 5
+            "periodo_nomina": "2024022",
+            "dias_aplicados": 1
+        },
+        {
+            "periodo_nomina": "2024031",
+            "dias_aplicados": 4
         }
     ]
 }

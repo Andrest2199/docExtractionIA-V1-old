@@ -4,33 +4,35 @@
     "fecha_a_partir": "16/03/24",
     "fecha_actual": "02/04/24",
     "dias_autorizados": "TRES",
-    "tipo_incapacidad": "INICIAL",
+    "tipo_incapacidad": "EG",
+    "categoria_incapacidad": "INICIAL",
     "tipo_nomina": "SEMANAL",
     "historico_incapacidades": [],
     "tabla_periodos_ciclos": [
         {
-            "periodo": "20240304",
+            "periodo": "2024034",
             "fecha_desde": "25/03/24",
             "fecha_hasta": "31/03/24",
-            "estatus_del_periodo": "CERRADO"
+            "fase": "CERRADO"
         },
         {
-            "periodo": "20240401",
+            "periodo": "2024041",
             "fecha_desde": "01/04/24",
             "fecha_hasta": "07/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "fase": "ABIERTO"
         },
         {
-            "periodo": "20240402",
+            "periodo": "2024042",
             "fecha_desde": "08/04/24",
             "fecha_hasta": "14/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "fase": "ABIERTO"
         },
         {
-            "periodo": "20240403",
+            "periodo": "2024043",
             "fecha_desde": "15/04/24",
             "fecha_hasta": "21/04/24",
-            "estatus_del_periodo": "ABIERTO"
+            "fase": "ABIERTO"
         }
-    ]
+    ],
+    "auth_fase_cerrada": "False"
 }

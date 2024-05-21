@@ -1,13 +1,16 @@
 {
     "no_empleado": "2691",
     "serie_folio": "MS736601",
-    "tipo_incapacidad": "INICIAL",
-    "fecha_desde": "09/03/24",
-    "fecha_hasta": "11/03/24",
+    "tipo_incapacidad": "EG",
+    "categoria_incapacidad": "INICIAL",
+    "fecha_desde_incapacidad": "09/03/24",
+    "fecha_hasta_incapacidad": "11/03/24",
+    "fecha_desde_aplicado_nomina": "16/03/24",
+    "fecha_hasta_aplicado_nomina": "18/03/24",
     "dias_autorizados": 3,
     "dias_incapacidad_aplicados_a_periodos": [
         {
-            "periodo_nomina": "20240302",
+            "periodo_nomina": "2024032",
             "dias_aplicados": 3
         }
     ]

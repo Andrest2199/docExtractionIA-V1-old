@@ -13,7 +13,7 @@ data_inicial_1 = {
     "fecha_a_partir": "09/03/24",
     "fecha_actual": "16/03/24",
     "dias_autorizados": "TRES",
-    "tipo_incapacidad": "EG", 
+    "tipo_incapacidad": "EG",
     "categoria_incapacidad": "INICIAL",
     "tipo_nomina": "QUINCENAL",
     "historico_incapacidades": [],
@@ -43,6 +43,7 @@ data_inicial_1 = {
             "fase": "ABIERTO",
         },
     ],
+    "auth_fase_cerrada": "False",
 }
 
 result_inicial_1 = {
@@ -97,6 +98,7 @@ data_inicial_2 = {
             "fase": "ABIERTO",
         },
     ],
+    "auth_fase_cerrada": "False",
 }
 
 result_inicial_2 = {
@@ -111,7 +113,7 @@ result_inicial_2 = {
     "dias_autorizados": 28,
     "dias_incapacidad_aplicados_a_periodos": [
         {"periodo_nomina": "2024021", "dias_aplicados": 15},
-        {"periodo_nomina": "2024022", "dias_aplicados": 13}
+        {"periodo_nomina": "2024022", "dias_aplicados": 13},
     ],
 }
 
@@ -146,6 +148,7 @@ data_inicial_3 = {
             "fase": "ABIERTO",
         },
     ],
+    "auth_fase_cerrada": "False",
 }
 
 result_inicial_3 = {
@@ -168,7 +171,7 @@ data_inicial_4 = {
     "no_empleado": "2232",
     "serie_folio": "MK879939",
     "fecha_a_partir": "28/11/23",
-    "fecha_actual": "01/12/23",
+    "fecha_actual": "03/12/23",
     "dias_autorizados": "OCHENTA Y CUATRO",
     "tipo_incapacidad": "MT",
     "categoria_incapacidad": "INICIAL",
@@ -200,6 +203,7 @@ data_inicial_4 = {
             "fase": "ABIERTO",
         },
     ],
+    "auth_fase_cerrada": "False",
 }
 
 result_inicial_4 = {
@@ -215,7 +219,7 @@ result_inicial_4 = {
     "dias_incapacidad_aplicados_a_periodos": [
         {"periodo_nomina": "2023121", "dias_aplicados": 31},
         {"periodo_nomina": "2024011", "dias_aplicados": 31},
-        {"periodo_nomina": "2024021", "dias_aplicados": 22}
+        {"periodo_nomina": "2024021", "dias_aplicados": 22},
     ],
 }
 
@@ -256,6 +260,7 @@ data_inicial_5 = {
             "fase": "ABIERTO",
         },
     ],
+    "auth_fase_cerrada": "False",
 }
 
 result_inicial_5 = {
@@ -265,8 +270,8 @@ result_inicial_5 = {
     "categoria_incapacidad": "INICIAL",
     "fecha_desde_incapacidad": "16/03/24",
     "fecha_hasta_incapacidad": "18/03/24",
-    "fecha_desde_aplicado_nomina": "02/04/24",
-    "fecha_hasta_aplicado_nomina": "04/04/24",
+    "fecha_desde_aplicado_nomina": "01/04/24",
+    "fecha_hasta_aplicado_nomina": "03/04/24",
     "dias_autorizados": 3,
     "dias_incapacidad_aplicados_a_periodos": [
         {"periodo_nomina": "2024041", "dias_aplicados": 3}
@@ -278,7 +283,7 @@ data_inicial_6 = {
     "no_empleado": "2538",
     "serie_folio": "MO571502",
     "fecha_a_partir": "14/03/24",
-    "fecha_actual": "02/04/24",
+    "fecha_actual": "01/04/24",
     "dias_autorizados": "OCHO",
     "tipo_incapacidad": "EG",
     "categoria_incapacidad": "INICIAL",
@@ -310,6 +315,7 @@ data_inicial_6 = {
             "fase": "ABIERTO",
         },
     ],
+    "auth_fase_cerrada": "False",
 }
 
 result_inicial_6 = {
@@ -319,15 +325,77 @@ result_inicial_6 = {
     "categoria_incapacidad": "INICIAL",
     "fecha_desde_incapacidad": "14/03/24",
     "fecha_hasta_incapacidad": "21/03/24",
-    "fecha_desde_aplicado_nomina": "02/04/24",
-    "fecha_hasta_aplicado_nomina": "09/04/24",
+    "fecha_desde_aplicado_nomina": "01/04/24",
+    "fecha_hasta_aplicado_nomina": "08/04/24",
     "dias_autorizados": 8,
     "dias_incapacidad_aplicados_a_periodos": [
-        {"periodo_nomina": "2024041", "dias_aplicados": 6},
-        {"periodo_nomina": "2024042", "dias_aplicados": 2},
+        {"periodo_nomina": "2024041", "dias_aplicados": 7},
+        {"periodo_nomina": "2024042", "dias_aplicados": 1},
     ],
 }
 
+# Incapacidad inicial 7 / nomina catorcenal / asignación en multiples periodos / aplicacion en fase cerrada
+data_inicial_7 = {
+    "no_empleado": "4794",
+    "serie_folio": "ID188749",
+    "fecha_a_partir": "07/05/24",
+    "fecha_actual": "06/06/24",
+    "dias_autorizados": "DIECIOCHO",
+    "tipo_incapacidad": "RT",
+    "categoria_incapacidad": "INICIAL",
+    "tipo_nomina": "CATORCENAL",
+    "historico_incapacidades": [],
+    "tabla_periodos_ciclos": [
+        {
+            "periodo": "2024051",
+            "fecha_desde": "01/05/24",
+            "fecha_hasta": "14/05/24",
+            "fase": "CERRADO",
+        },
+        {
+            "periodo": "2024052",
+            "fecha_desde": "15/05/24",
+            "fecha_hasta": "28/05/24",
+            "fase": "CERRADO",
+        },
+        {
+            "periodo": "2024053",
+            "fecha_desde": "29/05/24",
+            "fecha_hasta": "11/06/24",
+            "fase": "ABIERTO",
+        },
+        {
+            "periodo": "2024061",
+            "fecha_desde": "12/06/24",
+            "fecha_hasta": "25/06/24",
+            "fase": "ABIERTO",
+        },
+        {
+            "periodo": "2024062",
+            "fecha_desde": "26/06/24",
+            "fecha_hasta": "09/07/24",
+            "fase": "ABIERTO",
+        },
+    ],
+    "auth_fase_cerrada": "True",
+}
+# TODO: Revisar logica de aplicacion de incapacidad en fase cerrada,
+# para aplicar en el último periodo cerrado
+result_inicial_7 = {
+    "no_empleado": "4794",
+    "serie_folio": "ID188749",
+    "tipo_incapacidad": "RT",
+    "categoria_incapacidad": "INICIAL",
+    "fecha_desde_incapacidad": "07/05/24",
+    "fecha_hasta_incapacidad": "24/05/24",
+    "fecha_desde_aplicado_nomina": "15/05/24",
+    "fecha_hasta_aplicado_nomina": "01/06/24",
+    "dias_autorizados": 18,
+    "dias_incapacidad_aplicados_a_periodos": [
+        {"periodo_nomina": "2024052", "dias_aplicados": 14},
+        {"periodo_nomina": "2024053", "dias_aplicados": 4},
+    ],
+}
 # %% Incapacidades subsecuentes
 
 data_sub_1 = {
@@ -375,6 +443,7 @@ data_sub_1 = {
             "fase": "ABIERTO",
         },
     ],
+    "auth_fase_cerrada": "False",
 }
 
 result_sub_1 = {
@@ -438,6 +507,7 @@ data_sub_2 = {
             "fase": "ABIERTO",
         },
     ],
+    "auth_fase_cerrada": "False",
 }
 
 result_sub_2 = {
@@ -460,7 +530,7 @@ data_sub_3 = {
     "no_empleado": "2561",
     "serie_folio": "UN035361",
     "fecha_a_partir": "25/01/24",
-    "fecha_actual": "04/01/24",
+    "fecha_actual": "04/02/24",
     "dias_autorizados": "OCHO",
     "tipo_incapacidad": "RT",
     "categoria_incapacidad": "SUBSECUENTE",
@@ -501,6 +571,7 @@ data_sub_3 = {
             "fase": "ABIERTO",
         },
     ],
+    "auth_fase_cerrada": "False",
 }
 
 result_sub_3 = {
@@ -522,7 +593,7 @@ data_sub_4 = {
     "no_empleado": "1299",
     "serie_folio": "PKF32361",
     "fecha_a_partir": "17/02/24",
-    "fecha_actual": "24/02/24",
+    "fecha_actual": "04/03/24",
     "dias_autorizados": "OCHO",
     "tipo_incapacidad": "EG",
     "categoria_incapacidad": "SUBSECUENTE",
@@ -546,22 +617,16 @@ data_sub_4 = {
     ],
     "tabla_periodos_ciclos": [
         {
-            "periodo": "2024022",
-            "fecha_desde": "08/02/24",
-            "fecha_hasta": "15/02/24",
-            "fase": "CERRADO",
-        },
-        {
             "periodo": "2024023",
             "fecha_desde": "16/02/24",
             "fecha_hasta": "22/02/24",
-            "fase": "ABIERTO",
+            "fase": "CERRADO",
         },
         {
             "periodo": "2024024",
             "fecha_desde": "23/02/24",
             "fecha_hasta": "29/02/24",
-            "fase": "ABIERTO",
+            "fase": "CERRADO",
         },
         {
             "periodo": "2024031",
@@ -569,7 +634,14 @@ data_sub_4 = {
             "fecha_hasta": "07/03/24",
             "fase": "ABIERTO",
         },
+        {
+            "periodo": "2024032",
+            "fecha_desde": "08/03/24",
+            "fecha_hasta": "14/03/24",
+            "fase": "ABIERTO",
+        },
     ],
+    "auth_fase_cerrada": "False",
 }
 
 result_sub_4 = {
@@ -579,12 +651,12 @@ result_sub_4 = {
     "categoria_incapacidad": "INICIAL",
     "fecha_desde_incapacidad": "17/02/24",
     "fecha_hasta_incapacidad": "24/02/24",
-    "fecha_desde_aplicado_nomina": "24/02/24",
-    "fecha_hasta_aplicado_nomina": "02/03/24",
+    "fecha_desde_aplicado_nomina": "01/03/24",
+    "fecha_hasta_aplicado_nomina": "08/03/24",
     "dias_autorizados": 8,
     "dias_incapacidad_aplicados_a_periodos": [
-        {"periodo_nomina": "2024024", "dias_aplicados": 6},
-        {"periodo_nomina": "2024031", "dias_aplicados": 2},
+        {"periodo_nomina": "2024031", "dias_aplicados": 7},
+        {"periodo_nomina": "2024032", "dias_aplicados": 1},
     ],
 }
 
@@ -604,6 +676,8 @@ json_files_list = [
     "result_inicial_5",
     "data_inicial_6",
     "result_inicial_6",
+    "data_inicial_7",
+    "result_inicial_7",
     "data_sub_1",
     "result_sub_1",
     "data_sub_2",

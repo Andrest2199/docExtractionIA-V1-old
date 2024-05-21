@@ -1,0 +1,21 @@
+{
+    "no_empleado": "4794",
+    "serie_folio": "ID188749",
+    "tipo_incapacidad": "RT",
+    "categoria_incapacidad": "INICIAL",
+    "fecha_desde_incapacidad": "07/05/24",
+    "fecha_hasta_incapacidad": "24/05/24",
+    "fecha_desde_aplicado_nomina": "15/05/24",
+    "fecha_hasta_aplicado_nomina": "01/06/24",
+    "dias_autorizados": 18,
+    "dias_incapacidad_aplicados_a_periodos": [
+        {
+            "periodo_nomina": "2024052",
+            "dias_aplicados": 14
+        },
+        {
+            "periodo_nomina": "2024053",
+            "dias_aplicados": 4
+        }
+    ]
+}

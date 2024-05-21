@@ -1,0 +1,44 @@
+{
+    "no_empleado": "4794",
+    "serie_folio": "ID188749",
+    "fecha_a_partir": "07/05/24",
+    "fecha_actual": "06/06/24",
+    "dias_autorizados": "DIECIOCHO",
+    "tipo_incapacidad": "RT",
+    "categoria_incapacidad": "INICIAL",
+    "tipo_nomina": "CATORCENAL",
+    "historico_incapacidades": [],
+    "tabla_periodos_ciclos": [
+        {
+            "periodo": "2024051",
+            "fecha_desde": "01/05/24",
+            "fecha_hasta": "14/05/24",
+            "fase": "CERRADO"
+        },
+        {
+            "periodo": "2024052",
+            "fecha_desde": "15/05/24",
+            "fecha_hasta": "28/05/24",
+            "fase": "CERRADO"
+        },
+        {
+            "periodo": "2024053",
+            "fecha_desde": "29/05/24",
+            "fecha_hasta": "11/06/24",
+            "fase": "ABIERTO"
+        },
+        {
+            "periodo": "2024061",
+            "fecha_desde": "12/06/24",
+            "fecha_hasta": "25/06/24",
+            "fase": "ABIERTO"
+        },
+        {
+            "periodo": "2024062",
+            "fecha_desde": "26/06/24",
+            "fecha_hasta": "09/07/24",
+            "fase": "ABIERTO"
+        }
+    ],
+    "auth_fase_cerrada": "True"
+}

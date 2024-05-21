@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from json.decoder import JSONDecodeError
 from .chat_completions import chat_completions_arrastre_incapacidades
 from datetime import datetime
-
+import traceback
 @csrf_exempt
 def generate_arrastre(request: HttpRequest) -> JsonResponse:
     if request.method != "POST":
@@ -51,11 +51,12 @@ def generate_arrastre(request: HttpRequest) -> JsonResponse:
                 return JsonResponse({"error": "La fecha a partir de la incapacidad esta fuera de rango"}, status=400)
             
         # Process the data and perform necessary operations
-        response, tokens, context = chat_completions_arrastre_incapacidades(str(data))
+        response, tokens, context = chat_completions_arrastre_incapacidades(data)
 
         return JsonResponse({"message": "Success", "response": response}, status=200)
 
     except JSONDecodeError as e:
         return JsonResponse({"error": str(e)}, status=400)
     except Exception as e:
+        print(traceback.format_exc())
         return JsonResponse({"error": str(e)}, status=500)
