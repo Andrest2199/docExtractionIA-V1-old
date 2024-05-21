@@ -13,3 +13,5 @@ ono_ocr/migrations/__pycache__/
 ono_arrastre/__pycache__/
 /static/
 ono_arrastre/migrations/__pycache__/
+
+.idea/
