@@ -32,6 +32,7 @@ def ocr_recognize(request):
             )
         data = recognition_worker(filename, doctype, file_base64)
         return JsonResponse(data, status=200, safe=False)
-
+    except ValueError as e:
+        return JsonResponse({"error": str(e)}, status=422)
     except Exception as e:
         return JsonResponse(str(e), status=500, safe=False)
