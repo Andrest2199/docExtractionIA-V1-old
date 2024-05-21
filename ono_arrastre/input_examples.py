@@ -92,6 +92,27 @@
     ],
     "auth_fase_cerrada": "False"
 },
+# RESULT INICIAL 2 / NOMINA MENSUAL CHECK
+{
+    "message": "Success",
+    "response": {
+        "no_empleado": "2345",
+        "serie_folio": "WX321288",
+        "tipo_incapacidad": "MT",
+        "categoria_incapacidad": "INICIAL",
+        "fecha_desde_incapacidad": "20/03/24",
+        "fecha_hasta_incapacidad": "08/04/24",
+        "fecha_desde_aplicado_nomina": "01/04/24",
+        "fecha_hasta_aplicado_nomina": "20/04/24",
+        "dias_autorizados": 20,
+        "dias_incapacidad_aplicados_a_periodos": [
+            {
+                "periodo_nomina": "2024041",
+                "dias_aplicados": 20
+            }
+        ]
+    }
+}
 # EXAMPLE SUBSECUENTE 1 / NOMINA QUINCENAL CHECK
 {
     "no_empleado": "1666",
@@ -192,7 +213,7 @@
             "dias_autorizados": 4,
             "dias_incapacidad_aplicados_a_periodos": [
                 {"periodo_nomina": "2024021", "dias_aplicados": 4}
-            ],
+            ]
         }
     ],
     "tabla_periodos_ciclos": [
@@ -291,6 +312,35 @@
         }
     ],
     "auth_fase_cerrada": "False"
+}
+#RESULT SUBSECUENTE 3 / NOMINA QUINCENAL
+{
+    "message": "Success",
+    "response": {
+        "no_empleado": "2190",
+        "serie_folio": "CD536241",
+        "tipo_incapacidad": "EG",
+        "categoria_incapacidad": "INICIAL",
+        "fecha_desde_incapacidad": "20/06/24",
+        "fecha_hasta_incapacidad": "22/07/24",
+        "fecha_desde_aplicado_nomina": "01/07/24",
+        "fecha_hasta_aplicado_nomina": "02/08/24",
+        "dias_autorizados": 33,
+        "dias_incapacidad_aplicados_a_periodos": [
+            {
+                "periodo_nomina": "2024071",
+                "dias_aplicados": 15
+            },
+            {
+                "periodo_nomina": "2024072",
+                "dias_aplicados": 16
+            },
+            {
+                "periodo_nomina": "2024081",
+                "dias_aplicados": 2
+            }
+        ]
+    }
 }
 #Comment
 """Try
