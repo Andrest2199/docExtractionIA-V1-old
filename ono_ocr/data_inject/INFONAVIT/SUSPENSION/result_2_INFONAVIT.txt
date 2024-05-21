@@ -11,5 +11,6 @@
   "RFC_PATRON": "LSG1103226V6",
   "NUMERO_DE_REGISTRO_PATRONAL": "A0172158105",
   "RAZON_SOCIAL": "LEVI STRAUSS GLOBAL TRADING COMPANY II",
-  "SELLO": "TRUE"
+  "SELLO": "TRUE",
+  "LEYENDA_APLICACION_DESCUENTO": "a partir de la fecha en que se reciba este aviso, deberá suspender los descuentos, derivado a que el crédito está en la etapa final de cobro, motivo por el cual ya no deberá de retenerle la amortización ya que con el 5% de la aportación patronal durante un plazo establecido de 12 meses se terminará de pagar"
 }

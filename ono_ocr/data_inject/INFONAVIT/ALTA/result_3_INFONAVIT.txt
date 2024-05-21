@@ -13,5 +13,6 @@
   "RFC_PATRON": "RVC861201Q99",
   "NUMERO_DE_REGISTRO_PATRONAL": "E2382971109",
   "RAZON_SOCIAL": "REFRESCOS VICTORIA DEL CENTRO S.A. DE C",
-  "SELLO": "TRUE"
+  "SELLO": "TRUE",
+  "LEYENDA_APLICACION_DESCUENTO": "a partir del día siguiente a aquel en que se le haya notificado el presente aviso"
 }
