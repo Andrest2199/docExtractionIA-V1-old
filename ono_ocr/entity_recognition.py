@@ -80,6 +80,7 @@ def chat_completions_entity_extraction(
         "CLAVE_PATRONAL": STRING,
         "NOMBRE_DEL_PATRON": STRING
     }
+    Check if the first 4 characters of the CURP are letters and the next 6 are numbers, so if you detect that a character is an “O” and should be a digit, change it to a “0” and vice versa.
     """
     if type_doc == "INFONAVIT":
         context_data_inyection += """
@@ -111,6 +112,7 @@ def chat_completions_entity_extraction(
         "RFC": STRING,
         "ESTATUS_EN_EL_PADRON": STRING
     }
+    Check if the first 4 characters of the CURP are letters and the next 6 are numbers, so if you detect that a character is an “O” and should be a digit, change it to a “0” and vice versa.
     """
     # Set system role
     system_content = {"role": "system", "content": context_data_inyection}
