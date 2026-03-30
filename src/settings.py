@@ -95,28 +95,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "src.wsgi.application"
 CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = (
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "https://api.ono.starlight.science/",
-    "https://go3.grupoono.lat",
-    "https://api.grupoono.lat",
-    "http://go3.localhost",
-    "http://201.163.197.69"
-)
+
 CORS_ALLOWED_ORIGINS = [
-    "https://api.ono.starlight.science/",
+    "https://api.ono.starlight.science",
     "https://go3.grupoono.lat",
     "https://api.grupoono.lat",
     "http://go3.localhost",
     "http://201.163.197.69"
-    "http://127.0.0.1"
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "https://api.ono.starlight.science/",
+    "https://api.ono.starlight.science",
     "https://go3.grupoono.lat",
     "https://api.grupoono.lat",
     "http://go3.localhost",
