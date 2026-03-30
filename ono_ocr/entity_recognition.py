@@ -87,8 +87,10 @@ def chat_completions_entity_extraction(
     {
         "TITULO": STRING,
         "FOLIO": STRING,
+        "MOTIVO": STRING,
         "FECHA_EMISION": DATE STRING,
-        "FECHA_RECEPCION": DATE STRING,
+        "FECHA_RECEPCION": DATE STRING/NA,
+        "FECHA_TRAMITE": DATE STRING/NA,
         "NUMERO_DE_CREDITO": STRING,
         "DESCUENTO": STRING,
         "RFC":STRING,
