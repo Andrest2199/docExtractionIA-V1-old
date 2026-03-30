@@ -167,68 +167,6 @@ class Utils:
                         f"Error: El código postal '{fields['CODIGO_POSTAL']}' es incorrecto."
                     )
 
-        # Validacion de CURP
-        if "CURP" in fields:
-            if fields["CURP"] == "":
-                fields["CURP"] = "Error: no se encontró el CURP"
-            else:
-                # Expresión regular para validar el formato de CURP
-                patron_CURP = re.compile(r"^[A-Z]{4}[0-9]{6}[HM][A-Z]{5}[0-9]{2}$")
-
-                # Validar el formato de CURP
-                if not patron_CURP.match(fields["CURP"]):
-                    fields["CURP"] = f"Error: El CURP '{fields['CURP']}' es incorrecto."
-
-                # Calcular el dígito verificador
-                if "Error" not in fields["CURP"]:
-                    suma = 0
-                    diccionario_reemplazo = {
-                        "A": "10",
-                        "B": "11",
-                        "C": "12",
-                        "D": "13",
-                        "E": "14",
-                        "F": "15",
-                        "G": "16",
-                        "H": "17",
-                        "I": "18",
-                        "J": "19",
-                        "K": "20",
-                        "L": "21",
-                        "M": "22",
-                        "N": "23",
-                        "Ñ": "24",
-                        "O": "25",
-                        "P": "26",
-                        "Q": "27",
-                        "R": "28",
-                        "S": "29",
-                        "T": "30",
-                        "U": "31",
-                        "V": "32",
-                        "W": "33",
-                        "X": "34",
-                        "Y": "35",
-                        "Z": "36",
-                    }
-                    for i in range(len(fields["CURP"]) - 1):
-                        if fields["CURP"][i].isdigit():
-                            suma += int(fields["CURP"][i]) * (18 - i)
-                        else:
-                            suma += int(diccionario_reemplazo[fields["CURP"][i]]) * (
-                                18 - i
-                            )
-
-                    digito_verificador = 10 - (suma % 10)
-                    if digito_verificador == 10:
-                        digito_verificador = 0
-
-                    # Verificar el dígito verificador
-                    if int(fields["CURP"][-1]) != digito_verificador:
-                        fields["CURP"] = (
-                            f"Error: El dígito verificador del CURP '{fields['CURP']}' es incorrecto."
-                        )
-
         # Validacion de RFC
         if "RFC" in fields:
             if fields["RFC"] == "":

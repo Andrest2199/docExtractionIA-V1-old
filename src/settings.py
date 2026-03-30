@@ -38,7 +38,13 @@ DEBUG = env("DEBUG")
 if DEBUG:
     ALLOWED_HOSTS = ["127.0.0.1", "44.197.174.193", "api.ono.starlight.science"]
 else:
-    ALLOWED_HOSTS = ["44.197.174.193", "api.ono.starlight.science"]
+    ALLOWED_HOSTS = ["44.197.174.193", 
+    "api.ono.starlight.science",
+    "go3.grupoono.lat",
+    "api.grupoono.lat",
+    "go3.localhost",
+    "201.163.197.69",
+    ]
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
@@ -52,11 +58,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "ono_ocr",
     "ono_arrastre",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -86,17 +94,33 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "src.wsgi.application"
-
-CORS_ALLOWED_ORIGINS = [
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "http://0.0.0.0:3000",
     "https://api.ono.starlight.science/",
+    "https://go3.grupoono.lat",
+    "https://api.grupoono.lat",
+    "http://go3.localhost",
+    "http://201.163.197.69"
+)
+CORS_ALLOWED_ORIGINS = [
+    "https://api.ono.starlight.science/",
+    "https://go3.grupoono.lat",
+    "https://api.grupoono.lat",
+    "http://go3.localhost",
+    "http://201.163.197.69"
+    "http://127.0.0.1"
 ]
+
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:8000",
     "http://127.0.0.1:8000",
     "https://api.ono.starlight.science/",
+    "https://go3.grupoono.lat",
+    "https://api.grupoono.lat",
+    "http://go3.localhost",
+    "http://201.163.197.69"
 ]
 
 # Files Management
