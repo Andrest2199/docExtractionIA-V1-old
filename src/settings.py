@@ -99,6 +99,14 @@ CSRF_TRUSTED_ORIGINS = [
     "https://api.ono.starlight.science/",
 ]
 
+# Files Management
+# 15 MB = 15 * 1024 * 1024 bytes
+DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640 
+
+# Para que Django empiece a escribir en disco si el archivo es grande 
+# y no sature la RAM de la instancia de Lightsail (que suele ser limitada)
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 MB
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 

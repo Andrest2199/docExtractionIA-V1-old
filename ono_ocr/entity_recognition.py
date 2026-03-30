@@ -80,14 +80,17 @@ def chat_completions_entity_extraction(
         "CLAVE_PATRONAL": STRING,
         "NOMBRE_DEL_PATRON": STRING
     }
+    Check if the first 4 characters of the CURP are letters and the next 6 are numbers, so if you detect that a character is an “O” and should be a digit, change it to a “0” and vice versa.
     """
     if type_doc == "INFONAVIT":
         context_data_inyection += """
     {
         "TITULO": STRING,
         "FOLIO": STRING,
+        "MOTIVO": STRING,
         "FECHA_EMISION": DATE STRING,
-        "FECHA_RECEPCION": DATE STRING,
+        "FECHA_RECEPCION": DATE STRING/NA,
+        "FECHA_TRAMITE": DATE STRING/NA,
         "NUMERO_DE_CREDITO": STRING,
         "DESCUENTO": STRING,
         "RFC":STRING,
@@ -111,6 +114,7 @@ def chat_completions_entity_extraction(
         "RFC": STRING,
         "ESTATUS_EN_EL_PADRON": STRING
     }
+    Check if the first 4 characters of the CURP are letters and the next 6 are numbers, so if you detect that a character is an “O” and should be a digit, change it to a “0” and vice versa.
     """
     # Set system role
     system_content = {"role": "system", "content": context_data_inyection}
@@ -127,7 +131,7 @@ def chat_completions_entity_extraction(
 
     # Get response
     response = client.chat.completions.create(
-        model="gpt-4-turbo-preview",  # gpt-3.5-turbo-0125 #gpt-4-0125-preview, #gpt-4-vision-preview
+        model="gpt-5-nano",
         messages=[
             system_content,
             user_content,
