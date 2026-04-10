@@ -38,7 +38,13 @@ DEBUG = env("DEBUG")
 if DEBUG:
     ALLOWED_HOSTS = ["127.0.0.1", "44.197.174.193", "api.ono.starlight.science"]
 else:
-    ALLOWED_HOSTS = ["44.197.174.193", "api.ono.starlight.science"]
+    ALLOWED_HOSTS = ["44.197.174.193", 
+    "api.ono.starlight.science",
+    "go3.grupoono.lat",
+    "api.grupoono.lat",
+    "go3.localhost",
+    "201.163.197.69",
+    ]
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
@@ -52,11 +58,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "ono_ocr",
     "ono_arrastre",
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -86,18 +94,31 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "src.wsgi.application"
+CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "http://0.0.0.0:3000",
-    "https://api.ono.starlight.science/",
+    "https://api.ono.starlight.science",
+    "https://go3.grupoono.lat",
+    "https://api.grupoono.lat",
+    "http://go3.localhost",
+    "http://201.163.197.69"
 ]
+
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "https://api.ono.starlight.science/",
+    "https://api.ono.starlight.science",
+    "https://go3.grupoono.lat",
+    "https://api.grupoono.lat",
+    "http://go3.localhost",
+    "http://201.163.197.69"
 ]
+
+# Files Management
+# 15 MB = 15 * 1024 * 1024 bytes
+DATA_UPLOAD_MAX_MEMORY_SIZE = 15728640 
+
+# Para que Django empiece a escribir en disco si el archivo es grande 
+# y no sature la RAM de la instancia de Lightsail (que suele ser limitada)
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5 MB
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
